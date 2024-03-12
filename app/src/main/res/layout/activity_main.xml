@@ -12,9 +12,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLayout"
         android:layout_width="414dp"
-        android:layout_height="48dp"
-        android:background="@color/white"
+        android:layout_height="50dp"
+        android:background="@drawable/header_layout_border"
         android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/RvMainMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -54,6 +55,88 @@
             app:thumbTextPadding="0dp"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
 
+        <android.widget.Button
+            android:id="@+id/btnCoin"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/header_item_border"
+            android:drawableTop="@drawable/coin"
+            android:drawablePadding="-1dp"
+            android:gravity="center"
+            android:text="충전소"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnBook"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+        <android.widget.Button
+            android:id="@+id/btnBook"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/header_item_border"
+            android:drawableTop="@drawable/books"
+            android:drawablePadding="-1dp"
+            android:gravity="center"
+            android:text="내서재"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnGift"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.widget.Button
+            android:id="@+id/btnGift"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/header_item_border"
+            android:drawableTop="@drawable/gift"
+            android:drawablePadding="-3dp"
+            android:gravity="center"
+            android:text="선물함"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.125" />
+
+        <android.widget.Button
+            android:id="@+id/btnSearch"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/header_item_border"
+            android:drawableTop="@drawable/search"
+            android:drawablePadding="-5dp"
+            android:gravity="center"
+            android:text="검색"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btnHamburger"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.widget.Button
+            android:id="@+id/btnHamburger"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/header_item_border"
+            android:drawableTop="@drawable/hamburger"
+            android:drawablePadding="-5dp"
+            android:gravity="center"
+            android:text="메뉴"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,24 +146,24 @@
         android:layout_height="74dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/fragment_container"
+        app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerLayout"
         app:spanCount="4" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintBottom_toTopOf="@+id/ivFooter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.545"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/RvMainMenu" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/ivFooter"
         android:layout_width="0dp"
         android:layout_height="300dp"
         android:background="#EBECEE"
@@ -88,6 +171,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container" />
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
