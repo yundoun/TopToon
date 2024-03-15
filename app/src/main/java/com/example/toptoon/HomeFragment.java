@@ -24,8 +24,36 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
 
+        SlideImageAdapter adapter = new SlideImageAdapter(getContext());
         slideViewPager = binding.slideViewPager;
-        slideViewPager.setAdapter(new SlideImageAdapter(getContext()));
+        slideViewPager.setAdapter(adapter);
+
+        int imagesLength = adapter.getImageArrayLength();
+
+        // ViewPager2가 가상의 무한 리스트 중간에서 시작하도록 초기 위치를 계산
+        int initialPosition = Integer.MAX_VALUE / 2;
+        // initialPosition을 이미지 길이의 배수로 조정하여 시작점에서 시작하도록 보장
+        if (initialPosition % imagesLength != 0) {
+            initialPosition -= initialPosition % imagesLength;
+        }
+        slideViewPager.setCurrentItem(initialPosition, false);
+
+        // 인디케이터 초기화
+        CircleIndicator circleIndicator = binding.slideIndicator;
+        // 실제 이미지 수에 맞게 점 개수를 조정
+        circleIndicator.createDotPanel(imagesLength, R.drawable.tab_unselected, R.drawable.tab_selected, 0);
+
+        // ViewPager2에 페이지 변경 콜백 설정하여 인디케이터 업데이트 및 순환 스크롤 처리
+        slideViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                // 가상 무한 위치를 실제 이미지 인덱스로 변환
+                int realPosition = position % imagesLength;
+                circleIndicator.selectDot(realPosition);
+                currentItem = realPosition; // 현재 항목을 실제 위치로 업데이트
+            }
+        });
 
         // 자동 슬라이딩 구현
         Runnable runnable = new Runnable() {
@@ -35,35 +63,11 @@ public class HomeFragment extends Fragment {
                     currentItem = 0;
                 }
                 slideViewPager.setCurrentItem(currentItem++, true);
-                sliderHandler.postDelayed(this, 3000); // 3초 후 다음 이미지로 전환
+                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
             }
         };
+        // 앱 시작 시 자동 슬라이딩 시작
         sliderHandler.postDelayed(runnable, 3000);
-
-        slideViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                // 현재 페이지 인덱스 업데이트
-                currentItem = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-                if (state == ViewPager2.SCROLL_STATE_IDLE) { // 스크롤이 멈췄을 때
-                    int itemCount = slideViewPager.getAdapter().getItemCount(); // 전체 아이템 개수를 가져옵니다.
-                    if (currentItem == 0) {
-                        // 첫 번째 페이지에서 왼쪽으로 스와이프하면 마지막 페이지로 이동
-                        slideViewPager.setCurrentItem(itemCount  - 1, false);
-                    } else if (currentItem == itemCount - 1) {
-                        // 마지막 페이지에서 오른쪽으로 스와이프하면 첫 번째 페이지로 이동
-                        slideViewPager.setCurrentItem(0, false);
-                    }
-                }
-            }
-        });
-
 
         return binding.getRoot();
     }
@@ -71,9 +75,8 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        sliderHandler.removeCallbacksAndMessages(null); // 리소스 정리
-        binding = null; // 메모리 누수 방지
+        // 메모리 누수를 방지하기 위해 sliderHandler 콜백 취소
+        sliderHandler.removeCallbacksAndMessages(null);
+        binding = null;
     }
 }
-
-
