@@ -2,6 +2,8 @@ package com.example.toptoon;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuAdapter;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,6 +42,17 @@ public class MainActivity extends AppCompatActivity {
         menuList.add(new MainMenuItem("이벤트"));
 
         adapter.submitList(menuList); // 데이터 설정
+
+        // HomeFragment 인스턴스 생성
+        HomeFragment homeFragment = new HomeFragment();
+
+        // FragmentManager를 사용하여 FragmentTransaction을 시작
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        // FragmentTransaction을 사용하여 FragmentContainerView에 HomeFragment 추가
+        fragmentTransaction.add(R.id.fragmentContainer, homeFragment);
+        fragmentTransaction.commit(); // 변경사항을 커밋하여 적용
 
     }
 }
