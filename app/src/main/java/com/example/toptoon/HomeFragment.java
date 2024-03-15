@@ -41,19 +41,7 @@ public class HomeFragment extends Fragment {
         // 인디케이터 초기화
         CircleIndicator circleIndicator = binding.slideIndicator;
         // 실제 이미지 수에 맞게 점 개수를 조정
-        circleIndicator.createDotPanel(imagesLength, R.drawable.tab_unselected, R.drawable.tab_selected, 0);
-
-        // ViewPager2에 페이지 변경 콜백 설정하여 인디케이터 업데이트 및 순환 스크롤 처리
-        slideViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                // 가상 무한 위치를 실제 이미지 인덱스로 변환
-                int realPosition = position % imagesLength;
-                circleIndicator.selectDot(realPosition);
-                currentItem = realPosition; // 현재 항목을 실제 위치로 업데이트
-            }
-        });
+        circleIndicator.createDotPanel(imagesLength, R.drawable.indicator_unselected, R.drawable.indicator_selected, 0);
 
         // 자동 슬라이딩 구현
         Runnable runnable = new Runnable() {
@@ -70,6 +58,32 @@ public class HomeFragment extends Fragment {
         };
         // 앱 시작 시 자동 슬라이딩 시작
         sliderHandler.postDelayed(runnable, 3000);
+
+        slideViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+                if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
+                    // 사용자가 스와이프를 시작하면 자동 슬라이딩 일시 중지
+                    sliderHandler.removeCallbacks(runnable);
+                } else if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                    // 사용자 스와이프가 끝나면 자동 슬라이딩 다시 시작
+                    sliderHandler.removeCallbacks(runnable);
+                    sliderHandler.postDelayed(runnable, 3000);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                // 가상 무한 위치를 실제 이미지 인덱스로 변환
+                int realPosition = position % imagesLength;
+                circleIndicator.selectDot(realPosition);
+                currentItem = realPosition; // 현재 항목을 실제 위치로 업데이트
+            }
+        });
+
+
 
         return binding.getRoot();
     }
