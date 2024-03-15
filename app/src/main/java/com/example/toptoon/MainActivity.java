@@ -7,22 +7,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.widget.ImageView;
+
+import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        RecyclerView recyclerView = findViewById(R.id.RvMainMenu);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
+        binding.RvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
         MainMenuAdapter adapter = new MainMenuAdapter();
-        recyclerView.setAdapter(adapter);
+        binding.RvMainMenu.setAdapter(adapter);
 
         List<MainMenuItem> menuList = new ArrayList<>();
         menuList.add(new MainMenuItem("연재"));
