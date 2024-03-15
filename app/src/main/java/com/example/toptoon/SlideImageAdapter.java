@@ -9,7 +9,11 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptoon.databinding.ActivityMainBinding;
+import com.example.toptoon.databinding.SlideImageRowBinding;
+
 public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.SlideImageViewHolder> {
+
     private Context context;
     private int[] images = new int[]{R.drawable.slide_add_1, R.drawable.slide_add_2, R.drawable.slide_add_3, R.drawable.slide_add_4, R.drawable.slide_add_5,
             R.drawable.slide_add_6, R.drawable.slide_add_7};
@@ -21,13 +25,14 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     @NonNull
     @Override
     public SlideImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.slide_image_row, parent, false);
-        return new SlideImageViewHolder(view);
+        SlideImageRowBinding binding = SlideImageRowBinding.inflate(LayoutInflater.from(context),parent,false);
+        return new SlideImageViewHolder(binding);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
-        holder.imageView.setImageResource(images[position]);
+        holder.binding.slideImageRow.setImageResource(images[position]);
     }
 
     @Override
@@ -36,11 +41,11 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     }
 
     static class SlideImageViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+        SlideImageRowBinding binding;
 
-        SlideImageViewHolder(@NonNull View itemView) {
-            super(itemView);
-            imageView = itemView.findViewById(R.id.slideImageRow);
+        SlideImageViewHolder(SlideImageRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
