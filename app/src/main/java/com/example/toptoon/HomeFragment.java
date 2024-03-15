@@ -5,13 +5,14 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 public class HomeFragment extends Fragment {
-    private ViewPager slideViewPager;
+    private ViewPager2 slideViewPager;
     private Handler sliderHandler = new Handler();
     private int currentItem = 0;
 
@@ -27,18 +28,17 @@ public class HomeFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (currentItem == slideViewPager.getAdapter().getCount()) {
+                if (currentItem >= slideViewPager.getAdapter().getItemCount()) {
                     currentItem = 0;
                 }
                 slideViewPager.setCurrentItem(currentItem++, true);
-                sliderHandler.postDelayed(this, 2000); // 3초 후 다음 이미지로 전환
+                sliderHandler.postDelayed(this, 3000); // 3초 후 다음 이미지로 전환
             }
         };
-        sliderHandler.postDelayed(runnable, 2000);
+        sliderHandler.postDelayed(runnable, 3000);
 
         return view;
     }
-    // ViewPager 찾아서 초기화 이후 SlideImageAdapter의 인스턴스를 생성해서 Viewpager를 설정함 getContext()메소드는 Fragment내에서 현재 컨텍스트를 가져오기 위해 사용됨
 
     @Override
     public void onDestroy() {
@@ -48,4 +48,5 @@ public class HomeFragment extends Fragment {
         }
     }
 }
+
 
