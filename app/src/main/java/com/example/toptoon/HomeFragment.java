@@ -59,10 +59,12 @@ public class HomeFragment extends Fragment {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                if (currentItem >= slideViewPager.getAdapter().getItemCount()) {
-                    currentItem = 0;
-                }
-                slideViewPager.setCurrentItem(currentItem++, true);
+                int itemCount = slideViewPager.getAdapter().getItemCount();
+                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
+                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
+                // 가상 무한 스크롤을 위한 다음 위치 계산
+                int nextItemPosition = ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
+                slideViewPager.setCurrentItem(nextItemPosition, true);
                 sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
             }
         };
