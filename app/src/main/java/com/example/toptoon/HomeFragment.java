@@ -29,6 +29,15 @@ public class HomeFragment extends Fragment {
         initializeSlider(); // 슬라이더 초기화
         setupAutoSlide();   // 자동 슬라이딩 설정
 
+        // 어댑터 설정
+        binding.categoryViewPager.setAdapter(new TabAdapter(this));
+
+        // TabLayout과 ViewPager2 연동
+        new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager,
+                (tab, position) -> {
+                    // 여기서 탭 제목 설정
+                    tab.setText("Tab " + (position + 1));
+                }).attach();
 
 
         return binding.getRoot();
