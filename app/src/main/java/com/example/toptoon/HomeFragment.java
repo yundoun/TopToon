@@ -35,7 +35,20 @@ public class HomeFragment extends Fragment {
         new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager,
                 (tab, position) -> {
                     // 여기서 탭 제목 설정
-                    tab.setText("Tab " + (position + 1));
+                    switch (position) {
+                        case 0:
+                            tab.setText("실시간");
+                            break;
+                        case 1:
+                            tab.setText("신작");
+                            break;
+                        case 2:
+                            tab.setText("할인");
+                            break;
+                        case 3:
+                            tab.setText("내가보던");
+                            break;
+                    }
                 }).attach();
 
 

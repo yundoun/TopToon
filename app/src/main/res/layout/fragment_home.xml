@@ -51,12 +51,10 @@
     </androidx.viewpager2.widget.ViewPager2>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
+        android:id="@+id/ivSectionAdd"
+        android:layout_width="match_parent"
         android:layout_height="57.5dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:src="@drawable/section_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
