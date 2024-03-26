@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.toptoon.databinding.FragmentHomeBinding;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 public class HomeFragment extends Fragment {
@@ -104,10 +103,12 @@ public class HomeFragment extends Fragment {
         public void onPageScrollStateChanged(int state) {
             super.onPageScrollStateChanged(state);
             if (state == ViewPager2.SCROLL_STATE_DRAGGING) {
-                // 사용자가 슬라이딩을 시작하면 자동 슬라이딩 중지
+                // 사용자가 슬라이딩을 시작하면 기존에 예약된 자동 슬라이딩 작업을 모두 취소
                 sliderHandler.removeCallbacksAndMessages(null);
             } else if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                // 사용자 슬라이딩이 멈추면 자동 슬라이딩 재개
+                // 슬라이딩이 끝나고 정지 상태가 되면, 다시 자동 슬라이딩을 시작하기 전에 기존 작업을 취소
+                sliderHandler.removeCallbacksAndMessages(null);
+                // 그 다음, 자동 슬라이딩 작업을 새로 예약
                 sliderHandler.postDelayed(this::autoSlide, 3000);
             }
         }

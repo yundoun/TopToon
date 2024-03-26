@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainMenuAdapter extends ListAdapter<MainMenuItem, MainMenuAdapter.MainMenuViewHolder> {
+public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapter.MainMenuViewHolder> {
 
-    protected MainMenuAdapter() {
+    protected MainMenuRvAdapter() {
         super(new DiffUtil.ItemCallback<MainMenuItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull MainMenuItem oldItem, @NonNull MainMenuItem newItem) {
@@ -35,7 +35,7 @@ public class MainMenuAdapter extends ListAdapter<MainMenuItem, MainMenuAdapter.M
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MainMenuAdapter.MainMenuViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, int position) {
         MainMenuItem menu = (MainMenuItem) getItem(position);
         holder.textView.setText(menu.getTitle());
     }

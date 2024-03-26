@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding.RvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
-        MainMenuAdapter adapter = new MainMenuAdapter();
+        MainMenuRvAdapter adapter = new MainMenuRvAdapter();
         binding.RvMainMenu.setAdapter(adapter);
 
         List<MainMenuItem> menuList = new ArrayList<>();
