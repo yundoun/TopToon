@@ -9,16 +9,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
     private ViewPager2 slideViewPager;
     private Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
+
+    private RecyclerView rvCommon1, rvCommon2;
+    private CommonRvAdapter commonRvAdapter1, commonRvAdapter2;
+    private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2;
+
 
     @Nullable
     @Override
@@ -27,6 +36,24 @@ public class HomeFragment extends Fragment {
 
         initializeSlider(); // 슬라이더 초기화
         setupAutoSlide();   // 자동 슬라이딩 설정
+
+        // 데이터 초기화
+        commonContentItems1 = new ArrayList<>();
+        commonContentItems1.add(new CommonContentItem(R.drawable.common_1, "계약 남편에게 끌리...", "장미 스튜디오&열문"));
+        commonContentItems1.add(new CommonContentItem(R.drawable.common_2, "출구 없는 사랑", "YY&Jiman"));
+
+        commonContentItems2 = new ArrayList<>();
+        commonContentItems2.add(new CommonContentItem(R.drawable.common_1, "Text 3-1", "Text 3-2"));
+        commonContentItems2.add(new CommonContentItem(R.drawable.common_2, "Text 4-1", "Text 4-2"));
+
+        binding.rvCommon1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        commonRvAdapter1 = new CommonRvAdapter(commonContentItems1);
+        binding.rvCommon1.setAdapter(commonRvAdapter1);
+
+        binding.rvCommon2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        commonRvAdapter2 = new CommonRvAdapter(commonContentItems2);
+        binding.rvCommon2.setAdapter(commonRvAdapter2);
+
 
         // 어댑터 설정
         binding.categoryViewPager.setAdapter(new TabAdapter(this));
@@ -83,7 +110,7 @@ public class HomeFragment extends Fragment {
         slideViewPager.setCurrentItem(initialPosition, false);
     }
 
-    private  void setupAutoSlide() {
+    private void setupAutoSlide() {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {

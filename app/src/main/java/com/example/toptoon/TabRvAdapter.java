@@ -39,7 +39,7 @@ public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHol
     }
 
     public static class TabRvViewHolder extends RecyclerView.ViewHolder {
-        private TabRvRowBinding binding;
+        private final TabRvRowBinding binding;
 
         public TabRvViewHolder(TabRvRowBinding binding) {
             super(binding.getRoot());
