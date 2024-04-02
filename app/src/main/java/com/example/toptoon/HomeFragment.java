@@ -133,7 +133,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void initializeTabLayout() {
-        binding.categoryViewPager.setAdapter(new TabAdapter(this));
+        binding.categoryViewPager.setAdapter(new TabManager(this));
         // TabLayout과 ViewPager2 연동
         new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager, this::setupTabTitles).attach();
     }
