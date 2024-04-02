@@ -11,12 +11,11 @@ import com.example.toptoon.databinding.SlideImageRowBinding;
 
 public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.SlideImageViewHolder> {
 
-    private Context context;
-    private int[] images = new int[]{R.drawable.slide_add_1, R.drawable.slide_add_2, R.drawable.slide_add_3, R.drawable.slide_add_4, R.drawable.slide_add_5,
-            R.drawable.slide_add_6, R.drawable.slide_add_7};
 
-    SlideImageAdapter(Context context) {
-        this.context = context;
+    private final int[] images;
+
+    SlideImageAdapter(int[] images){
+        this.images = images;
     }
 
     // 이미지 배열의 길이를 반환하는 메서드 추가
@@ -27,7 +26,7 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     @NonNull
     @Override
     public SlideImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        SlideImageRowBinding binding = SlideImageRowBinding.inflate(LayoutInflater.from(context),parent,false);
+        SlideImageRowBinding binding = SlideImageRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new SlideImageViewHolder(binding);
 
     }

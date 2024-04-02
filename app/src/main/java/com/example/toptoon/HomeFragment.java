@@ -22,12 +22,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
-    private ViewPager2 slideViewPager;
+    private ViewPager2 slideViewPager1, slideViewPager2;
     private Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
-    private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2;
+    private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2, commonContentItems3, commonContentItems4;
 
+    private int[] slideImages = new int[]{R.drawable.slide_add_1, R.drawable.slide_add_2, R.drawable.slide_add_3, R.drawable.slide_add_4, R.drawable.slide_add_5,
+            R.drawable.slide_add_6, R.drawable.slide_add_7};
+    private int[] eventImages = new int[]{R.drawable.event_add_1, R.drawable.event_add_2, R.drawable.event_add_3, R.drawable.event_add_4, R.drawable.event_add_5,
+            R.drawable.event_add_6, R.drawable.event_add_7};
 
     @Nullable
     @Override
@@ -46,25 +50,57 @@ public class HomeFragment extends Fragment {
         setupTagMenu();
     }
 
-    private void setupTagMenu() {
-        binding.rvTagMenu.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        TagMenuRvAdapter adapter = new TagMenuRvAdapter();
-        binding.rvTagMenu.setAdapter(adapter);
-        List<TagMenuItem> menuList = createTagMenuItems (); // 메뉴 아이템 데이터 리스트 생성
-        adapter.submitList(menuList); // 데이터 설정
+    private void initializeSlider() {
+        SlideImageAdapter adapter = new SlideImageAdapter(slideImages);
+        slideViewPager1 = binding.slideViewPager;
+        slideViewPager1.setAdapter(adapter);
+
+        SlideImageAdapter adapter2 = new SlideImageAdapter(eventImages);
+        slideViewPager2 = binding.slideViewPager2;
+        slideViewPager2.setAdapter(adapter2);
+
+
+        int imagesLength = adapter.getImageArrayLength();
+        setInitialPosition(imagesLength); // 초기 위치 설정
+
+        // 인디케이터 초기화
+        CircleIndicator circleIndicator = binding.slideIndicator;
+        // 실제 이미지 수에 맞게 점 개수를 조정
+        circleIndicator.createDotPanel(imagesLength, R.drawable.indicator_unselected, R.drawable.indicator_selected, 0);
+
+        // ViewPager2 페이지 변경 콜백 등록
+        slideViewPager1.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
     }
 
-    private List<TagMenuItem> createTagMenuItems() {
-        List<TagMenuItem> menuList = new ArrayList<>();
-        menuList.add(new TagMenuItem("#인기작품"));
-        menuList.add(new TagMenuItem("#탑툰독점"));
-        menuList.add(new TagMenuItem("#매일무료"));
-        menuList.add(new TagMenuItem("#전체무료"));
-        menuList.add(new TagMenuItem("#핫한신작"));
-        menuList.add(new TagMenuItem("#리메이크"));
-        menuList.add(new TagMenuItem("#백만조회"));
-        menuList.add(new TagMenuItem("#정주행각"));
-        return menuList;
+    // ViewPager2 초기 위치 설정
+    private void setInitialPosition(int imagesLength) {
+        // ViewPager2가 가상의 무한 리스트 중간에서 시작하도록 초기 위치를 계산
+        int initialPosition = Integer.MAX_VALUE / 2;
+        // initialPosition을 이미지 길이의 배수로 조정하여 시작점에서 시작하도록 보장
+        if (initialPosition % imagesLength != 0) {
+            initialPosition -= initialPosition % imagesLength;
+        }
+        slideViewPager1.setCurrentItem(initialPosition, false);
+    }
+
+    private void setupAutoSlide() {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
+                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
+                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
+                // 가상 무한 스크롤을 위한 다음 위치 계산
+                int nextItemPosition = calculateNextItemPosition(imagesLength);
+                slideViewPager1.setCurrentItem(nextItemPosition, true);
+                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
+            }
+        };
+        sliderHandler.postDelayed(runnable, 3000); // 앱 시작 시 자동 슬라이딩 시작
+    }
+
+    private int calculateNextItemPosition(int imagesLength) {
+        return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
     }
 
     private void initializeRecyclerViews() {
@@ -77,8 +113,18 @@ public class HomeFragment extends Fragment {
         commonContentItems2.add(new CommonContentItem(R.drawable.common_1, "Text 3-1", "Text 3-2"));
         commonContentItems2.add(new CommonContentItem(R.drawable.common_2, "Text 4-1", "Text 4-2"));
 
+        commonContentItems3 = new ArrayList<>();
+        commonContentItems3.add(new CommonContentItem(R.drawable.common_1, "Text 5-1", "Text 5-2"));
+        commonContentItems3.add(new CommonContentItem(R.drawable.common_2, "Text 6-1", "Text 6-2"));
+
+        commonContentItems4 = new ArrayList<>();
+        commonContentItems4.add(new CommonContentItem(R.drawable.common_1, "Text 7-1", "Text 7-2"));
+        commonContentItems4.add(new CommonContentItem(R.drawable.common_2, "Text 8-1", "Text 8-2"));
+
         setupRecyclerView(binding.rvCommon1, commonContentItems1);
         setupRecyclerView(binding.rvCommon2, commonContentItems2);
+        setupRecyclerView(binding.rvKeyword1, commonContentItems3);
+        setupRecyclerView(binding.rvKeyword2, commonContentItems4);
     }
 
     private void setupRecyclerView(RecyclerView recyclerView, ArrayList<CommonContentItem> items) {
@@ -93,58 +139,49 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupTabTitles(TabLayout.Tab tab, int position) {
-        String[] tabTitles = {"인기", "신작", "완결", "장르", "작가"};
+        String[] tabTitles = {"실시간", "신작", "할인", "내가보던"};
         if (position < tabTitles.length) {
             tab.setText(tabTitles[position]);
         }
     }
 
-    private void initializeSlider() {
-        SlideImageAdapter adapter = new SlideImageAdapter(getContext());
-        slideViewPager = binding.slideViewPager;
-        slideViewPager.setAdapter(adapter);
-
-        int imagesLength = adapter.getImageArrayLength();
-        setInitialPosition(imagesLength); // 초기 위치 설정
-
-        // 인디케이터 초기화
-        CircleIndicator circleIndicator = binding.slideIndicator;
-        // 실제 이미지 수에 맞게 점 개수를 조정
-        circleIndicator.createDotPanel(imagesLength, R.drawable.indicator_unselected, R.drawable.indicator_selected, 0);
-
-        // ViewPager2 페이지 변경 콜백 등록
-        slideViewPager.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
+    private void setupTagMenu() {
+        TagMenuRecyclerViewWithAdapter(binding.rvTagMenu1, createTagMenuItems1());
+        TagMenuRecyclerViewWithAdapter(binding.rvTagMenu2, createTagMenuItems2());
     }
 
-    // ViewPager2 초기 위치 설정
-    private void setInitialPosition(int imagesLength) {
-        // ViewPager2가 가상의 무한 리스트 중간에서 시작하도록 초기 위치를 계산
-        int initialPosition = Integer.MAX_VALUE / 2;
-        // initialPosition을 이미지 길이의 배수로 조정하여 시작점에서 시작하도록 보장
-        if (initialPosition % imagesLength != 0) {
-            initialPosition -= initialPosition % imagesLength;
-        }
-        slideViewPager.setCurrentItem(initialPosition, false);
+    private void TagMenuRecyclerViewWithAdapter(RecyclerView recyclerView, List<TagMenuItem> menuList ){
+        recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        TagMenuRvAdapter adapter = new TagMenuRvAdapter();
+        recyclerView.setAdapter(adapter);
+        adapter.submitList(menuList);
     }
 
-    private void setupAutoSlide() {
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                int imagesLength = ((SlideImageAdapter) slideViewPager.getAdapter()).getImageArrayLength();
-                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
-                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
-                // 가상 무한 스크롤을 위한 다음 위치 계산
-                int nextItemPosition = calculateNextItemPosition(imagesLength);
-                slideViewPager.setCurrentItem(nextItemPosition, true);
-                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
-            }
-        };
-        sliderHandler.postDelayed(runnable, 3000); // 앱 시작 시 자동 슬라이딩 시작
+
+    private List<TagMenuItem> createTagMenuItems1() {
+        List<TagMenuItem> menuList = new ArrayList<>();
+        menuList.add(new TagMenuItem("#인기작품"));
+        menuList.add(new TagMenuItem("#탑툰독점"));
+        menuList.add(new TagMenuItem("#매일무료"));
+        menuList.add(new TagMenuItem("#전체무료"));
+        menuList.add(new TagMenuItem("#핫한신작"));
+        menuList.add(new TagMenuItem("#리메이크"));
+        menuList.add(new TagMenuItem("#백만조회"));
+        menuList.add(new TagMenuItem("#정주행각"));
+        return menuList;
     }
 
-    private int calculateNextItemPosition(int imagesLength) {
-        return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
+    private List<TagMenuItem> createTagMenuItems2() {
+        List<TagMenuItem> menuList = new ArrayList<>();
+        menuList.add(new TagMenuItem("#로맨스"));
+        menuList.add(new TagMenuItem("#드라마"));
+        menuList.add(new TagMenuItem("#학원/액션"));
+        menuList.add(new TagMenuItem("#옴니버스"));
+        menuList.add(new TagMenuItem("#판타지/SF"));
+        menuList.add(new TagMenuItem("#공포/스릴러"));
+        menuList.add(new TagMenuItem("#개그"));
+        menuList.add(new TagMenuItem("#무협"));
+        return menuList;
     }
 
     // ViewPager2 페이지 변경을 처리하는 내부 클래스
@@ -171,10 +208,10 @@ public class HomeFragment extends Fragment {
         }
 
         private void autoSlide() {
-            int imagesLength = ((SlideImageAdapter) slideViewPager.getAdapter()).getImageArrayLength();
+            int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
             currentItem = (currentItem + 1) % imagesLength;
             int nextItemPosition = calculateNextItemPosition(imagesLength);
-            slideViewPager.setCurrentItem(nextItemPosition, true);
+            slideViewPager1.setCurrentItem(nextItemPosition, true);
         }
 
         @Override
