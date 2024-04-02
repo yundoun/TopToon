@@ -1,3 +1,44 @@
 <resources>
     <string name="app_name">TopToon</string>
+
+    <string-array name="main_menu_items">
+        <item>연재</item>
+        <item>TOP100</item>
+        <item>신작</item>
+        <item>완결</item>
+        <item>추천무료</item>
+        <item>전연령</item>
+        <item>탑툰쇼츠</item>
+        <item>이벤트</item>
+    </string-array>
+
+    <string-array name="tab_title">
+        <item>실시간</item>
+        <item>신작</item>
+        <item>할인</item>
+        <item>내가보던</item>
+    </string-array>
+
+    <string-array name="tag_menu_items_1">
+        <item>#인기작품</item>
+        <item>#탑툰독점</item>
+        <item>#매일무료</item>
+        <item>#전체무료</item>
+        <item>#핫한신작</item>
+        <item>#리메이크</item>
+        <item>#백만조회</item>
+        <item>#정주행각</item>
+    </string-array>
+
+    <string-array name="tag_menu_items_2">
+        <item>#로맨스</item>
+        <item>#드라마</item>
+        <item>#학원/액션</item>
+        <item>#옴니버스</item>
+        <item>#판타지/SF</item>
+        <item>#공포/스릴러</item>
+        <item>#개그</item>
+        <item>#무협</item>
+    </string-array>
+
 </resources>

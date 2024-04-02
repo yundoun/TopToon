@@ -39,14 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     private List<MainMenuItem> createMenuItems() {
         List<MainMenuItem> menuList = new ArrayList<>();
-        menuList.add(new MainMenuItem("연재"));
-        menuList.add(new MainMenuItem("TOP100"));
-        menuList.add(new MainMenuItem("신작"));
-        menuList.add(new MainMenuItem("완결"));
-        menuList.add(new MainMenuItem("추천무료"));
-        menuList.add(new MainMenuItem("전연령"));
-        menuList.add(new MainMenuItem("탑툰쇼츠"));
-        menuList.add(new MainMenuItem("이벤트"));
+        for (String item : getResources().getStringArray(R.array.main_menu_items)){
+            menuList.add(new MainMenuItem(item));
+        }
         return menuList;
     }
 

@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupTabTitles(TabLayout.Tab tab, int position) {
-        String[] tabTitles = {"실시간", "신작", "할인", "내가보던"};
+        String[] tabTitles = getResources().getStringArray(R.array.tab_title);
         if (position < tabTitles.length) {
             tab.setText(tabTitles[position]);
         }
@@ -160,27 +160,17 @@ public class HomeFragment extends Fragment {
 
     private List<TagMenuItem> createTagMenuItems1() {
         List<TagMenuItem> menuList = new ArrayList<>();
-        menuList.add(new TagMenuItem("#인기작품"));
-        menuList.add(new TagMenuItem("#탑툰독점"));
-        menuList.add(new TagMenuItem("#매일무료"));
-        menuList.add(new TagMenuItem("#전체무료"));
-        menuList.add(new TagMenuItem("#핫한신작"));
-        menuList.add(new TagMenuItem("#리메이크"));
-        menuList.add(new TagMenuItem("#백만조회"));
-        menuList.add(new TagMenuItem("#정주행각"));
+        for (String item : getResources().getStringArray(R.array.tag_menu_items_1)) {
+            menuList.add(new TagMenuItem(item));
+        }
         return menuList;
     }
 
     private List<TagMenuItem> createTagMenuItems2() {
         List<TagMenuItem> menuList = new ArrayList<>();
-        menuList.add(new TagMenuItem("#로맨스"));
-        menuList.add(new TagMenuItem("#드라마"));
-        menuList.add(new TagMenuItem("#학원/액션"));
-        menuList.add(new TagMenuItem("#옴니버스"));
-        menuList.add(new TagMenuItem("#판타지/SF"));
-        menuList.add(new TagMenuItem("#공포/스릴러"));
-        menuList.add(new TagMenuItem("#개그"));
-        menuList.add(new TagMenuItem("#무협"));
+        for (String item : getResources().getStringArray(R.array.tag_menu_items_2)) {
+            menuList.add(new TagMenuItem(item));
+        }
         return menuList;
     }
 
