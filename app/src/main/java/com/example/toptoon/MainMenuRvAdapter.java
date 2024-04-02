@@ -30,7 +30,7 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
     @NonNull
     @Override
     public MainMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_rv_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_menu_rv_row, parent, false);
         return new MainMenuViewHolder(view);
     }
 

@@ -43,8 +43,29 @@ public class HomeFragment extends Fragment {
         setupAutoSlide();   // 자동 슬라이딩 설정
         initializeRecyclerViews();
         initializeTabLayout();
+        setupTagMenu();
     }
 
+    private void setupTagMenu() {
+        binding.rvTagMenu.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        TagMenuRvAdapter adapter = new TagMenuRvAdapter();
+        binding.rvTagMenu.setAdapter(adapter);
+        List<TagMenuItem> menuList = createTagMenuItems (); // 메뉴 아이템 데이터 리스트 생성
+        adapter.submitList(menuList); // 데이터 설정
+    }
+
+    private List<TagMenuItem> createTagMenuItems() {
+        List<TagMenuItem> menuList = new ArrayList<>();
+        menuList.add(new TagMenuItem("#인기작품"));
+        menuList.add(new TagMenuItem("#탑툰독점"));
+        menuList.add(new TagMenuItem("#매일무료"));
+        menuList.add(new TagMenuItem("#전체무료"));
+        menuList.add(new TagMenuItem("#핫한신작"));
+        menuList.add(new TagMenuItem("#리메이크"));
+        menuList.add(new TagMenuItem("#백만조회"));
+        menuList.add(new TagMenuItem("#정주행각"));
+        return menuList;
+    }
 
     private void initializeRecyclerViews() {
         // 데이터 초기화

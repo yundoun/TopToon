@@ -28,7 +28,7 @@
             android:layout_height="50dp"
             android:background="@drawable/header_layout_border"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/RvMainMenu"
+            app:layout_constraintBottom_toTopOf="@+id/rvMainMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ivHomeAdd">
@@ -154,7 +154,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/RvMainMenu"
+            android:id="@+id/rvMainMenu"
             android:layout_width="match_parent"
             android:layout_height="74dp"
             android:layout_marginStart="10dp"
@@ -174,7 +174,7 @@
             app:layout_constraintHorizontal_bias="0.545"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/ivFooter"
-            app:layout_constraintTop_toBottomOf="@+id/RvMainMenu" />
+            app:layout_constraintTop_toBottomOf="@+id/rvMainMenu" />
 
         <ImageView
             android:id="@+id/ivFooter"

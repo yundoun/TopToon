@@ -22,11 +22,22 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.RvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
+
+        setupMainMenu();
+        displayHomeFragment();
+
+    }
+
+    private void setupMainMenu(){
+        binding.rvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
         MainMenuRvAdapter adapter = new MainMenuRvAdapter();
-        binding.RvMainMenu.setAdapter(adapter);
+        binding.rvMainMenu.setAdapter(adapter);
+        List<MainMenuItem> menuList = createMenuItems(); // 메뉴 아이템 데이터 리스트 생성
+        adapter.submitList(menuList); // 데이터 설정
+    }
 
+    private List<MainMenuItem> createMenuItems() {
         List<MainMenuItem> menuList = new ArrayList<>();
         menuList.add(new MainMenuItem("연재"));
         menuList.add(new MainMenuItem("TOP100"));
@@ -36,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
         menuList.add(new MainMenuItem("전연령"));
         menuList.add(new MainMenuItem("탑툰쇼츠"));
         menuList.add(new MainMenuItem("이벤트"));
+        return menuList;
+    }
 
-        adapter.submitList(menuList); // 데이터 설정
-
+    private void displayHomeFragment(){
         // HomeFragment 인스턴스 생성
         HomeFragment homeFragment = new HomeFragment();
 
@@ -49,6 +61,6 @@ public class MainActivity extends AppCompatActivity {
         // FragmentTransaction을 사용하여 FragmentContainerView에 HomeFragment 추가
         fragmentTransaction.add(R.id.fragmentContainer, homeFragment);
         fragmentTransaction.commit(); // 변경사항을 커밋하여 적용
-
     }
+
 }

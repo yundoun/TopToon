@@ -11,7 +11,7 @@ import com.example.toptoon.databinding.CommonRvRowBinding;
 import java.util.List;
 
 public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.CommonViewHolder>{
-    private List<CommonContentItem> commonContentItems;
+    private final List<CommonContentItem> commonContentItems;
 
     public CommonRvAdapter(List<CommonContentItem> commonContentItems) {
         this.commonContentItems = commonContentItems;
