@@ -9,23 +9,23 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.toptoon.databinding.FragmentHomeBinding;
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
     private ViewPager2 slideViewPager;
     private Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
-
-    private RecyclerView rvCommon1, rvCommon2;
-    private CommonRvAdapter commonRvAdapter1, commonRvAdapter2;
     private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2;
 
 
@@ -33,10 +33,20 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        initializeComponents();
+        return binding.getRoot();
+    }
 
+
+    private void initializeComponents() {
         initializeSlider(); // 슬라이더 초기화
         setupAutoSlide();   // 자동 슬라이딩 설정
+        initializeRecyclerViews();
+        initializeTabLayout();
+    }
 
+
+    private void initializeRecyclerViews() {
         // 데이터 초기화
         commonContentItems1 = new ArrayList<>();
         commonContentItems1.add(new CommonContentItem(R.drawable.common_1, "계약 남편에게 끌리...", "장미 스튜디오&열문"));
@@ -46,40 +56,26 @@ public class HomeFragment extends Fragment {
         commonContentItems2.add(new CommonContentItem(R.drawable.common_1, "Text 3-1", "Text 3-2"));
         commonContentItems2.add(new CommonContentItem(R.drawable.common_2, "Text 4-1", "Text 4-2"));
 
-        binding.rvCommon1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        commonRvAdapter1 = new CommonRvAdapter(commonContentItems1);
-        binding.rvCommon1.setAdapter(commonRvAdapter1);
+        setupRecyclerView(binding.rvCommon1, commonContentItems1);
+        setupRecyclerView(binding.rvCommon2, commonContentItems2);
+    }
 
-        binding.rvCommon2.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        commonRvAdapter2 = new CommonRvAdapter(commonContentItems2);
-        binding.rvCommon2.setAdapter(commonRvAdapter2);
+    private void setupRecyclerView(RecyclerView recyclerView, ArrayList<CommonContentItem> items) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(new CommonRvAdapter(items));
+    }
 
-
-        // 어댑터 설정
+    private void initializeTabLayout() {
         binding.categoryViewPager.setAdapter(new TabAdapter(this));
-
         // TabLayout과 ViewPager2 연동
-        new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager,
-                (tab, position) -> {
-                    // 여기서 탭 제목 설정
-                    switch (position) {
-                        case 0:
-                            tab.setText("실시간");
-                            break;
-                        case 1:
-                            tab.setText("신작");
-                            break;
-                        case 2:
-                            tab.setText("할인");
-                            break;
-                        case 3:
-                            tab.setText("내가보던");
-                            break;
-                    }
-                }).attach();
+        new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager, this::setupTabTitles).attach();
+    }
 
-
-        return binding.getRoot();
+    private void setupTabTitles(TabLayout.Tab tab, int position) {
+        String[] tabTitles = {"인기", "신작", "완결", "장르", "작가"};
+        if (position < tabTitles.length) {
+            tab.setText(tabTitles[position]);
+        }
     }
 
     private void initializeSlider() {
