@@ -40,7 +40,21 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         initializeComponents();
+        return binding.getRoot();
+    }
 
+
+    private void initializeComponents() {
+        setTabColor();
+        initializeSlider(); // 슬라이더 초기화
+        setupAutoSlide();   // 자동 슬라이딩 설정
+        initializeRecyclerViews();
+        initializeTabLayout();
+        setupTagMenu();
+
+    }
+
+    private void setTabColor() {
         TabLayout.Tab firstTab = binding.tabLayout.getTabAt(0);
         if (firstTab != null) {
             firstTab.view.setBackgroundColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.light_pink));
@@ -63,18 +77,6 @@ public class HomeFragment extends Fragment {
                 // Do nothing
             }
         });
-
-
-        return binding.getRoot();
-    }
-
-
-    private void initializeComponents() {
-        initializeSlider(); // 슬라이더 초기화
-        setupAutoSlide();   // 자동 슬라이딩 설정
-        initializeRecyclerViews();
-        initializeTabLayout();
-        setupTagMenu();
     }
 
     private void initializeSlider() {
@@ -109,6 +111,7 @@ public class HomeFragment extends Fragment {
         }
         slideViewPager1.setCurrentItem(initialPosition, false);
     }
+
 
     private void setupAutoSlide() {
         final Runnable runnable = new Runnable() {
