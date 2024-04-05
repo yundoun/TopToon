@@ -24,6 +24,13 @@
         app:layout_constraintBottom_toBottomOf="@id/slideViewPager"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
@@ -31,11 +38,17 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slideViewPager"
         app:tabGravity="fill"
+        app:tabIndicator="@android:color/transparent"
+        app:tabIndicatorGravity="bottom"
         app:tabMode="fixed"
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/light_red"
+        app:tabTextColor="@color/light_gray"
         tools:ignore="MissingClass" />
 
     <androidx.viewpager2.widget.ViewPager2
@@ -66,7 +79,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="제목 1"
+        android:text="기다리면 빵원"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivSectionAdd" />
 
@@ -74,7 +89,7 @@
         android:id="@+id/rvCommon1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
@@ -91,7 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:text="제목2"
+        android:text="1코인관"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvCommon1" />
 
@@ -115,6 +132,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:text="추천 무료"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvCommon2" />
 
@@ -135,6 +154,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:text="맞춤 키워드"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivFree" />
 
@@ -180,6 +201,8 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:text="추천장르"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvKeyword1" />
 
@@ -222,6 +245,8 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="20dp"
         android:text="이벤트관"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rvKeyword2" />
 
@@ -237,7 +262,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEvent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

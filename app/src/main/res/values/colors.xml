@@ -14,6 +14,7 @@
     <color name="red">#FF0000</color>
     <color name="light_red">#FF6666</color>
     <color name="dark_red">#990000</color>
+    <color name="light_pink">#ffe1da</color>
 
     <!-- 주황 -->
     <color name="orange">#FFA500</color>

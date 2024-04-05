@@ -5,9 +5,11 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +40,31 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         initializeComponents();
+
+        TabLayout.Tab firstTab = binding.tabLayout.getTabAt(0);
+        if (firstTab != null) {
+            firstTab.view.setBackgroundColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.light_pink));
+        }
+
+        binding.tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                binding.categoryViewPager.setCurrentItem(tab.getPosition());
+                tab.view.setBackgroundColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.light_pink));
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                tab.view.setBackgroundColor(ContextCompat.getColor(binding.getRoot().getContext(), R.color.white));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Do nothing
+            }
+        });
+
+
         return binding.getRoot();
     }
 
