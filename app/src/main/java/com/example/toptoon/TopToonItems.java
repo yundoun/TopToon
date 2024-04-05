@@ -1,33 +1,51 @@
 package com.example.toptoon;
 
 import java.util.List;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 public class TopToonItems {
-    private List<Webtoon> webtoons;
-    private List<SlideAd> slideAdd;
+    private List<SlideAd> slideAd;
+    private List<Event> event;
+    private List<TabItem> tab;
+
 
     // Getter and Setter
-    public List<Webtoon> getWebtoons() {
-        return webtoons;
+
+    public List<SlideAd> getSlideAd() {
+        return slideAd;
     }
 
-    public void setWebtoons(List<Webtoon> webtoons) {
-        this.webtoons = webtoons;
+    public List<Event> getEvent() {
+        return event;
     }
 
-    public List<SlideAd> getSlideAdd() {
-        return slideAdd;
+    public List<TabItem> getTab() {
+        return tab;
     }
 
-    public void setSlideAdd(List<SlideAd> slideAdd) {
-        this.slideAdd = slideAdd;
+
+    // SlideAd Class
+    public static class SlideAd {
+
+        private String image_url;
+
+        public String getImage_url() {
+            return image_url;
+        }
+
     }
 
-    // Webtoon Class
-    public static class Webtoon {
+    public static class Event {
+
+        private String image_url;
+
+        public String getImage_url() {
+            return image_url;
+        }
+
+    }
+
+    public static class TabItem {
+
         public String getTitle() {
             return title;
         }
@@ -36,15 +54,11 @@ public class TopToonItems {
             return author;
         }
 
-        public String getGenre() {
-            return genre;
-        }
-
-        public int getLatest_episode() {
+        public String getLatest_episode() {
             return latest_episode;
         }
 
-        public int getViews() {
+        public String getViews() {
             return views;
         }
 
@@ -60,8 +74,8 @@ public class TopToonItems {
             return is_exclusive;
         }
 
-        public boolean isBecomes_free_after_some_time() {
-            return becomes_free_after_some_time;
+        public boolean isWait_free() {
+            return wait_free;
         }
 
         public boolean isRecently_updated() {
@@ -72,29 +86,34 @@ public class TopToonItems {
             return image_url;
         }
 
+        public TabItem(String title, String author, String latest_episode,
+                       String views, boolean is_new, boolean is_discounted,
+                       boolean is_exclusive, boolean wait_free, boolean recently_updated,
+                       String image_url) {
+            this.title = title;
+            this.author = author;
+            this.latest_episode = latest_episode;
+            this.views = views;
+            this.is_new = is_new;
+            this.is_discounted = is_discounted;
+            this.is_exclusive = is_exclusive;
+            this.wait_free = wait_free;
+            this.recently_updated = recently_updated;
+            this.image_url = image_url;
+        }
+
         private String title;
         private String author;
-        private String genre;
-        private int latest_episode;
-        private int views;
+        private String latest_episode;
+        private String views;
         private boolean is_new;
         private boolean is_discounted;
         private boolean is_exclusive;
-        private boolean becomes_free_after_some_time;
+        private boolean wait_free;
         private boolean recently_updated;
         private String image_url;
 
 
     }
 
-    // SlideAd Class
-    public static class SlideAd {
-
-        private String image_url;
-
-        public String getImage_url() {
-            return image_url;
-        }
-
-    }
 }

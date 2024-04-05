@@ -1,14 +1,11 @@
 package com.example.toptoon;
 
-import static java.sql.DriverManager.println;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,10 +34,8 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2, commonContentItems3, commonContentItems4;
 
-    private int[] slideImages = new int[]{R.drawable.slide_add_1, R.drawable.slide_add_2, R.drawable.slide_add_3, R.drawable.slide_add_4, R.drawable.slide_add_5,
-            R.drawable.slide_add_6, R.drawable.slide_add_7};
-    private int[] eventImages = new int[]{R.drawable.event_add_1, R.drawable.event_add_2, R.drawable.event_add_3, R.drawable.event_add_4, R.drawable.event_add_5,
-            R.drawable.event_add_6, R.drawable.event_add_7};
+    List<String> slideImageUrls = new ArrayList<>();
+    List<String> eventImageUrls = new ArrayList<>();
 
     @Nullable
     @Override
@@ -53,9 +48,8 @@ public class HomeFragment extends Fragment {
 
     private void initializeComponents() {
         setTabColor();
-        //initializeSlider(); // 슬라이더 초기화
-        //setupAutoSlide();   // 자동 슬라이딩 설정
         fetchSlideAds();
+        setupAutoSlide();
         initializeRecyclerViews();
         initializeTabLayout();
         setupTagMenu();
@@ -70,18 +64,26 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
-                    // 성공적으로 데이터를 받아온 경우
                     TopToonItems items = response.body();
-                    List<String> slideImageUrls = new ArrayList<>();
-                    for(TopToonItems.SlideAd slideAd : items.getSlideAdd()) {
+                    Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
+
+
+                    for (TopToonItems.SlideAd slideAd : items.getSlideAd()) {
                         slideImageUrls.add(slideAd.getImage_url());
                     }
-                    Log.println(Log.INFO, "HomeFragment", "슬라이드 광고 이미지 URL: " + slideImageUrls);
-                    // 슬라이드 광고 데이터를 처리
+
+                    for (TopToonItems.Event event : items.getEvent()) {
+                        eventImageUrls.add(event.getImage_url());
+                    }
+
+                    // 이미지 넘겨 주기
                     initializeSlider(slideImageUrls);
+                    setEvent(eventImageUrls);
+                } else {
+                    Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
             }
+
 
             @Override
             public void onFailure(Call<TopToonItems> call, Throwable t) {
@@ -90,7 +92,6 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-
 
 
     private void setTabColor() {
@@ -118,18 +119,13 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void initializeSlider(List<String> slideImageUrls) {
+    private void initializeSlider(List<String> ImageUrls) {
 
-        slideViewPager1 = binding.slideViewPager;
-        SlideImageAdapter adapter = new SlideImageAdapter(getContext(), slideImageUrls);
-        slideViewPager1.setAdapter(adapter);
+        slideViewPager1 = binding.slideViewPager1;
+        SlideImageAdapter adapter1 = new SlideImageAdapter(getContext(), ImageUrls);
+        slideViewPager1.setAdapter(adapter1);
 
-        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), slideImageUrls);
-        slideViewPager2 = binding.slideViewPager2;
-        slideViewPager2.setAdapter(adapter2);
-
-
-        int imagesLength = adapter.getImageArrayLength();
+        int imagesLength = adapter1.getImageArrayLength();
         setInitialPosition(imagesLength); // 초기 위치 설정
 
         // 인디케이터 초기화
@@ -139,6 +135,12 @@ public class HomeFragment extends Fragment {
 
         // ViewPager2 페이지 변경 콜백 등록
         slideViewPager1.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
+    }
+
+    private void setEvent(List<String> ImageUrls) {
+        slideViewPager2 = binding.slideViewPager2;
+        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), ImageUrls);
+        slideViewPager2.setAdapter(adapter2);
     }
 
     // ViewPager2 초기 위치 설정
@@ -153,21 +155,21 @@ public class HomeFragment extends Fragment {
     }
 
 
-//    private void setupAutoSlide() {
-//        final Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
-//                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
-//                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
-//                // 가상 무한 스크롤을 위한 다음 위치 계산
-//                int nextItemPosition = calculateNextItemPosition(imagesLength);
-//                slideViewPager1.setCurrentItem(nextItemPosition, true);
-//                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
-//            }
-//        };
-//        sliderHandler.postDelayed(runnable, 3000); // 앱 시작 시 자동 슬라이딩 시작
-//    }
+    private void setupAutoSlide() {
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
+                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
+                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
+                // 가상 무한 스크롤을 위한 다음 위치 계산
+                int nextItemPosition = calculateNextItemPosition(imagesLength);
+                slideViewPager1.setCurrentItem(nextItemPosition, true);
+                sliderHandler.postDelayed(this, 4000); // 다음 이미지로 전환하기 전 3초 대기
+            }
+        };
+        sliderHandler.postDelayed(runnable, 4000); // 앱 시작 시 자동 슬라이딩 시작
+    }
 
     private int calculateNextItemPosition(int imagesLength) {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
@@ -220,7 +222,7 @@ public class HomeFragment extends Fragment {
         TagMenuRecyclerViewWithAdapter(binding.rvTagMenu2, createTagMenuItems2());
     }
 
-    private void TagMenuRecyclerViewWithAdapter(RecyclerView recyclerView, List<TagMenuItem> menuList ){
+    private void TagMenuRecyclerViewWithAdapter(RecyclerView recyclerView, List<TagMenuItem> menuList) {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
         TagMenuRvAdapter adapter = new TagMenuRvAdapter();
         recyclerView.setAdapter(adapter);
@@ -281,6 +283,7 @@ public class HomeFragment extends Fragment {
             circleIndicator.selectDot(realPosition);
             currentItem = realPosition;
         }
+
     }
 
     @Override

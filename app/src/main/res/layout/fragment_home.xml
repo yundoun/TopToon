@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/slideViewPager"
+        android:id="@+id/slideViewPager1"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
@@ -21,7 +21,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@id/slideViewPager"
+        app:layout_constraintBottom_toBottomOf="@id/slideViewPager1"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -41,7 +41,7 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slideViewPager"
+        app:layout_constraintTop_toBottomOf="@+id/slideViewPager1"
         app:tabGravity="fill"
         app:tabIndicator="@android:color/transparent"
         app:tabIndicatorGravity="bottom"

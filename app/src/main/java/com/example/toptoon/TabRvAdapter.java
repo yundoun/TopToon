@@ -1,12 +1,12 @@
 package com.example.toptoon;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.toptoon.databinding.TabRvRowBinding;
 
 import java.util.List;
@@ -30,7 +30,9 @@ public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHol
     @Override
     public void onBindViewHolder(@NonNull TabRvViewHolder holder, int position) {
         TabContentItem tabContentItem = tabContentItems.get(position);
-        holder.bind(tabContentItem);
+        // rank 값을 설정. position은 0부터 시작하므로, rank를 표시할 때는 +1을 해줍니다.
+        String rank = String.valueOf(position + 1);
+        holder.bind(tabContentItem, rank);
     }
 
     @Override
@@ -46,12 +48,13 @@ public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHol
             this.binding = binding;
         }
 
-        public void bind(TabContentItem tabContentItem){
-            binding.ivTabLive.setImageResource(tabContentItem.getImageResourceId());
-            binding.ivHits.setImageResource(R.drawable.icon_hits);
-            binding.ivLook.setImageResource(R.drawable.icon_look);
-            binding.tvRank.setText(tabContentItem.getRank());
-            binding.tvEpisode.setText(tabContentItem.getEpisode());
+        public void bind(TabContentItem tabContentItem, String rank){
+            Glide.with(itemView.getContext())
+                    .load(tabContentItem.getImageUrl()) // 이미지 URL 사용
+                    .into(binding.ivTabLive);
+
+            binding.tvRank.setText(rank); // Rank 값을 설정
+            binding.tvEpisode.setText(tabContentItem.getLatestEpisode());
             binding.tvViews.setText(tabContentItem.getViews());
             binding.tvTitle.setText(tabContentItem.getTitle());
         }

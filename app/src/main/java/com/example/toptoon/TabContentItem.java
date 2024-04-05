@@ -1,43 +1,72 @@
 package com.example.toptoon;
 
 public class TabContentItem {
-    private int imageResourceId;
-    private String rank;
-    private String episode;
-    private String views;
-    private String title;
-
-    // Constructor
-    public TabContentItem(int imageResourceId, String rank, String episode, String views, String title) {
-        this.imageResourceId = imageResourceId;
-        this.rank = rank;
-        this.episode = episode;
-        this.views = views;
+    public TabContentItem(String title, String author, String latestEpisode,
+                          String views, boolean isNew, boolean isDiscounted,
+                          boolean isExclusive, boolean waitFree, boolean recentlyUpdated,
+                          String imageUrl) {
         this.title = title;
+        this.author = author;
+        this.latestEpisode = latestEpisode;
+        this.views = views;
+        this.isNew = isNew;
+        this.isDiscounted = isDiscounted;
+        this.isExclusive = isExclusive;
+        this.waitFree = waitFree;
+        this.recentlyUpdated = recentlyUpdated;
+        this.imageUrl = imageUrl;
     }
 
-    // Getters and Setters
-    public int getImageResourceId() {
-        return imageResourceId;
+    public String getTitle() {
+        return title;
     }
 
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
-    }
-    public String getRank() {
-        return rank;
+    public String getAuthor() {
+        return author;
     }
 
-    public String getEpisode() {
-        return episode;
+    public String getLatestEpisode() {
+        return latestEpisode;
     }
 
     public String getViews() {
         return views;
     }
 
-    public String getTitle() {
-        return title;
+    public boolean isNew() {
+        return isNew;
     }
+
+    public boolean isDiscounted() {
+        return isDiscounted;
+    }
+
+    public boolean isExclusive() {
+        return isExclusive;
+    }
+
+    public boolean isWaitFree() {
+        return waitFree;
+    }
+
+    public boolean isRecentlyUpdated() {
+        return recentlyUpdated;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    private String title;
+    private String author; // 추가된 필드
+    private String latestEpisode;
+    private String views;
+    private boolean isNew; // 추가된 필드
+    private boolean isDiscounted; // 추가된 필드
+    private boolean isExclusive; // 추가된 필드
+    private boolean waitFree; // 추가된 필드
+    private boolean recentlyUpdated; // 추가된 필드
+    private String imageUrl;
+
 
 }
