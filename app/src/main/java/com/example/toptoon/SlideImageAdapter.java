@@ -7,20 +7,25 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.toptoon.databinding.SlideImageRowBinding;
+
+import java.util.List;
 
 public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.SlideImageViewHolder> {
 
 
-    private final int[] images;
+    private final List<String> imageUrls;
+    private Context context;
 
-    SlideImageAdapter(int[] images){
-        this.images = images;
+    SlideImageAdapter(Context context, List<String> imageUrls){
+        this.context = context;
+        this.imageUrls = imageUrls;
     }
 
     // 이미지 배열의 길이를 반환하는 메서드 추가
     public int getImageArrayLength() {
-        return images.length;
+        return imageUrls.size();
     }
 
     @NonNull
@@ -33,8 +38,8 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
 
     @Override
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
-        int realPosition = position % images.length; // 실제 이미지 배열의 위치를 계산
-        holder.binding.slideImageRow.setImageResource(images[realPosition]);
+        int realPosition = position % imageUrls.size(); // 실제 이미지 배열의 위치를 계산
+        Glide.with(context).load(imageUrls.get(realPosition)).into(holder.binding.slideImageRow);
     }
 
     @Override

@@ -1,7 +1,10 @@
 package com.example.toptoon;
 
+import static java.sql.DriverManager.println;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +25,10 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private ViewPager2 slideViewPager1, slideViewPager2;
@@ -46,13 +53,45 @@ public class HomeFragment extends Fragment {
 
     private void initializeComponents() {
         setTabColor();
-        initializeSlider(); // 슬라이더 초기화
-        setupAutoSlide();   // 자동 슬라이딩 설정
+        //initializeSlider(); // 슬라이더 초기화
+        //setupAutoSlide();   // 자동 슬라이딩 설정
+        fetchSlideAds();
         initializeRecyclerViews();
         initializeTabLayout();
         setupTagMenu();
 
     }
+
+    private void fetchSlideAds() {
+        TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
+        Call<TopToonItems> call = service.getTopToonItems();
+
+        call.enqueue(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
+                    // 성공적으로 데이터를 받아온 경우
+                    TopToonItems items = response.body();
+                    List<String> slideImageUrls = new ArrayList<>();
+                    for(TopToonItems.SlideAd slideAd : items.getSlideAdd()) {
+                        slideImageUrls.add(slideAd.getImage_url());
+                    }
+                    Log.println(Log.INFO, "HomeFragment", "슬라이드 광고 이미지 URL: " + slideImageUrls);
+                    // 슬라이드 광고 데이터를 처리
+                    initializeSlider(slideImageUrls);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopToonItems> call, Throwable t) {
+                // 요청 실패 처리
+                Log.println(Log.ERROR, "HomeFragment", "데이터를 받아오는 데 실패함");
+            }
+        });
+    }
+
+
 
     private void setTabColor() {
         TabLayout.Tab firstTab = binding.tabLayout.getTabAt(0);
@@ -79,12 +118,13 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void initializeSlider() {
-        SlideImageAdapter adapter = new SlideImageAdapter(slideImages);
+    private void initializeSlider(List<String> slideImageUrls) {
+
         slideViewPager1 = binding.slideViewPager;
+        SlideImageAdapter adapter = new SlideImageAdapter(getContext(), slideImageUrls);
         slideViewPager1.setAdapter(adapter);
 
-        SlideImageAdapter adapter2 = new SlideImageAdapter(eventImages);
+        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), slideImageUrls);
         slideViewPager2 = binding.slideViewPager2;
         slideViewPager2.setAdapter(adapter2);
 
@@ -113,21 +153,21 @@ public class HomeFragment extends Fragment {
     }
 
 
-    private void setupAutoSlide() {
-        final Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
-                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
-                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
-                // 가상 무한 스크롤을 위한 다음 위치 계산
-                int nextItemPosition = calculateNextItemPosition(imagesLength);
-                slideViewPager1.setCurrentItem(nextItemPosition, true);
-                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
-            }
-        };
-        sliderHandler.postDelayed(runnable, 3000); // 앱 시작 시 자동 슬라이딩 시작
-    }
+//    private void setupAutoSlide() {
+//        final Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
+//                // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
+//                currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
+//                // 가상 무한 스크롤을 위한 다음 위치 계산
+//                int nextItemPosition = calculateNextItemPosition(imagesLength);
+//                slideViewPager1.setCurrentItem(nextItemPosition, true);
+//                sliderHandler.postDelayed(this, 3000); // 다음 이미지로 전환하기 전 3초 대기
+//            }
+//        };
+//        sliderHandler.postDelayed(runnable, 3000); // 앱 시작 시 자동 슬라이딩 시작
+//    }
 
     private int calculateNextItemPosition(int imagesLength) {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
