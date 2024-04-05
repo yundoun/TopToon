@@ -5,7 +5,9 @@ import java.util.List;
 public class TopToonItems {
     private List<SlideAd> slideAd;
     private List<Event> event;
-    private List<TabItem> tab;
+    private List<TabItem> tabRealTime;
+    private List<TabItem> tabNew;
+    private List<TabItem> tabSale;
 
 
     // Getter and Setter
@@ -18,9 +20,17 @@ public class TopToonItems {
         return event;
     }
 
-    public List<TabItem> getTab() {
-        return tab;
+    public List<TabItem> getTabRealTime() {
+        return tabRealTime;
     }
+
+//    public List<TabItem> getTabNew() {
+//        return tabNew;
+//    }
+//
+//    public List<TabItem> getTabSale() {
+//        return tabSale;
+//    }
 
 
     // SlideAd Class
