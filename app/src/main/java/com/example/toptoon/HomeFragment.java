@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
         setTabColor();
         fetchSlideAds();
         setupAutoSlide();
-        initializeRecyclerViews();
+        initializeCommonRecyclerViews();
         initializeTabLayout();
         setupTagMenu();
         setFreeAd();
@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
     }
 
-    private void initializeRecyclerViews() {
+    private void initializeCommonRecyclerViews() {
         // 데이터 초기화
         commonContentItems1 = new ArrayList<>();
         commonContentItems1.add(new CommonContentItem(R.drawable.common_1, "계약 남편에게 끌리...", "장미 스튜디오&열문"));
