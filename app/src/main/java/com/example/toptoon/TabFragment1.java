@@ -42,33 +42,38 @@ public class TabFragment1 extends Fragment {
                 if (response.isSuccessful() && response.body() != null){
                     Log.println(Log.INFO, "TabFragment1", "데이터를 받아옴");
 
-                    List<TopToonItems.TabItem> tabItems = response.body().getTab();
-
-                    Log.println(Log.INFO, "TabFragment1", "tabItems.size(): " + tabItems.size());
-
+                    List<TopToonItems.TabItem> tabItems = response.body().getTabRealTime();
+                    // 이게 Null 값인 것 같음
                     List<TabContentItem> items = new ArrayList<>();
 
-                    // 받아온 데이터를 TabContentItem 객체로 변환하고 rank를 설정
-                    for (int i = 0; i < tabItems.size(); i++) {
-                        TopToonItems.TabItem item = tabItems.get(i);
-                        items.add(new TabContentItem(
-                                item.getTitle(),
-                                item.getAuthor(),
-                                item.getLatest_episode(),
-                                item.getViews(),
-                                item.isIs_new(),
-                                item.isIs_discounted(),
-                                item.isIs_exclusive(),
-                                item.isWait_free(),
-                                item.isRecently_updated(),
-                                item.getImage_url()
-                        ));
-                    }
+                    if (tabItems != null) {
+                        Log.println(Log.INFO, "TabFragment1", "tabItems.size(): " + tabItems.size());
 
-                    // 어댑터 생성 및 RecyclerView에 설정
-                    TabRvAdapter adapter = new TabRvAdapter(items);
-                    binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
-                    binding.rvTab.setAdapter(adapter);
+                        // 받아온 데이터를 TabContentItem 객체로 변환하고 rank를 설정
+                        for (int i = 0; i < tabItems.size(); i++) {
+                            TopToonItems.TabItem item = tabItems.get(i);
+                            items.add(new TabContentItem(
+                                    item.getTitle(),
+                                    item.getAuthor(),
+                                    item.getLatestEpisode(),
+                                    item.getViews(),
+                                    item.isNew(),
+                                    item.isDiscounted(),
+                                    item.isExclusive(),
+                                    item.isWaitFree(),
+                                    item.isRecentlyUpdated(),
+                                    item.getImageUrl()
+                            ));
+                        }
+
+                        // 어댑터 생성 및 RecyclerView에 설정
+                        TabRvAdapter adapter = new TabRvAdapter(items);
+                        binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
+                        binding.rvTab.setAdapter(adapter);
+
+                    } else {
+                        Log.e("TabFragment1", "tabItems가 null입니다");
+                    }
                 }
             }
 

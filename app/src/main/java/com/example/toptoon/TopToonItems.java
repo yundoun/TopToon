@@ -1,5 +1,7 @@
 package com.example.toptoon;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class TopToonItems {
@@ -64,64 +66,83 @@ public class TopToonItems {
             return author;
         }
 
-        public String getLatest_episode() {
-            return latest_episode;
+        public String getLatestEpisode() {
+            return latestEpisode;
         }
 
         public String getViews() {
             return views;
         }
 
-        public boolean isIs_new() {
-            return is_new;
+        public boolean isNew() {
+            return isNew;
         }
 
-        public boolean isIs_discounted() {
-            return is_discounted;
+        public boolean isDiscounted() {
+            return isDiscounted;
         }
 
-        public boolean isIs_exclusive() {
-            return is_exclusive;
+        public boolean isExclusive() {
+            return isExclusive;
         }
 
-        public boolean isWait_free() {
-            return wait_free;
+        public boolean isWaitFree() {
+            return waitFree;
         }
 
-        public boolean isRecently_updated() {
-            return recently_updated;
+        public boolean isRecentlyUpdated() {
+            return recentlyUpdated;
         }
 
-        public String getImage_url() {
-            return image_url;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public TabItem(String title, String author, String latest_episode,
-                       String views, boolean is_new, boolean is_discounted,
-                       boolean is_exclusive, boolean wait_free, boolean recently_updated,
-                       String image_url) {
+        public TabItem(String title, String author, String latestEpisode,
+                       String views, boolean isNew, boolean isDiscounted,
+                       boolean isExclusive, boolean wait_free, boolean recentlyUpdated,
+                       String imageUrl) {
             this.title = title;
             this.author = author;
-            this.latest_episode = latest_episode;
+            this.latestEpisode = latestEpisode;
             this.views = views;
-            this.is_new = is_new;
-            this.is_discounted = is_discounted;
-            this.is_exclusive = is_exclusive;
-            this.wait_free = wait_free;
-            this.recently_updated = recently_updated;
-            this.image_url = image_url;
+            this.isNew = isNew;
+            this.isDiscounted = isDiscounted;
+            this.isExclusive = isExclusive;
+            this.waitFree = wait_free;
+            this.recentlyUpdated = recentlyUpdated;
+            this.imageUrl = imageUrl;
         }
 
+        @SerializedName("title")
         private String title;
+
+        @SerializedName("author")
         private String author;
-        private String latest_episode;
+
+        @SerializedName("latestEpisode")
+        private String latestEpisode;
+
+        @SerializedName("views")
         private String views;
-        private boolean is_new;
-        private boolean is_discounted;
-        private boolean is_exclusive;
-        private boolean wait_free;
-        private boolean recently_updated;
-        private String image_url;
+
+        @SerializedName("isNew")
+        private boolean isNew;
+
+        @SerializedName("isDiscounted")
+        private boolean isDiscounted;
+
+        @SerializedName("isExclusive")
+        private boolean isExclusive;
+
+        @SerializedName("waitFree")
+        private boolean waitFree;
+
+        @SerializedName("recentlyUpdated")
+        private boolean recentlyUpdated;
+
+        @SerializedName("imageUrl")
+        private String imageUrl;
 
 
     }

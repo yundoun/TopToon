@@ -66,19 +66,19 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     TopToonItems items = response.body();
                     Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
-
+                    Log.println(Log.INFO, "HomeFragment", items.getSlideAd().toString());
 
                     for (TopToonItems.SlideAd slideAd : items.getSlideAd()) {
                         slideImageUrls.add(slideAd.getImage_url());
                     }
 
-                    for (TopToonItems.Event event : items.getEvent()) {
-                        eventImageUrls.add(event.getImage_url());
-                    }
+//                    for (TopToonItems.Event event : items.getEvent()) {
+//                        eventImageUrls.add(event.getImage_url());
+//                    }
 
                     // 이미지 넘겨 주기
                     initializeSlider(slideImageUrls);
-                    setEvent(eventImageUrls);
+                    //setEvent(eventImageUrls);
                 } else {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
