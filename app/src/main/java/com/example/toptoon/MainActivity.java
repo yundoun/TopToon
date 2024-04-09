@@ -1,18 +1,15 @@
 package com.example.toptoon;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -25,6 +22,9 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
+    Call<TopToonItems> call = service.getTopToonItems();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,32 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setHeaderAd();
         setupMainMenu();
         displayHomeFragment();
 
+    }
+
+    private void setHeaderAd(){
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    String headerAdUrl = response.body()
+                            .getHeaderAd();
+                    Log.println(Log.INFO, "MainActivity", "headerAdUrl: " + headerAdUrl);
+                    if(headerAdUrl != null && !headerAdUrl.isEmpty()){
+                        Glide.with(MainActivity.this)
+                                .load(headerAdUrl)
+                                .into(binding.ivHeaderAd);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<TopToonItems> call, Throwable t) {
+                Log.println(Log.ERROR, "MainActivity", "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     private void setupMainMenu() {

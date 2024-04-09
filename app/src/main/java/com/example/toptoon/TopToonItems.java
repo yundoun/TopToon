@@ -6,6 +6,13 @@ import java.util.List;
 
 public class TopToonItems {
 
+
+
+
+    private String headerAd;
+    private String freeAd;
+    private String sectionAd;
+    private String Footer;
     private List<SlideAd> slideAd;
     private List<Event> event;
     private List<TabItem> tabRealTime;
@@ -14,6 +21,14 @@ public class TopToonItems {
 
 
     // Getter and Setter
+
+    public String getHeaderAd() { return headerAd;}
+
+    public String getFreeAd() { return freeAd; }
+
+    public String getSectionAd() { return sectionAd; }
+
+    public String getFooter() { return Footer; }
     public List<SlideAd> getSlideAd() {
         return slideAd;
     }
@@ -34,8 +49,34 @@ public class TopToonItems {
 //        return tabSale;
 //    }
 
-    public static class SlideAd {
+    public static class HeaderAd {
+        private String headerAd;
 
+        public String getHeaderAd() {
+            return headerAd;
+        }
+    }
+    public static class FreeAd {
+        private String freeAd;
+        public String getFreeAdAd() {
+            return freeAd;
+        }
+    }
+    public static class SectionAd {
+        private String SectionAd;
+        public String getSectionAd() {
+            return SectionAd;
+        }
+    }
+
+    public static class Footer {
+        private String footer;
+        public String getFooter() {
+            return footer;
+        }
+    }
+
+    public static class SlideAd {
         private String imageUrl;
 
         public String getImageUrl() {

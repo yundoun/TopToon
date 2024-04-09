@@ -13,10 +13,9 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/ivHomeAdd"
+            android:id="@+id/ivHeaderAd"
             android:layout_width="match_parent"
             android:layout_height="57.5dp"
-            android:src="@drawable/header_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +30,7 @@
             app:layout_constraintBottom_toTopOf="@+id/rvMainMenu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivHomeAdd">
+            app:layout_constraintTop_toBottomOf="@+id/ivHeaderAd">
 
             <ImageView
                 android:id="@+id/ivLogo"
@@ -52,15 +51,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:textOff=""
                 android:textOn=""
+                android:thumb="@drawable/icon_adult"
                 android:track="@drawable/switch_track_selector"
-
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintStart_toEndOf="@+id/ivLogo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:switchMinWidth="50dp"
@@ -169,10 +166,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
+            app:layout_constraintBottom_toTopOf="@+id/ivFooter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.545"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ivFooter"
             app:layout_constraintTop_toBottomOf="@+id/rvMainMenu" />
 
         <ImageView
@@ -180,7 +177,7 @@
             android:layout_width="0dp"
             android:layout_height="300dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/footer"
+            android:background="@drawable/icon_footer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -37,6 +38,7 @@ public class HomeFragment extends Fragment {
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,7 +47,6 @@ public class HomeFragment extends Fragment {
         return binding.getRoot();
     }
 
-
     private void initializeComponents() {
         setTabColor();
         fetchSlideAds();
@@ -53,14 +54,12 @@ public class HomeFragment extends Fragment {
         initializeRecyclerViews();
         initializeTabLayout();
         setupTagMenu();
-
+        setFreeAd();
+        setSectionAd();
     }
 
     private void fetchSlideAds() {
-        TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
-        Call<TopToonItems> call = service.getTopToonItems();
-
-        call.enqueue(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
             public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -83,6 +82,7 @@ public class HomeFragment extends Fragment {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
             }
+
             @Override
             public void onFailure(Call<TopToonItems> call, Throwable t) {
                 // 요청 실패 처리
@@ -242,6 +242,52 @@ public class HomeFragment extends Fragment {
             menuList.add(new TagMenuItem(item));
         }
         return menuList;
+    }
+
+    private void setFreeAd() {
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String freeAdUrl = response.body()
+                            .getFreeAd();
+                    Log.println(Log.INFO, "HomeFragment", "freeAdUrl: " + freeAdUrl);
+                    if (freeAdUrl != null && !freeAdUrl.isEmpty()) {
+                        Glide.with(HomeFragment.this)
+                                .load(freeAdUrl)
+                                .into(binding.ivFreeAd);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopToonItems> call, Throwable t) {
+                Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
+    private void setSectionAd() {
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String sectionAdUrl = response.body()
+                            .getSectionAd();
+                    Log.println(Log.INFO, "HomeFragment", "sectionAdUrl: " + sectionAdUrl);
+                    if (sectionAdUrl != null && !sectionAdUrl.isEmpty()) {
+                        Glide.with(HomeFragment.this)
+                                .load(sectionAdUrl)
+                                .into(binding.ivSectionAd);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopToonItems> call, Throwable t) {
+                Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
+            }
+        });
     }
 
     // ViewPager2 페이지 변경을 처리하는 내부 클래스
