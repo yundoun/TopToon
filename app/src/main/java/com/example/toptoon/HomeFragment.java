@@ -69,22 +69,20 @@ public class HomeFragment extends Fragment {
                     Log.println(Log.INFO, "HomeFragment", items.getSlideAd().toString());
 
                     for (TopToonItems.SlideAd slideAd : items.getSlideAd()) {
-                        slideImageUrls.add(slideAd.getImage_url());
+                        slideImageUrls.add(slideAd.getImageUrl());
                     }
 
-//                    for (TopToonItems.Event event : items.getEvent()) {
-//                        eventImageUrls.add(event.getImage_url());
-//                    }
+                    for (TopToonItems.Event event : items.getEvent()) {
+                        eventImageUrls.add(event.getImageUrl());
+                    }
 
                     // 이미지 넘겨 주기
                     initializeSlider(slideImageUrls);
-                    //setEvent(eventImageUrls);
+                    setEvent(eventImageUrls);
                 } else {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
             }
-
-
             @Override
             public void onFailure(Call<TopToonItems> call, Throwable t) {
                 // 요청 실패 처리

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 public class TopToonItems {
+
     private List<SlideAd> slideAd;
     private List<Event> event;
     private List<TabItem> tabRealTime;
@@ -13,7 +14,6 @@ public class TopToonItems {
 
 
     // Getter and Setter
-
     public List<SlideAd> getSlideAd() {
         return slideAd;
     }
@@ -34,24 +34,22 @@ public class TopToonItems {
 //        return tabSale;
 //    }
 
-
-    // SlideAd Class
     public static class SlideAd {
 
-        private String image_url;
+        private String imageUrl;
 
-        public String getImage_url() {
-            return image_url;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
     }
 
     public static class Event {
 
-        private String image_url;
+        private String imageUrl;
 
-        public String getImage_url() {
-            return image_url;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
     }

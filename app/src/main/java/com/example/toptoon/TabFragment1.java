@@ -41,7 +41,7 @@ public class TabFragment1 extends Fragment {
             public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null){
                     Log.println(Log.INFO, "TabFragment1", "데이터를 받아옴");
-
+                    Log.println(Log.INFO, "TabFragment1", response.body().toString());
                     List<TopToonItems.TabItem> tabItems = response.body().getTabRealTime();
                     // 이게 Null 값인 것 같음
                     List<TabContentItem> items = new ArrayList<>();

@@ -1,5 +1,8 @@
 package com.example.toptoon;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,10 +10,17 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +32,12 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-
         setupMainMenu();
         displayHomeFragment();
 
     }
 
-    private void setupMainMenu(){
+    private void setupMainMenu() {
         binding.rvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
         MainMenuRvAdapter adapter = new MainMenuRvAdapter();
@@ -39,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
     private List<MainMenuItem> createMenuItems() {
         List<MainMenuItem> menuList = new ArrayList<>();
-        for (String item : getResources().getStringArray(R.array.main_menu_items)){
+        for (String item : getResources().getStringArray(R.array.main_menu_items)) {
             menuList.add(new MainMenuItem(item));
         }
         return menuList;
     }
 
-    private void displayHomeFragment(){
+    private void displayHomeFragment() {
         // HomeFragment 인스턴스 생성
         HomeFragment homeFragment = new HomeFragment();
 
