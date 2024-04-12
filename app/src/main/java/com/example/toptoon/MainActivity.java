@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "MainActivity", "onFailure: " + t.getMessage());
             }
         });

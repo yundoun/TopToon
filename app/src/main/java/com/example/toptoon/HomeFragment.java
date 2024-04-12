@@ -29,8 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    private ViewPager2 slideViewPager1, slideViewPager2;
-    private Handler sliderHandler = new Handler();
+    private ViewPager2 vpAutoSlide;
+    private final Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
     List<String> slideImageUrls = new ArrayList<>();
@@ -46,15 +46,15 @@ public class HomeFragment extends Fragment {
     }
 
     private void initializeComponents() {
-        setTabColor();
         fetchSlideAds();
+        setTabColor();
+        initializeTabLayout();
         setupAutoSlide();
+        setSectionAd();
         setupCommonRecyclerView();
         initializeCommonRecyclerViews();
-        initializeTabLayout();
-        setupTagMenu();
         setFreeAd();
-        setSectionAd();
+        setupTagMenu();
     }
 
     private void fetchSlideAds() {
@@ -64,7 +64,6 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     TopToonItems items = response.body();
                     Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
-                    Log.println(Log.INFO, "HomeFragment", items.getSlideAd().toString());
 
                     for (TopToonItems.SlideAd slideAd : items.getSlideAd()) {
                         slideImageUrls.add(slideAd.getImageUrl());
@@ -73,10 +72,8 @@ public class HomeFragment extends Fragment {
                     for (TopToonItems.Event event : items.getEvent()) {
                         eventImageUrls.add(event.getImageUrl());
                     }
-
-                    // 이미지 넘겨 주기
                     initializeSlider(slideImageUrls);
-                    setEvent(eventImageUrls);
+                    setEventAd(eventImageUrls);
                 } else {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
@@ -84,13 +81,10 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<TopToonItems> call, Throwable t) {
-                // 요청 실패 처리
                 Log.println(Log.ERROR, "HomeFragment", "데이터를 받아오는 데 실패함");
             }
         });
     }
-
-
     private void setTabColor() {
         TabLayout.Tab firstTab = binding.tabLayout.getTabAt(0);
         if (firstTab != null) {
@@ -111,19 +105,19 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                // Do nothing
+                // 설정 x
             }
         });
     }
 
     private void initializeSlider(List<String> ImageUrls) {
 
-        slideViewPager1 = binding.slideViewPager1;
+        vpAutoSlide = binding.vpAutoSlide;
         SlideImageAdapter adapter1 = new SlideImageAdapter(getContext(), ImageUrls);
-        slideViewPager1.setAdapter(adapter1);
+        vpAutoSlide.setAdapter(adapter1);
 
         int imagesLength = adapter1.getImageArrayLength();
-        setInitialPosition(imagesLength); // 초기 위치 설정
+        setAutoViewPagerInitialPosition(imagesLength); // 초기 위치 설정
 
         // 인디케이터 초기화
         CircleIndicator circleIndicator = binding.slideIndicator;
@@ -131,24 +125,24 @@ public class HomeFragment extends Fragment {
         circleIndicator.createDotPanel(imagesLength, R.drawable.indicator_unselected, R.drawable.indicator_selected, 0);
 
         // ViewPager2 페이지 변경 콜백 등록
-        slideViewPager1.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
+        vpAutoSlide.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
     }
 
-    private void setEvent(List<String> ImageUrls) {
-        slideViewPager2 = binding.slideViewPager2;
+    private void setEventAd(List<String> ImageUrls) {
+        ViewPager2 vpEvent = binding.vpEvent;
         SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), ImageUrls);
-        slideViewPager2.setAdapter(adapter2);
+        vpEvent.setAdapter(adapter2);
     }
 
-    // ViewPager2 초기 위치 설정
-    private void setInitialPosition(int imagesLength) {
+
+    private void setAutoViewPagerInitialPosition(int imagesLength) {
         // ViewPager2가 가상의 무한 리스트 중간에서 시작하도록 초기 위치를 계산
         int initialPosition = Integer.MAX_VALUE / 2;
         // initialPosition을 이미지 길이의 배수로 조정하여 시작점에서 시작하도록 보장
         if (initialPosition % imagesLength != 0) {
             initialPosition -= initialPosition % imagesLength;
         }
-        slideViewPager1.setCurrentItem(initialPosition, false);
+        vpAutoSlide.setCurrentItem(initialPosition, false);
     }
 
 
@@ -156,12 +150,12 @@ public class HomeFragment extends Fragment {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
+                int imagesLength = ((SlideImageAdapter) vpAutoSlide.getAdapter()).getImageArrayLength();
                 // 실제 이미지 길이를 기준으로 다음 아이템 위치 계산
                 currentItem = (currentItem + 1) % imagesLength; // 여기서 imagesLength는 실제 이미지 배열의 길이
                 // 가상 무한 스크롤을 위한 다음 위치 계산
                 int nextItemPosition = calculateNextItemPosition(imagesLength);
-                slideViewPager1.setCurrentItem(nextItemPosition, true);
+                vpAutoSlide.setCurrentItem(nextItemPosition, true);
                 sliderHandler.postDelayed(this, 4000); // 다음 이미지로 전환하기 전 3초 대기
             }
         };
@@ -173,38 +167,54 @@ public class HomeFragment extends Fragment {
     }
 
     private void initializeCommonRecyclerViews() {
-    NetworkManager.fetchTopToonItems(new Callback<TopToonItems>(){
-        @Override
-        public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
-            if (response.isSuccessful() && response.body() != null){
-                Log.println(Log.INFO, "HomeFragment", "Common 데이터를 받아옴");
-                displayDataCommon(response.body().getWaitFree());
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.println(Log.INFO, "HomeFragment", "Common 데이터를 받아옴");
+                    displayFreeWait(response.body().getWaitFree());
+                    displayOneCoin(response.body().getOneCoin());
+                }
             }
-        }
 
-        @Override
-        public void onFailure(Call<TopToonItems> call, Throwable t) {
+            @Override
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "Common 데이터를 받아오는 데 실패함");
-        }
-    });
+            }
+        });
     }
 
-    private void displayDataCommon(List<TopToonItems.WaitFree> waitFreeList){
-        if (waitFreeList != null){
-            List<CommonContentItem> items =new ArrayList<>();
-            for (TopToonItems.WaitFree item : waitFreeList){
+    private void displayFreeWait(List<TopToonItems.WaitFree> waitFreeList) {
+        if (waitFreeList != null) {
+            List<CommonContentItem> items = new ArrayList<>();
+            for (TopToonItems.WaitFree item : waitFreeList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
                         item.getAuthor()
                 ));
             }
-            binding.rvCommon1.setAdapter(new CommonRvAdapter(items));
+            binding.rvWaitFree.setAdapter(new CommonRvAdapter(items));
+        }
+    }
+
+    private void displayOneCoin(List<TopToonItems.OneCoin> oneCoinList) {
+        if (oneCoinList != null) {
+            List<CommonContentItem> items = new ArrayList<>();
+            for (TopToonItems.OneCoin item : oneCoinList) {
+                items.add(new CommonContentItem(
+                        item.getImageUrl(),
+                        item.getTitle(),
+                        item.getAuthor()
+                ));
+            }
+            binding.rvOneCoin.setAdapter(new CommonRvAdapter(items));
         }
     }
 
     private void setupCommonRecyclerView() {
-        binding.rvCommon1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvWaitFree.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvOneCoin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void initializeTabLayout() {
@@ -319,10 +329,10 @@ public class HomeFragment extends Fragment {
         }
 
         private void autoSlide() {
-            int imagesLength = ((SlideImageAdapter) slideViewPager1.getAdapter()).getImageArrayLength();
+            int imagesLength = ((SlideImageAdapter) vpAutoSlide.getAdapter()).getImageArrayLength();
             currentItem = (currentItem + 1) % imagesLength;
             int nextItemPosition = calculateNextItemPosition(imagesLength);
-            slideViewPager1.setCurrentItem(nextItemPosition, true);
+            vpAutoSlide.setCurrentItem(nextItemPosition, true);
         }
 
         @Override

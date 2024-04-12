@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/slideViewPager1"
+        android:id="@+id/vpAutoSlide"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         app:layout_constraintBottom_toTopOf="@+id/tabLayout"
@@ -21,7 +21,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginBottom="8dp"
         android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="@id/slideViewPager1"
+        app:layout_constraintBottom_toBottomOf="@id/vpAutoSlide"
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
@@ -41,7 +41,7 @@
         android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slideViewPager1"
+        app:layout_constraintTop_toBottomOf="@+id/vpAutoSlide"
         app:tabGravity="fill"
         app:tabIndicator="@android:color/transparent"
         app:tabIndicatorGravity="bottom"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivSectionAd" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCommon1"
+        android:id="@+id/rvWaitFree"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -109,10 +109,10 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCommon1" />
+        app:layout_constraintTop_toBottomOf="@+id/rvWaitFree" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCommon2"
+        android:id="@+id/rvOneCoin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -134,7 +134,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvCommon2" />
+        app:layout_constraintTop_toBottomOf="@+id/rvOneCoin" />
 
     <ImageView
         android:id="@+id/ivFreeAd"
@@ -251,7 +251,7 @@
         app:layout_constraintTop_toBottomOf="@+id/rvKeyword2" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/slideViewPager2"
+        android:id="@+id/vpEvent"
         android:layout_width="match_parent"
         android:layout_height="168dp"
         android:layout_marginStart="10dp"

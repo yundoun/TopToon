@@ -19,9 +19,13 @@ public class TopToonItems {
     private List<WaitFree> waitFree;
 
 
+    private List<OneCoin> oneCoin;
+
+
 
 
     // Getter and Setter
+    public List<OneCoin> getOneCoin() { return oneCoin; }
     public List<WaitFree> getWaitFree() {
         return waitFree;
     }
@@ -119,7 +123,23 @@ public class TopToonItems {
             return imageUrl;
         }
     }
+    public static class OneCoin{
+        private String title;
+        private String author;
+        private String imageUrl;
 
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
+    }
     public static class TabItem {
 
         public String getTitle() {
