@@ -22,6 +22,7 @@ import retrofit2.Response;
 
 public class TabFragment1 extends Fragment {
     private FragmentTab1Binding binding;
+    private TabRvAdapter adapter;
 
     @Nullable
     @Override
@@ -38,7 +39,9 @@ public class TabFragment1 extends Fragment {
     }
 
     private void setupRecyclerView() {
+        adapter = new TabRvAdapter();
         binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvTab.setAdapter(adapter);
     }
 
     private void fetchDataFromNetwork() {
@@ -77,7 +80,7 @@ public class TabFragment1 extends Fragment {
                         item.getImageUrl()
                 ));
             }
-            binding.rvTab.setAdapter(new TabRvAdapter(items));
+            adapter.submitList(items);
         } else {
             Log.e("TabFragment1", "Tab items are null");
         }

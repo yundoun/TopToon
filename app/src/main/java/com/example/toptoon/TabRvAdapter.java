@@ -1,9 +1,12 @@
 package com.example.toptoon;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -11,17 +14,27 @@ import com.example.toptoon.databinding.TabRvRowBinding;
 
 import java.util.List;
 
-public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHolder> {
+public class TabRvAdapter extends ListAdapter<TabContentItem, TabRvAdapter.TabRvViewHolder> {
 
-    private final List<TabContentItem> tabContentItems;
+    public TabRvAdapter() {
+        super(new DiffUtil.ItemCallback<TabContentItem>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull TabContentItem oldItem, @NonNull TabContentItem newItem) {
+                // 각 항목을 고유하게 식별할 수 있는 속성을 비교 (예: imageUrl)
+                return oldItem.getImageUrl().equals(newItem.getImageUrl());
+            }
 
-    public TabRvAdapter(List<TabContentItem> tabContentItems) {
-        this.tabContentItems = tabContentItems;
+            @Override
+            public boolean areContentsTheSame(@NonNull TabContentItem oldItem, @NonNull TabContentItem newItem) {
+                // 항목의 상세 내용이 같은지 비교 (equals 메소드 사용 권장)
+                return oldItem.equals(newItem);
+            }
+        });
     }
 
     @NonNull
     @Override
-    public TabRvAdapter.TabRvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TabRvViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         TabRvRowBinding binding = TabRvRowBinding.inflate(layoutInflater, parent, false);
         return new TabRvViewHolder(binding);
@@ -29,15 +42,10 @@ public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHol
 
     @Override
     public void onBindViewHolder(@NonNull TabRvViewHolder holder, int position) {
-        TabContentItem tabContentItem = tabContentItems.get(position);
+        TabContentItem tabContentItem = getItem(position);
         // rank 값을 설정. position은 0부터 시작하므로, rank를 표시할 때는 +1을 해줍니다.
         String rank = String.valueOf(position + 1);
         holder.bind(tabContentItem, rank);
-    }
-
-    @Override
-    public int getItemCount() {
-        return tabContentItems.size();
     }
 
     public static class TabRvViewHolder extends RecyclerView.ViewHolder {

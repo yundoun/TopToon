@@ -11,20 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.toptoon.databinding.CommonRvRowBinding;
 
-import java.util.List;
-
 public class CommonRvAdapter extends ListAdapter<CommonContentItem, CommonRvAdapter.CommonViewHolder> {
 
 
-    protected CommonRvAdapter(){
+    protected CommonRvAdapter() {
         super(new DiffUtil.ItemCallback<CommonContentItem>() {
             @Override
-            public boolean areItemsTheSame(@NonNull CommonContentItem  oldItem, @NonNull CommonContentItem  newItem) {
+            public boolean areItemsTheSame(@NonNull CommonContentItem oldItem, @NonNull CommonContentItem newItem) {
                 return oldItem.getImageUrl().equals(newItem.getImageUrl());
             }
 
             @Override
-            public boolean areContentsTheSame(@NonNull CommonContentItem  oldItem, @NonNull CommonContentItem  newItem) {
+            public boolean areContentsTheSame(@NonNull CommonContentItem oldItem, @NonNull CommonContentItem newItem) {
                 return oldItem.equals(newItem);
             }
         });
