@@ -57,16 +57,16 @@ public class TabContentItem {
         return imageUrl;
     }
 
-    private String title;
-    private String author; // 추가된 필드
-    private String latestEpisode;
-    private String views;
-    private boolean isNew; // 추가된 필드
-    private boolean isDiscounted; // 추가된 필드
-    private boolean isExclusive; // 추가된 필드
-    private boolean waitFree; // 추가된 필드
-    private boolean recentlyUpdated; // 추가된 필드
-    private String imageUrl;
+    private final String title;
+    private final String author; // 추가된 필드
+    private final String latestEpisode;
+    private final String views;
+    private final boolean isNew; // 추가된 필드
+    private final boolean isDiscounted; // 추가된 필드
+    private final boolean isExclusive; // 추가된 필드
+    private final boolean waitFree; // 추가된 필드
+    private final boolean recentlyUpdated; // 추가된 필드
+    private final String imageUrl;
 
 
 }

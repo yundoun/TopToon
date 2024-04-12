@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TabRvAdapter extends RecyclerView.Adapter<TabRvAdapter.TabRvViewHolder> {
 
-    private List<TabContentItem> tabContentItems;
+    private final List<TabContentItem> tabContentItems;
 
     public TabRvAdapter(List<TabContentItem> tabContentItems) {
         this.tabContentItems = tabContentItems;

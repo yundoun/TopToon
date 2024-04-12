@@ -1,26 +1,24 @@
 package com.example.toptoon;
 
 public class CommonContentItem {
-    int imageResourceId;
+    String imageUrl;
     String title;
-    String subTitle;
+    String author;
 
-    public CommonContentItem(int imageResourceId, String text1, String text2) {
-        this.imageResourceId = imageResourceId;
-        this.title = text1;
-        this.subTitle = text2;
+    public CommonContentItem(String imageUrl, String title, String author) {
+        this.imageUrl = imageUrl;
+        this.title = title;
+        this.author = author;
     }
 
-    public int getImageResourceId() {
-        return imageResourceId;
-    }
+    public String getImageUrl() { return imageUrl; }
 
     public String getTitle() {
         return title;
     }
 
-    public String getSubTitle() {
-        return subTitle;
+    public String getAuthor() {
+        return author;
     }
 }
 

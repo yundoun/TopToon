@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,64 +26,61 @@ public class TabFragment1 extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 프래그먼트 레이아웃을 인플레이트합니다.
-            binding = FragmentTab1Binding.inflate(inflater, container, false);
-            return binding.getRoot();
+        binding = FragmentTab1Binding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        TopToonApi service = RetrofitClient.getClient().create((TopToonApi.class));
-        Call<TopToonItems> call = service.getTopToonItems();
+        setupRecyclerView();
+        fetchDataFromNetwork();
+    }
 
-        call.enqueue(new Callback<TopToonItems>() {
+    private void setupRecyclerView() {
+        binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+    private void fetchDataFromNetwork() {
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
-            public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
-                if (response.isSuccessful() && response.body() != null){
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
                     Log.println(Log.INFO, "TabFragment1", "데이터를 받아옴");
-                    Log.println(Log.INFO, "TabFragment1", response.body().toString());
-                    List<TopToonItems.TabItem> tabItems = response.body().getTabRealTime();
-                    // 이게 Null 값인 것 같음
-                    List<TabContentItem> items = new ArrayList<>();
-
-                    if (tabItems != null) {
-                        Log.println(Log.INFO, "TabFragment1", "tabItems.size(): " + tabItems.size());
-
-                        // 받아온 데이터를 TabContentItem 객체로 변환하고 rank를 설정
-                        for (int i = 0; i < tabItems.size(); i++) {
-                            TopToonItems.TabItem item = tabItems.get(i);
-                            items.add(new TabContentItem(
-                                    item.getTitle(),
-                                    item.getAuthor(),
-                                    item.getLatestEpisode(),
-                                    item.getViews(),
-                                    item.isNew(),
-                                    item.isDiscounted(),
-                                    item.isExclusive(),
-                                    item.isWaitFree(),
-                                    item.isRecentlyUpdated(),
-                                    item.getImageUrl()
-                            ));
-                        }
-
-                        // 어댑터 생성 및 RecyclerView에 설정
-                        TabRvAdapter adapter = new TabRvAdapter(items);
-                        binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
-                        binding.rvTab.setAdapter(adapter);
-
-                    } else {
-                        Log.e("TabFragment1", "tabItems가 null입니다");
-                    }
+                    displayData(response.body().getTabRealTime());
+                } else {
+                    Log.e("TabFragment1", "tabItems가 null입니다");
                 }
             }
 
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
-                Log.e("TabFragment1", "데이터를 받아오는 데 실패함", t);
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+                Log.e("TabFragment1", "Failed to fetch data: " + t.getMessage());
             }
         });
+    }
 
+    private void displayData(List<TopToonItems.TabItem> tabItems) {
+        if (tabItems != null) {
+            List<TabContentItem> items = new ArrayList<>();
+            for (TopToonItems.TabItem item : tabItems) {
+                items.add(new TabContentItem(
+                        item.getTitle(),
+                        item.getAuthor(),
+                        item.getLatestEpisode(),
+                        item.getViews(),
+                        item.isNew(),
+                        item.isDiscounted(),
+                        item.isExclusive(),
+                        item.isWaitFree(),
+                        item.isRecentlyUpdated(),
+                        item.getImageUrl()
+                ));
+            }
+            binding.rvTab.setAdapter(new TabRvAdapter(items));
+        } else {
+            Log.e("TabFragment1", "Tab items are null");
+        }
     }
 
     @Override

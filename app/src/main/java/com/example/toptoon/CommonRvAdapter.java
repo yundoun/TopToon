@@ -6,16 +6,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.toptoon.databinding.CommonRvRowBinding;
 
 import java.util.List;
 
-public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.CommonViewHolder>{
+public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.CommonViewHolder> {
     private final List<CommonContentItem> commonContentItems;
 
     public CommonRvAdapter(List<CommonContentItem> commonContentItems) {
         this.commonContentItems = commonContentItems;
     }
+
     @NonNull
     @Override
     public CommonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,9 +29,7 @@ public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.Common
     @Override
     public void onBindViewHolder(@NonNull CommonViewHolder holder, int position) {
         CommonContentItem commonContentItem = commonContentItems.get(position);
-        holder.binding.ivImage.setImageResource(commonContentItem.getImageResourceId());
-        holder.binding.tvTitle.setText(commonContentItem.getTitle());
-        holder.binding.tvSubTitle.setText(commonContentItem.getSubTitle());
+        holder.bind(commonContentItem);
     }
 
     @Override
@@ -45,10 +45,13 @@ public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.Common
             this.binding = binding;
         }
 
-        public void bind(CommonContentItem commonContentItem){
-            binding.ivImage.setImageResource(commonContentItem.getImageResourceId());
+        public void bind(CommonContentItem commonContentItem) {
+            Glide.with(itemView.getContext())
+                    .load(commonContentItem.getImageUrl())
+                    .into(binding.ivImage);
+
             binding.tvTitle.setText(commonContentItem.getTitle());
-            binding.tvSubTitle.setText(commonContentItem.getSubTitle());
+            binding.tvAuthor.setText(commonContentItem.getAuthor());
         }
     }
 }

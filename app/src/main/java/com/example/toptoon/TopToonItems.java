@@ -8,27 +8,37 @@ public class TopToonItems {
 
 
 
-
     private String headerAd;
     private String freeAd;
     private String sectionAd;
-    private String Footer;
     private List<SlideAd> slideAd;
     private List<Event> event;
     private List<TabItem> tabRealTime;
     private List<TabItem> tabNew;
     private List<TabItem> tabSale;
+    private List<WaitFree> waitFree;
+
+
 
 
     // Getter and Setter
+    public List<WaitFree> getWaitFree() {
+        return waitFree;
+    }
 
-    public String getHeaderAd() { return headerAd;}
+    public String getHeaderAd() {
+        return headerAd;
+    }
 
-    public String getFreeAd() { return freeAd; }
+    public String getFreeAd() {
+        return freeAd;
+    }
 
-    public String getSectionAd() { return sectionAd; }
+    public String getSectionAd() {
+        return sectionAd;
+    }
 
-    public String getFooter() { return Footer; }
+
     public List<SlideAd> getSlideAd() {
         return slideAd;
     }
@@ -56,23 +66,20 @@ public class TopToonItems {
             return headerAd;
         }
     }
+
     public static class FreeAd {
         private String freeAd;
+
         public String getFreeAdAd() {
             return freeAd;
         }
     }
+
     public static class SectionAd {
         private String SectionAd;
+
         public String getSectionAd() {
             return SectionAd;
-        }
-    }
-
-    public static class Footer {
-        private String footer;
-        public String getFooter() {
-            return footer;
         }
     }
 
@@ -93,6 +100,24 @@ public class TopToonItems {
             return imageUrl;
         }
 
+    }
+
+    public static class WaitFree {
+        private String title;
+        private String author;
+        private String imageUrl;
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getImageUrl() {
+            return imageUrl;
+        }
     }
 
     public static class TabItem {

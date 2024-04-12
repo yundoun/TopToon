@@ -33,8 +33,6 @@ public class HomeFragment extends Fragment {
     private Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
-    private ArrayList<CommonContentItem> commonContentItems1, commonContentItems2, commonContentItems3, commonContentItems4;
-
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
 
@@ -51,6 +49,7 @@ public class HomeFragment extends Fragment {
         setTabColor();
         fetchSlideAds();
         setupAutoSlide();
+        setupCommonRecyclerView();
         initializeCommonRecyclerViews();
         initializeTabLayout();
         setupTagMenu();
@@ -174,32 +173,38 @@ public class HomeFragment extends Fragment {
     }
 
     private void initializeCommonRecyclerViews() {
-        // 데이터 초기화
-        commonContentItems1 = new ArrayList<>();
-        commonContentItems1.add(new CommonContentItem(R.drawable.common_1, "계약 남편에게 끌리...", "장미 스튜디오&열문"));
-        commonContentItems1.add(new CommonContentItem(R.drawable.common_2, "출구 없는 사랑", "YY&Jiman"));
+    NetworkManager.fetchTopToonItems(new Callback<TopToonItems>(){
+        @Override
+        public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            if (response.isSuccessful() && response.body() != null){
+                Log.println(Log.INFO, "HomeFragment", "Common 데이터를 받아옴");
+                displayDataCommon(response.body().getWaitFree());
+            }
+        }
 
-        commonContentItems2 = new ArrayList<>();
-        commonContentItems2.add(new CommonContentItem(R.drawable.common_1, "Text 3-1", "Text 3-2"));
-        commonContentItems2.add(new CommonContentItem(R.drawable.common_2, "Text 4-1", "Text 4-2"));
-
-        commonContentItems3 = new ArrayList<>();
-        commonContentItems3.add(new CommonContentItem(R.drawable.common_1, "Text 5-1", "Text 5-2"));
-        commonContentItems3.add(new CommonContentItem(R.drawable.common_2, "Text 6-1", "Text 6-2"));
-
-        commonContentItems4 = new ArrayList<>();
-        commonContentItems4.add(new CommonContentItem(R.drawable.common_1, "Text 7-1", "Text 7-2"));
-        commonContentItems4.add(new CommonContentItem(R.drawable.common_2, "Text 8-1", "Text 8-2"));
-
-        setupRecyclerView(binding.rvCommon1, commonContentItems1);
-        setupRecyclerView(binding.rvCommon2, commonContentItems2);
-        setupRecyclerView(binding.rvKeyword1, commonContentItems3);
-        setupRecyclerView(binding.rvKeyword2, commonContentItems4);
+        @Override
+        public void onFailure(Call<TopToonItems> call, Throwable t) {
+                Log.println(Log.ERROR, "HomeFragment", "Common 데이터를 받아오는 데 실패함");
+        }
+    });
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView, ArrayList<CommonContentItem> items) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new CommonRvAdapter(items));
+    private void displayDataCommon(List<TopToonItems.WaitFree> waitFreeList){
+        if (waitFreeList != null){
+            List<CommonContentItem> items =new ArrayList<>();
+            for (TopToonItems.WaitFree item : waitFreeList){
+                items.add(new CommonContentItem(
+                        item.getImageUrl(),
+                        item.getTitle(),
+                        item.getAuthor()
+                ));
+            }
+            binding.rvCommon1.setAdapter(new CommonRvAdapter(items));
+        }
+    }
+
+    private void setupCommonRecyclerView() {
+        binding.rvCommon1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     private void initializeTabLayout() {
