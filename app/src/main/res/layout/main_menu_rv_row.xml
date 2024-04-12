@@ -6,7 +6,7 @@
     android:layout_height="35dp">
 
     <TextView
-        android:id="@+id/textViewItem"
+        android:id="@+id/tvItem"
         android:layout_width="92dp"
         android:layout_height="31dp"
         android:background="@drawable/main_menu_border"

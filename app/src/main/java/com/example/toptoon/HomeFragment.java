@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
     private final Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
+    private CommonRvAdapter adapterFreeWait;
+    private CommonRvAdapter adapterOneCoin;
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
 
@@ -194,7 +196,7 @@ public class HomeFragment extends Fragment {
                         item.getAuthor()
                 ));
             }
-            binding.rvWaitFree.setAdapter(new CommonRvAdapter(items));
+            adapterFreeWait.submitList(items);
         }
     }
 
@@ -208,13 +210,18 @@ public class HomeFragment extends Fragment {
                         item.getAuthor()
                 ));
             }
-            binding.rvOneCoin.setAdapter(new CommonRvAdapter(items));
+            adapterOneCoin.submitList(items);
         }
     }
 
     private void setupCommonRecyclerView() {
+        adapterFreeWait = new CommonRvAdapter();
         binding.rvWaitFree.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvWaitFree.setAdapter(adapterFreeWait);
+
+        adapterOneCoin = new CommonRvAdapter();
         binding.rvOneCoin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvOneCoin.setAdapter(adapterOneCoin);
     }
 
     private void initializeTabLayout() {
@@ -245,7 +252,7 @@ public class HomeFragment extends Fragment {
 
     private List<TagMenuItem> createTagMenuItems1() {
         List<TagMenuItem> menuList = new ArrayList<>();
-        for (String item : getResources().getStringArray(R.array.tag_menu_items_1)) {
+        for (String item : getResources().getStringArray(R.array.custom_keyword)) {
             menuList.add(new TagMenuItem(item));
         }
         return menuList;
@@ -253,7 +260,7 @@ public class HomeFragment extends Fragment {
 
     private List<TagMenuItem> createTagMenuItems2() {
         List<TagMenuItem> menuList = new ArrayList<>();
-        for (String item : getResources().getStringArray(R.array.tag_menu_items_2)) {
+        for (String item : getResources().getStringArray(R.array.recommend_genre)) {
             menuList.add(new TagMenuItem(item));
         }
         return menuList;

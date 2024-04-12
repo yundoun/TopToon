@@ -4,6 +4,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -11,12 +13,23 @@ import com.example.toptoon.databinding.CommonRvRowBinding;
 
 import java.util.List;
 
-public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.CommonViewHolder> {
-    private final List<CommonContentItem> commonContentItems;
+public class CommonRvAdapter extends ListAdapter<CommonContentItem, CommonRvAdapter.CommonViewHolder> {
 
-    public CommonRvAdapter(List<CommonContentItem> commonContentItems) {
-        this.commonContentItems = commonContentItems;
+
+    protected CommonRvAdapter(){
+        super(new DiffUtil.ItemCallback<CommonContentItem>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull CommonContentItem  oldItem, @NonNull CommonContentItem  newItem) {
+                return oldItem.getImageUrl().equals(newItem.getImageUrl());
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull CommonContentItem  oldItem, @NonNull CommonContentItem  newItem) {
+                return oldItem.equals(newItem);
+            }
+        });
     }
+
 
     @NonNull
     @Override
@@ -28,13 +41,8 @@ public class CommonRvAdapter extends RecyclerView.Adapter<CommonRvAdapter.Common
 
     @Override
     public void onBindViewHolder(@NonNull CommonViewHolder holder, int position) {
-        CommonContentItem commonContentItem = commonContentItems.get(position);
+        CommonContentItem commonContentItem = getItem(position);
         holder.bind(commonContentItem);
-    }
-
-    @Override
-    public int getItemCount() {
-        return commonContentItems.size();
     }
 
     public static class CommonViewHolder extends RecyclerView.ViewHolder {

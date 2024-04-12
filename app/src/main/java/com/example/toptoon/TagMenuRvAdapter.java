@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptoon.databinding.TagMenuRvRowBinding;
+
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {
 
         protected TagMenuRvAdapter() {
@@ -30,22 +32,22 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
         @NonNull
         @Override
         public TagMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tag_menu_rv_row, parent, false);
-            return new TagMenuViewHolder(view);
+            TagMenuRvRowBinding binding = TagMenuRvRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+            return new TagMenuViewHolder(binding);
         }
 
         @Override
         public void onBindViewHolder(@NonNull TagMenuRvAdapter.TagMenuViewHolder holder, int position) {
-            TagMenuItem menu = (TagMenuItem) getItem(position);
-            holder.textView.setText(menu.getTitle());
+            TagMenuItem menu = getItem(position);
+            holder.binding.tvTagMenu.setText(menu.getTitle());
         }
 
         static class TagMenuViewHolder extends RecyclerView.ViewHolder {
-            TextView textView;
+            private final TagMenuRvRowBinding binding;
 
-            public TagMenuViewHolder(@NonNull View itemView) {
-                super(itemView);
-                textView = itemView.findViewById(R.id.tvTagMenu);
+            public TagMenuViewHolder(@NonNull TagMenuRvRowBinding binding) {
+                super(binding.getRoot());
+                this.binding = binding;
             }
         }
 }

@@ -19,7 +19,7 @@
         <item>내가보던</item>
     </string-array>
 
-    <string-array name="tag_menu_items_1">
+    <string-array name="custom_keyword">
         <item>#인기작품</item>
         <item>#탑툰독점</item>
         <item>#매일무료</item>
@@ -30,7 +30,7 @@
         <item>#정주행각</item>
     </string-array>
 
-    <string-array name="tag_menu_items_2">
+    <string-array name="recommend_genre">
         <item>#로맨스</item>
         <item>#드라마</item>
         <item>#학원/액션</item>

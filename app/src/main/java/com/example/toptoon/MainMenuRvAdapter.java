@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptoon.databinding.MainMenuRvRowBinding;
+
 public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapter.MainMenuViewHolder> {
 
     protected MainMenuRvAdapter() {
@@ -30,22 +32,22 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
     @NonNull
     @Override
     public MainMenuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_menu_rv_row, parent, false);
-        return new MainMenuViewHolder(view);
+        MainMenuRvRowBinding binding = MainMenuRvRowBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new MainMenuViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, int position) {
-        MainMenuItem menu = (MainMenuItem) getItem(position);
-        holder.textView.setText(menu.getTitle());
+        MainMenuItem menu = getItem(position);
+        holder.binding.tvItem.setText(menu.getTitle());
     }
 
     static class MainMenuViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        private final MainMenuRvRowBinding binding;
 
-        public MainMenuViewHolder(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.textViewItem);
+        public MainMenuViewHolder(@NonNull  MainMenuRvRowBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }
