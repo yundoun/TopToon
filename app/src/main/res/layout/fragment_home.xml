@@ -170,7 +170,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivFreeAd" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTagMenu1"
+        android:id="@+id/rvCustomKeywordMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -183,7 +183,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvKeyword1"
+        android:id="@+id/rvCustomKeyword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -192,10 +192,10 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvTagMenu1" />
+        app:layout_constraintTop_toBottomOf="@id/rvCustomKeywordMenu" />
 
     <TextView
-        android:id="@+id/tvRecommend"
+        android:id="@+id/tvRecommendGenre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -204,7 +204,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvKeyword1" />
+        app:layout_constraintTop_toBottomOf="@+id/rvCustomKeyword" />
 
     <TextView
         android:id="@+id/tvViewAll2"
@@ -214,10 +214,10 @@
         android:layout_marginEnd="10dp"
         android:text="전체보기 >"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvKeyword1" />
+        app:layout_constraintTop_toBottomOf="@+id/rvCustomKeyword" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTagMenu2"
+        android:id="@+id/rvRecommendGenreMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -225,10 +225,10 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRecommend" />
+        app:layout_constraintTop_toBottomOf="@id/tvRecommendGenre" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvKeyword2"
+        android:id="@+id/rvRecommendGenre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -236,7 +236,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rvTagMenu2" />
+        app:layout_constraintTop_toBottomOf="@id/rvRecommendGenreMenu" />
 
     <TextView
         android:id="@+id/tvEvent"
@@ -248,7 +248,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rvKeyword2" />
+        app:layout_constraintTop_toBottomOf="@+id/rvRecommendGenre" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vpEvent"

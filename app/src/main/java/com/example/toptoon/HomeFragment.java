@@ -1,5 +1,6 @@
 package com.example.toptoon;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -238,8 +239,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupTagMenu() {
-        TagMenuRecyclerViewWithAdapter(binding.rvTagMenu1, createTagMenuItems1());
-        TagMenuRecyclerViewWithAdapter(binding.rvTagMenu2, createTagMenuItems2());
+        TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu());
+        TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre());
     }
 
     private void TagMenuRecyclerViewWithAdapter(RecyclerView recyclerView, List<TagMenuItem> menuList) {
@@ -247,10 +248,12 @@ public class HomeFragment extends Fragment {
         TagMenuRvAdapter adapter = new TagMenuRvAdapter();
         recyclerView.setAdapter(adapter);
         adapter.submitList(menuList);
+
+        adapter.setSelectedItem(0);
     }
 
 
-    private List<TagMenuItem> createTagMenuItems1() {
+    private List<TagMenuItem> createCustomKeywordMenu() {
         List<TagMenuItem> menuList = new ArrayList<>();
         for (String item : getResources().getStringArray(R.array.custom_keyword)) {
             menuList.add(new TagMenuItem(item));
@@ -258,13 +261,14 @@ public class HomeFragment extends Fragment {
         return menuList;
     }
 
-    private List<TagMenuItem> createTagMenuItems2() {
+    private List<TagMenuItem> createRecommendGenre() {
         List<TagMenuItem> menuList = new ArrayList<>();
         for (String item : getResources().getStringArray(R.array.recommend_genre)) {
             menuList.add(new TagMenuItem(item));
         }
         return menuList;
     }
+
 
     private void setFreeAd() {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
