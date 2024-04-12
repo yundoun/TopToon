@@ -88,6 +88,7 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
     private void setTabColor() {
         TabLayout.Tab firstTab = binding.tabLayout.getTabAt(0);
         if (firstTab != null) {
@@ -239,13 +240,16 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupTagMenu() {
-        TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu());
-        TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre());
+        TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu(),0);
+        TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre(),1);
     }
 
-    private void TagMenuRecyclerViewWithAdapter(RecyclerView recyclerView, List<TagMenuItem> menuList) {
+    private void TagMenuRecyclerViewWithAdapter(
+            RecyclerView recyclerView,
+            List<TagMenuItem> menuList,
+            int type) {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        TagMenuRvAdapter adapter = new TagMenuRvAdapter();
+        TagMenuRvAdapter adapter = new TagMenuRvAdapter(type);
         recyclerView.setAdapter(adapter);
         adapter.submitList(menuList);
 

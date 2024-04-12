@@ -2,11 +2,8 @@ package com.example.toptoon;
 
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -16,8 +13,9 @@ import com.example.toptoon.databinding.TagMenuRvRowBinding;
 
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {
     private int selectedPos = RecyclerView.NO_POSITION;
+    private int type; // 0 for default, 1 for custom
 
-    protected TagMenuRvAdapter() {
+    protected TagMenuRvAdapter(int type) {
         super(new DiffUtil.ItemCallback<TagMenuItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull TagMenuItem oldItem, @NonNull TagMenuItem newItem) {
@@ -30,7 +28,7 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
                 return oldItem.equals(newItem);
             }
         });
-        // 기본 배경색 변수
+        this.type = type;
     }
 
     @NonNull
@@ -45,17 +43,38 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
         TagMenuItem menu = getItem(position);
         holder.binding.tvTagMenu.setText(menu.getTitle());
 
-        // 현재 위치가 선택된 위치인지 확인
+        // 현재 위치가 선택된 위치인지
         if (selectedPos == position) {
-            // 선택된 배경 적용
             holder.binding.tvTagMenu.setBackgroundResource(R.drawable.tag_menu_selected);
-            // 글자색 빨간색으로 변경
             holder.binding.tvTagMenu.setTextColor(Color.RED);
         } else {
-            // 기본 배경 적용
-            holder.binding.tvTagMenu.setBackgroundResource(R.drawable.tag_menu_border);
-            // 글자색 검정색으로 변경
-            holder.binding.tvTagMenu.setTextColor(Color.BLACK);
+            if (type == 1) { // 1은 custom
+                switch (position) {
+                    case 0:
+                    case 6:
+                        holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_yellow);
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#FBC02D"));
+                        break;
+                    case 1:
+                    case 4:
+                        holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_green);
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#4CAF50"));
+                        break;
+                    case 2:
+                    case 5:
+                        holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_purple);
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#6A1B9A"));
+                        break;
+                    case 3:
+                    case 7:
+                        holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_red);
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#D32F2F"));
+                        break;
+                }
+            } else {
+                holder.binding.tvTagMenu.setBackgroundResource(R.drawable.tag_menu_border);
+                holder.binding.tvTagMenu.setTextColor(Color.BLACK);
+            }
         }
 
         // 아이템 클릭 이벤트 처리
