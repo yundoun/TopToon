@@ -53,12 +53,12 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
                     case 0:
                     case 6:
                         holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_yellow);
-                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#FBC02D"));
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#F9A825"));
                         break;
                     case 1:
                     case 4:
                         holder.binding.tvTagMenu.setBackgroundResource(R.drawable.custom_border_green);
-                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#4CAF50"));
+                        holder.binding.tvTagMenu.setTextColor(Color.parseColor("#388E3C"));
                         break;
                     case 2:
                     case 5:
