@@ -17,8 +17,6 @@ public class TopToonItems {
     private List<TabItem> tabNew;
     private List<TabItem> tabSale;
     private List<WaitFree> waitFree;
-
-
     private List<OneCoin> oneCoin;
 
 
@@ -55,13 +53,12 @@ public class TopToonItems {
         return tabRealTime;
     }
 
-//    public List<TabItem> getTabNew() {
-//        return tabNew;
-//    }
-//
-//    public List<TabItem> getTabSale() {
-//        return tabSale;
-//    }
+    public List<TabItem> getTabNew() { return tabNew; }
+
+    public List<TabItem> getTabSale() { return tabSale; }
+
+
+    // Inner Classes
 
     public static class HeaderAd {
         private String headerAd;

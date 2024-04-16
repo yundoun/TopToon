@@ -20,7 +20,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TabFragment1 extends Fragment {
+public class TabRealTime1 extends Fragment {
     private FragmentTab1Binding binding;
     private TabRvAdapter adapter;
 
