@@ -4,12 +4,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -58,6 +60,12 @@ public class HomeFragment extends Fragment {
         initializeCommonRecyclerViews();
         setFreeAd();
         setupTagMenu();
+
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 226, getResources().getDisplayMetrics()),
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 137, getResources().getDisplayMetrics())
+        );
+
     }
 
     private void fetchSlideAds() {
@@ -179,6 +187,7 @@ public class HomeFragment extends Fragment {
                     List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
                     displayFreeWait(findWebtoonById(response.body().getWaitFree(), allWebtoons));
                     displayOneCoin(findWebtoonById(response.body().getOneCoin(), allWebtoons));
+
                 }
             }
 
@@ -189,11 +198,11 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private List<TopToonItems.Webtoon> findWebtoonById(List<Integer> idList, List<TopToonItems.Webtoon> allWebtoons){
+    private List<TopToonItems.Webtoon> findWebtoonById(List<Integer> idList, List<TopToonItems.Webtoon> allWebtoons) {
         List<TopToonItems.Webtoon> selectedWebtoons = new ArrayList<>();
-        for(Integer id : idList){
-            for(TopToonItems.Webtoon webtoon : allWebtoons){
-                if(webtoon.getId() == id){
+        for (Integer id : idList) {
+            for (TopToonItems.Webtoon webtoon : allWebtoons) {
+                if (webtoon.getId() == id) {
                     selectedWebtoons.add(webtoon);
                     break;
                 }
@@ -205,7 +214,7 @@ public class HomeFragment extends Fragment {
     private void displayFreeWait(List<TopToonItems.Webtoon> waitFreeList) {
         if (waitFreeList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon  item : waitFreeList) {
+            for (TopToonItems.Webtoon item : waitFreeList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
@@ -216,10 +225,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void displayOneCoin(List<TopToonItems.Webtoon > oneCoinList) {
+    private void displayOneCoin(List<TopToonItems.Webtoon> oneCoinList) {
         if (oneCoinList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon  item : oneCoinList) {
+            for (TopToonItems.Webtoon item : oneCoinList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
@@ -254,8 +263,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupTagMenu() {
-        TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu(),0);
-        TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre(),1);
+        TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu(), 0);
+        TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre(), 1);
     }
 
     private void TagMenuRecyclerViewWithAdapter(
