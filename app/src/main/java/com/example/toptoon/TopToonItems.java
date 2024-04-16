@@ -7,82 +7,52 @@ import java.util.List;
 public class TopToonItems {
 
 
+    @SerializedName("webtoons")
+    private List<Webtoon> webtoons;
 
+    @SerializedName("TabRealTime")
+    private List<Integer> tabRealTime;
+
+    @SerializedName("TabNew")
+    private List<Integer> tabNew;
+
+    @SerializedName("TabSale")
+    private List<Integer> tabSale;
+
+    @SerializedName("waitFree")
+    private List<Integer> waitFree;
+
+    @SerializedName("oneCoin")
+    private List<Integer> oneCoin;
+
+    // 광고 필드는 변경 없음
+    private List<SlideAd> slideAd;
+    private List<Event> event;
     private String headerAd;
     private String freeAd;
     private String sectionAd;
-    private List<SlideAd> slideAd;
-    private List<Event> event;
-    private List<TabItem> tabRealTime;
-    private List<TabItem> tabNew;
-    private List<TabItem> tabSale;
-    private List<WaitFree> waitFree;
-    private List<OneCoin> oneCoin;
-
-
 
 
     // Getter and Setter
-    public List<OneCoin> getOneCoin() { return oneCoin; }
-    public List<WaitFree> getWaitFree() {
-        return waitFree;
-    }
+    public List<Webtoon> getWebtoons() { return webtoons; }
+    public List<Integer> getTabRealTime() { return tabRealTime; }
+    public List<Integer> getTabNew() { return tabNew; }
+    public List<Integer> getTabSale() { return tabSale; }
+    public List<Integer> getWaitFree() { return waitFree; }
+    public List<Integer> getOneCoin() { return oneCoin; }
+    public List<SlideAd> getSlideAd() { return slideAd; }
 
-    public String getHeaderAd() {
-        return headerAd;
-    }
+    public List<Event> getEvent() { return event; }
 
-    public String getFreeAd() {
-        return freeAd;
-    }
+    public String getHeaderAd() { return headerAd; }
 
-    public String getSectionAd() {
-        return sectionAd;
-    }
+    public String getFreeAd() { return freeAd; }
 
+    public String getSectionAd() { return sectionAd; }
 
-    public List<SlideAd> getSlideAd() {
-        return slideAd;
-    }
-
-    public List<Event> getEvent() {
-        return event;
-    }
-
-    public List<TabItem> getTabRealTime() {
-        return tabRealTime;
-    }
-
-    public List<TabItem> getTabNew() { return tabNew; }
-
-    public List<TabItem> getTabSale() { return tabSale; }
 
 
     // Inner Classes
-
-    public static class HeaderAd {
-        private String headerAd;
-
-        public String getHeaderAd() {
-            return headerAd;
-        }
-    }
-
-    public static class FreeAd {
-        private String freeAd;
-
-        public String getFreeAdAd() {
-            return freeAd;
-        }
-    }
-
-    public static class SectionAd {
-        private String SectionAd;
-
-        public String getSectionAd() {
-            return SectionAd;
-        }
-    }
 
     public static class SlideAd {
         private String imageUrl;
@@ -103,42 +73,11 @@ public class TopToonItems {
 
     }
 
-    public static class WaitFree {
-        private String title;
-        private String author;
-        private String imageUrl;
+    public static class Webtoon {
 
-        public String getTitle() {
-            return title;
+        public int getId() {
+            return id;
         }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-    }
-    public static class OneCoin{
-        private String title;
-        private String author;
-        private String imageUrl;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public String getAuthor() {
-            return author;
-        }
-
-        public String getImageUrl() {
-            return imageUrl;
-        }
-    }
-    public static class TabItem {
-
         public String getTitle() {
             return title;
         }
@@ -179,10 +118,11 @@ public class TopToonItems {
             return imageUrl;
         }
 
-        public TabItem(String title, String author, String latestEpisode,
+        public Webtoon(int id, String title, String author, String latestEpisode,
                        String views, boolean isNew, boolean isDiscounted,
                        boolean isExclusive, boolean wait_free, boolean recentlyUpdated,
                        String imageUrl) {
+            this.id = id;
             this.title = title;
             this.author = author;
             this.latestEpisode = latestEpisode;
@@ -194,6 +134,9 @@ public class TopToonItems {
             this.recentlyUpdated = recentlyUpdated;
             this.imageUrl = imageUrl;
         }
+
+        @SerializedName("id")
+        private int id;
 
         @SerializedName("title")
         private String title;

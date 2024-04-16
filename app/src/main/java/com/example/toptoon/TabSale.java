@@ -23,10 +23,18 @@ public class TabSale extends BaseTabFragment {
             @Override
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // 데이터를 성공적으로 받아왔을 때
                     Log.println(Log.INFO, "TabSale", "데이터를 받아옴");
-                    // 데이터를 화면에 표시합니다.
-                    displayData(response.body().getTabSale());
+                    List<Integer> tabSaleIds = response.body().getTabSale();
+                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    List<TopToonItems.Webtoon> filteredWebtoons = new ArrayList<>();
+                    for (Integer id : tabSaleIds) {
+                        for (TopToonItems.Webtoon webtoon : allWebtoons) {
+                            if (webtoon.getId() == id) {
+                                filteredWebtoons.add(webtoon);
+                            }
+                        }
+                    }
+                    displayData(filteredWebtoons);
                 } else {
                     // 데이터를 받아오지 못했을 때
                     Log.e("TabSale", "tabItems가 null입니다");
@@ -41,10 +49,10 @@ public class TabSale extends BaseTabFragment {
         });
     }
 
-    private void displayData(List<TopToonItems.TabItem> tabItems) {
+    private void displayData(List<TopToonItems.Webtoon> tabItems) {
         if (tabItems != null) {
             List<TabContentItem> items = new ArrayList<>();
-            for (TopToonItems.TabItem item : tabItems) {
+            for (TopToonItems.Webtoon item : tabItems) {
                 items.add(new TabContentItem(
                         item.getTitle(),
                         item.getAuthor(),
@@ -60,7 +68,7 @@ public class TabSale extends BaseTabFragment {
             }
             adapter.submitList(items);
         } else {
-            Log.e("TabFragment3", "Tab items are null");
+            Log.e("TabSale", "Tab items are null");
         }
     }
 }

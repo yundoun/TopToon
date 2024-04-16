@@ -23,24 +23,34 @@ public class TabNewItem extends BaseTabFragment {
             @Override
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.println(Log.INFO, "TabFragment2", "데이터를 받아옴");
-                    displayData(response.body().getTabNew());
+                    Log.println(Log.INFO, "TabNewItem", "데이터를 받아옴");
+                    List<Integer> tabNewItems = response.body().getTabNew();
+                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    List<TopToonItems.Webtoon> filteredWebtoons = new ArrayList<>();
+                    for(Integer id : tabNewItems) {
+                        for(TopToonItems.Webtoon webtoon : allWebtoons) {
+                            if(webtoon.getId() == id) {
+                                filteredWebtoons.add(webtoon);
+                            }
+                        }
+                    }
+                    displayData(filteredWebtoons);
                 } else {
-                    Log.e("TabFragment2", "tabItems가 null입니다");
+                    Log.e("TabNewItem", "tabItems가 null입니다");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
-                Log.e("TabFragment2", "데이터를 받아오지 못함", t);
+                Log.e("TabNewItem", "데이터를 받아오지 못함", t);
             }
         });
     }
 
-    private void displayData(List<TopToonItems.TabItem> tabItems) {
+    private void displayData(List<TopToonItems.Webtoon> tabItems) {
         if (tabItems != null) {
             List<TabContentItem> items = new ArrayList<>();
-            for (TopToonItems.TabItem item : tabItems) {
+            for (TopToonItems.Webtoon item : tabItems) {
                 items.add(new TabContentItem(
                         item.getTitle(),
                         item.getAuthor(),
@@ -56,7 +66,7 @@ public class TabNewItem extends BaseTabFragment {
             }
             adapter.submitList(items);
         } else {
-            Log.e("2", "Tab items are null");
+            Log.e("TabNewItem", "Tab items are null");
         }
     }
 }

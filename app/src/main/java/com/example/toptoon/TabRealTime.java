@@ -21,9 +21,19 @@ public class TabRealTime extends BaseTabFragment {
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.println(Log.INFO, "TabRealTime", "데이터를 받아옴");
-                    displayData(response.body().getTabRealTime());
+                    List<Integer> tabRealTimeIds = response.body().getTabRealTime();
+                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    List<TopToonItems.Webtoon> filteredWebtoons = new ArrayList<>();
+                    for (Integer id : tabRealTimeIds) {
+                        for (TopToonItems.Webtoon webtoon : allWebtoons) {
+                            if (webtoon.getId() == id) {
+                                filteredWebtoons.add(webtoon);
+                            }
+                        }
+                    }
+                    displayData(filteredWebtoons);
                 } else {
-                    Log.e("TabRealTime", "tabItems가 null입니다");
+                    Log.e("TabRealTime", "Response is not successful or body is null");
                 }
             }
 
@@ -34,10 +44,10 @@ public class TabRealTime extends BaseTabFragment {
         });
     }
 
-    private void displayData(List<TopToonItems.TabItem> tabItems) {
-        if (tabItems != null) {
+    private void displayData(List<TopToonItems.Webtoon> tabItems) {
+        if (tabItems != null && !tabItems.isEmpty()) {
             List<TabContentItem> items = new ArrayList<>();
-            for (TopToonItems.TabItem item : tabItems) {
+            for (TopToonItems.Webtoon item : tabItems) {
                 items.add(new TabContentItem(
                         item.getTitle(),
                         item.getAuthor(),
@@ -53,7 +63,7 @@ public class TabRealTime extends BaseTabFragment {
             }
             adapter.submitList(items);
         } else {
-            Log.e("TabFragment1", "Tab items are null");
+            Log.e("TabRealTime", "Tab items are null or empty");
         }
     }
 }

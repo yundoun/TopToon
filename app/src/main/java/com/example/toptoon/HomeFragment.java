@@ -176,8 +176,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.println(Log.INFO, "HomeFragment", "Common 데이터를 받아옴");
-                    displayFreeWait(response.body().getWaitFree());
-                    displayOneCoin(response.body().getOneCoin());
+                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    displayFreeWait(findWebtoonById(response.body().getWaitFree(), allWebtoons));
+                    displayOneCoin(findWebtoonById(response.body().getOneCoin(), allWebtoons));
                 }
             }
 
@@ -188,10 +189,23 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void displayFreeWait(List<TopToonItems.WaitFree> waitFreeList) {
+    private List<TopToonItems.Webtoon> findWebtoonById(List<Integer> idList, List<TopToonItems.Webtoon> allWebtoons){
+        List<TopToonItems.Webtoon> selectedWebtoons = new ArrayList<>();
+        for(Integer id : idList){
+            for(TopToonItems.Webtoon webtoon : allWebtoons){
+                if(webtoon.getId() == id){
+                    selectedWebtoons.add(webtoon);
+                    break;
+                }
+            }
+        }
+        return selectedWebtoons;
+    }
+
+    private void displayFreeWait(List<TopToonItems.Webtoon> waitFreeList) {
         if (waitFreeList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.WaitFree item : waitFreeList) {
+            for (TopToonItems.Webtoon  item : waitFreeList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
@@ -202,10 +216,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void displayOneCoin(List<TopToonItems.OneCoin> oneCoinList) {
+    private void displayOneCoin(List<TopToonItems.Webtoon > oneCoinList) {
         if (oneCoinList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.OneCoin item : oneCoinList) {
+            for (TopToonItems.Webtoon  item : oneCoinList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
