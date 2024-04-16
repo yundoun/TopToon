@@ -13,9 +13,10 @@ import com.example.toptoon.databinding.TagMenuRvRowBinding;
 
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {
     private int selectedPos = RecyclerView.NO_POSITION;
+    private OnTagSelectedListener listener;
     private int type; // 0 for default, 1 for custom
 
-    protected TagMenuRvAdapter(int type) {
+    protected TagMenuRvAdapter(int type, OnTagSelectedListener listener) {
         super(new DiffUtil.ItemCallback<TagMenuItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull TagMenuItem oldItem, @NonNull TagMenuItem newItem) {
@@ -29,6 +30,7 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
             }
         });
         this.type = type;
+        this.listener = listener;
     }
 
     @NonNull
@@ -42,6 +44,8 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
     public void onBindViewHolder(@NonNull TagMenuRvAdapter.TagMenuViewHolder holder, int position) {
         TagMenuItem menu = getItem(position);
         holder.binding.tvTagMenu.setText(menu.getTitle());
+
+        updateSelection(holder, position);
 
         // 현재 위치가 선택된 위치인지
         if (selectedPos == position) {
@@ -82,9 +86,23 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
             notifyItemChanged(selectedPos); // 이전에 선택된 아이템 업데이트
             selectedPos = holder.getLayoutPosition(); // 새로운 위치 저장
             notifyItemChanged(selectedPos); // 새로운 아이템 업데이트
+
+            // Notify the listener
+            if (listener != null) {
+                listener.onTagSelected(menu.getTitle());
+            }
         });
     }
 
+
+    private void updateSelection(TagMenuViewHolder holder, int position) {
+        if (selectedPos == position) {
+            // Update for selected
+        } else {
+            // Update for not selected
+        }
+    }
+    
     static class TagMenuViewHolder extends RecyclerView.ViewHolder {
         private final TagMenuRvRowBinding binding;
 
