@@ -1,17 +1,8 @@
 package com.example.toptoon;
 
-import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
-import com.example.toptoon.databinding.FragmentTab2Binding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,31 +11,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class TabNewItem2 extends Fragment {
-    private FragmentTab2Binding binding;
-    private TabRvAdapter adapter;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentTab2Binding.inflate(inflater, container, false);
-        return binding.getRoot();
-    }
+public class TabNewItem extends BaseTabFragment {
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setupRecyclerView();
-        fetchDataFromNetwork();
+    protected TabRvAdapter createAdapter() {
+        return new TabRvAdapter();
     }
 
-    private void setupRecyclerView() {
-        adapter = new TabRvAdapter();
-        binding.rvTab.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvTab.setAdapter(adapter);
-    }
-
-    private void fetchDataFromNetwork() {
+    protected void fetchDataFromNetwork() {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
@@ -85,11 +59,4 @@ public class TabNewItem2 extends Fragment {
             Log.e("2", "Tab items are null");
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null; // 뷰 바인딩 참조 해제
-    }
-
 }

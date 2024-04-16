@@ -15,15 +15,15 @@ public class TabManager extends FragmentStateAdapter {
         // 여기서 position에 따라 다른 Fragment를 반환
         switch (position) {
             case 0:
-                return new TabRealTime1();
+                return new TabRealTime();
             case 1:
-                return new TabNewItem2();
+                return new TabNewItem();
             case 2:
-                return new TabSale3();
+                return new TabSale();
             case 3:
-                return new TabFragment4();
+                return new TabMine();
             default:
-                return new TabRealTime1(); // 기본값
+                return new TabRealTime(); // 기본값
         }
     }
 

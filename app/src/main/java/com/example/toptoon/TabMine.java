@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class TabFragment4 extends Fragment {
+import com.example.toptoon.databinding.FragmentTabMineBinding;
+
+public class TabMine extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // 프래그먼트 레이아웃을 인플레이트합니다.
-        return inflater.inflate(R.layout.fragment_tab4, container, false);
+        com.example.toptoon.databinding.FragmentTabMineBinding binding = FragmentTabMineBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 }
