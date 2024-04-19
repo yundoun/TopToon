@@ -1,6 +1,5 @@
 package com.example.toptoon;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -8,6 +7,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +25,10 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,8 +41,11 @@ public class HomeFragment extends Fragment {
     private FragmentHomeBinding binding;
     private CommonRvAdapter adapterFreeWait;
     private CommonRvAdapter adapterOneCoin;
+    private CommonRvAdapter adapterCustomKeyword;
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
+    private Map<String, String> tagToJsonKey;
+
 
 
     @Nullable
@@ -247,6 +253,10 @@ public class HomeFragment extends Fragment {
         adapterOneCoin = new CommonRvAdapter();
         binding.rvOneCoin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.rvOneCoin.setAdapter(adapterOneCoin);
+
+        adapterCustomKeyword = new CommonRvAdapter();
+        binding.rvCustomKeyword.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        binding.rvCustomKeyword.setAdapter(adapterCustomKeyword);
     }
 
     private void initializeTabLayout() {
@@ -272,12 +282,102 @@ public class HomeFragment extends Fragment {
             List<TagMenuItem> menuList,
             int type) {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        TagMenuRvAdapter adapter = new TagMenuRvAdapter(type);
+        initializeMapping();
+        // 리스너 인터페이스 구현 변경
+        OnTagSelectedListener listener = new OnTagSelectedListener() {
+            @Override
+            public void onTagSelected(String tag) {
+                // 선택된 태그에 대한 데이터 로드
+                fetchWebtoonsForTag(tag);
+                Toast.makeText(getContext(), "선택됨: " + tag, Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        TagMenuRvAdapter adapter = new TagMenuRvAdapter(type, listener);
         recyclerView.setAdapter(adapter);
         adapter.submitList(menuList);
 
         adapter.setSelectedItem(0);
     }
+
+    private void fetchWebtoonsForTag(String tag) {
+        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+            @Override
+            public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    TopToonItems items = response.body();
+                    List<Integer> webtoonIds = getWebtoonIdsForTag(items, tag);
+                    List<TopToonItems.Webtoon> webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
+                    updateWebtoonRecyclerView(webtoons);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TopToonItems> call, Throwable t) {
+                // 네트워크 에러 처리
+            }
+        });
+    }
+
+    private List<TopToonItems.Webtoon> filterWebtoonsByIds(List<TopToonItems.Webtoon> webtoons, List<Integer> ids) {
+        return webtoons.stream().filter(w -> ids.contains(w.getId())).collect(Collectors.toList());
+    }
+
+    private void updateWebtoonRecyclerView(List<TopToonItems.Webtoon> webtoons) {
+        if (webtoons != null) {
+            List<CommonContentItem> items = new ArrayList<>();
+            for (TopToonItems.Webtoon webtoon : webtoons) {
+                items.add(new CommonContentItem(
+                        webtoon.getImageUrl(),
+                        webtoon.getTitle(),
+                        webtoon.getAuthor()
+                ));
+            }
+            // 가정: adapterWebtoon은 웹툰을 표시하는 RecyclerView의 어댑터
+            adapterCustomKeyword.submitList(items);
+        }
+    }
+
+    private void initializeMapping() {
+        tagToJsonKey = new HashMap<>();
+        tagToJsonKey.put("#인기작품", "popularWorks");
+        tagToJsonKey.put("#탑툰독점", "topToonExclusive");
+        tagToJsonKey.put("#매일무료", "dailyFree");
+        tagToJsonKey.put("#전체무료", "completelyFree");
+        tagToJsonKey.put("#핫한신작", "hotNewWorks");
+        tagToJsonKey.put("#리메이크", "remakes");
+        tagToJsonKey.put("#백만조회", "millionViews");
+        tagToJsonKey.put("#정주행각", "bingeWatching");
+
+    }
+
+    private List<Integer> getWebtoonIdsForTag(TopToonItems items, String tag) {
+        String jsonKey = tagToJsonKey.get(tag);
+        if (jsonKey != null) {
+            switch (jsonKey) {
+                case "popularWorks":
+                    return items.getCustomKeyword().getPopularWorks();
+                case "topToonExclusive":
+                    return items.getCustomKeyword().getToptoonExclusive();
+                case "dailyFree":
+                    return items.getCustomKeyword().getDailyFree();
+                case "completelyFree":
+                    return items.getCustomKeyword().getCompletelyFree();
+                case "hotNewWorks":
+                    return items.getCustomKeyword().getHotNewWorks();
+                case "remakes":
+                    return items.getCustomKeyword().getRemakes();
+                case "millionViews":
+                    return items.getCustomKeyword().getMillionViews();
+                case "bingeWatching":
+                    return items.getCustomKeyword().getBingeWatching();
+                default:
+                    return new ArrayList<>();
+            }
+        }
+        return new ArrayList<>();
+    }
+
 
 
     private List<TagMenuItem> createCustomKeywordMenu() {
@@ -314,7 +414,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
             }
         });
@@ -337,7 +437,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
             }
         });

@@ -31,7 +31,7 @@ public class TopToonItems {
     private String headerAd;
     private String freeAd;
     private String sectionAd;
-
+    private CustomKeyword customKeyword;
 
     // Getter and Setter
     public List<Webtoon> getWebtoons() { return webtoons; }
@@ -49,6 +49,9 @@ public class TopToonItems {
     public String getFreeAd() { return freeAd; }
 
     public String getSectionAd() { return sectionAd; }
+    public CustomKeyword getCustomKeyword() {
+        return customKeyword;
+    }
 
 
 
@@ -71,6 +74,46 @@ public class TopToonItems {
             return imageUrl;
         }
 
+    }
+
+    public static class CustomKeyword{
+        public List<Integer> getPopularWorks() {
+            return popularWorks;
+        }
+
+        public List<Integer> getToptoonExclusive() {
+            return toptoonExclusive;
+        }
+
+        public List<Integer> getDailyFree() {
+            return dailyFree;
+        }
+
+        public List<Integer> getCompletelyFree() {
+            return completelyFree;
+        }
+
+        public List<Integer> getHotNewWorks() {
+            return hotNewWorks;
+        }
+        public List<Integer> getRemakes() { return remakes; }
+
+        public List<Integer> getMillionViews() {
+            return millionViews;
+        }
+
+        public List<Integer> getBingeWatching() {
+            return bingeWatching;
+        }
+
+        private List<Integer> popularWorks;
+        private List<Integer> toptoonExclusive;
+        private List<Integer> dailyFree;
+        private List<Integer> completelyFree;
+        private List<Integer> hotNewWorks;
+        private List<Integer> remakes;
+        private List<Integer> millionViews;
+        private List<Integer> bingeWatching;
     }
 
     public static class Webtoon {
