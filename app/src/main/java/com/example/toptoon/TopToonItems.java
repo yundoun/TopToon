@@ -32,6 +32,7 @@ public class TopToonItems {
     private String freeAd;
     private String sectionAd;
     private CustomKeyword customKeyword;
+    private RecommendGenre recommendGenre;
 
     // Getter and Setter
     public List<Webtoon> getWebtoons() { return webtoons; }
@@ -52,6 +53,8 @@ public class TopToonItems {
     public CustomKeyword getCustomKeyword() {
         return customKeyword;
     }
+
+    public RecommendGenre getRecommendGenre(){return recommendGenre;}
 
 
 
@@ -114,6 +117,48 @@ public class TopToonItems {
         private List<Integer> remakes;
         private List<Integer> millionViews;
         private List<Integer> bingeWatching;
+    }
+    public static class RecommendGenre{
+        public List<Integer> getRomance() {
+            return romance;
+        }
+
+        public List<Integer> getDrama() {
+            return drama;
+        }
+
+        public List<Integer> getSchoolAction() {
+            return schoolAction;
+        }
+
+        public List<Integer> getOmnibus() {
+            return omnibus;
+        }
+
+        public List<Integer> getFantasySF() {
+            return fantasySF;
+        }
+
+        public List<Integer> getHorrorThriller() {
+            return horrorThriller;
+        }
+
+        public List<Integer> getComedy() {
+            return comedy;
+        }
+
+        public List<Integer> getMartialArts() {
+            return martialArts;
+        }
+
+        private List<Integer> romance;
+        private List<Integer> drama;
+        private List<Integer> schoolAction;
+        private List<Integer> omnibus;
+        private List<Integer> fantasySF;
+        private List<Integer> horrorThriller;
+        private List<Integer> comedy;
+        private List<Integer> martialArts;
     }
 
     public static class Webtoon {

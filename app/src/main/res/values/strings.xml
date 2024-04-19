@@ -30,6 +30,18 @@
         <item>#정주행각</item>
     </string-array>
 
+    <string-array name="custom_keyword_json">
+        <item>popularWorks</item>
+        <item>topToonExclusive</item>
+        <item>dailyFree</item>
+        <item>completelyFree</item>
+        <item>hotNewWorks</item>
+        <item>remakes</item>
+        <item>millionViews</item>
+        <item>bingeWatching</item>
+    </string-array>
+
+
     <string-array name="recommend_genre">
         <item>#로맨스</item>
         <item>#드라마</item>
@@ -39,6 +51,17 @@
         <item>#공포/스릴러</item>
         <item>#개그</item>
         <item>#무협</item>
+    </string-array>
+
+    <string-array name="recommend_genre_json">
+        <item>romance</item>
+        <item>drama</item>
+        <item>schoolAction</item>
+        <item>omnibus</item>
+        <item>fantasySF</item>
+        <item>horrorThriller</item>
+        <item>comedy</item>
+        <item>martialArts</item>
     </string-array>
 
 </resources>

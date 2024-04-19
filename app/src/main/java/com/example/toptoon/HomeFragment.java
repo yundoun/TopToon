@@ -3,7 +3,6 @@ package com.example.toptoon;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -42,10 +40,10 @@ public class HomeFragment extends Fragment {
     private CommonRvAdapter adapterFreeWait;
     private CommonRvAdapter adapterOneCoin;
     private CommonRvAdapter adapterCustomKeyword;
+    private CommonRvAdapter adapterRecommendGenre;
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
-    private Map<String, String> tagToJsonKey;
-
+    private Map<String, String> customKeywordTagToJsonKey, recommendGenreTagToJsonKey;
 
 
     @Nullable
@@ -59,18 +57,16 @@ public class HomeFragment extends Fragment {
     private void initializeComponents() {
         fetchSlideAds();
         setTabColor();
-        initializeTabLayout();
+        setupTabLayoutWithViewPager();
         setupAutoSlide();
         setSectionAd();
-        setupCommonRecyclerView();
-        initializeCommonRecyclerViews();
+        initializeRecyclerViews();
+        fetchAndDisplayCommonRecyclerView();
         setFreeAd();
         setupTagMenu();
 
-        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 226, getResources().getDisplayMetrics()),
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 137, getResources().getDisplayMetrics())
-        );
+        fetchWebtoonsForTag("#인기작품");
+        fetchWebtoonsForTag("#로맨스");
 
     }
 
@@ -184,7 +180,7 @@ public class HomeFragment extends Fragment {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
     }
 
-    private void initializeCommonRecyclerViews() {
+    private void fetchAndDisplayCommonRecyclerView() {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
@@ -245,21 +241,27 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void setupCommonRecyclerView() {
+
+    private void initializeRecyclerViews() {
         adapterFreeWait = new CommonRvAdapter();
-        binding.rvWaitFree.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.rvWaitFree.setAdapter(adapterFreeWait);
+        setupRecyclerView(binding.rvWaitFree, adapterFreeWait);
 
         adapterOneCoin = new CommonRvAdapter();
-        binding.rvOneCoin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.rvOneCoin.setAdapter(adapterOneCoin);
+        setupRecyclerView(binding.rvOneCoin, adapterOneCoin);
 
         adapterCustomKeyword = new CommonRvAdapter();
-        binding.rvCustomKeyword.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        binding.rvCustomKeyword.setAdapter(adapterCustomKeyword);
+        setupRecyclerView(binding.rvCustomKeyword, adapterCustomKeyword);
+
+        adapterRecommendGenre = new CommonRvAdapter();
+        setupRecyclerView(binding.rvRecommendGenre, adapterRecommendGenre);
     }
 
-    private void initializeTabLayout() {
+    private void setupRecyclerView(RecyclerView recyclerView, CommonRvAdapter adapter) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void setupTabLayoutWithViewPager() {
         binding.categoryViewPager.setAdapter(new TabManager(this));
         // TabLayout과 ViewPager2 연동
         new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager, this::setupTabTitles).attach();
@@ -275,6 +277,7 @@ public class HomeFragment extends Fragment {
     private void setupTagMenu() {
         TagMenuRecyclerViewWithAdapter(binding.rvCustomKeywordMenu, createCustomKeywordMenu(), 0);
         TagMenuRecyclerViewWithAdapter(binding.rvRecommendGenreMenu, createRecommendGenre(), 1);
+        initializeMapping();
     }
 
     private void TagMenuRecyclerViewWithAdapter(
@@ -282,7 +285,7 @@ public class HomeFragment extends Fragment {
             List<TagMenuItem> menuList,
             int type) {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        initializeMapping();
+
         // 리스너 인터페이스 구현 변경
         OnTagSelectedListener listener = new OnTagSelectedListener() {
             @Override
@@ -306,9 +309,18 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     TopToonItems items = response.body();
-                    List<Integer> webtoonIds = getWebtoonIdsForTag(items, tag);
-                    List<TopToonItems.Webtoon> webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
-                    updateWebtoonRecyclerView(webtoons);
+                    List<Integer> webtoonIds;
+                    List<TopToonItems.Webtoon> webtoons;
+
+                    if (customKeywordTagToJsonKey.containsKey(tag)) {
+                        webtoonIds = getWebtoonIdsForTag(items, tag);
+                        webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
+                        updateWebtoonRecyclerView(webtoons, adapterCustomKeyword);
+                    } else if (recommendGenreTagToJsonKey.containsKey(tag)) {
+                        webtoonIds = getWebtoonIdsForGenre(items, tag);
+                        webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
+                        updateWebtoonRecyclerView(webtoons, adapterRecommendGenre);
+                    }
                 }
             }
 
@@ -323,36 +335,35 @@ public class HomeFragment extends Fragment {
         return webtoons.stream().filter(w -> ids.contains(w.getId())).collect(Collectors.toList());
     }
 
-    private void updateWebtoonRecyclerView(List<TopToonItems.Webtoon> webtoons) {
+    private void updateWebtoonRecyclerView(List<TopToonItems.Webtoon> webtoons, CommonRvAdapter adapter) {
         if (webtoons != null) {
             List<CommonContentItem> items = new ArrayList<>();
             for (TopToonItems.Webtoon webtoon : webtoons) {
-                items.add(new CommonContentItem(
-                        webtoon.getImageUrl(),
-                        webtoon.getTitle(),
-                        webtoon.getAuthor()
-                ));
+                items.add(new CommonContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor()));
             }
-            // 가정: adapterWebtoon은 웹툰을 표시하는 RecyclerView의 어댑터
-            adapterCustomKeyword.submitList(items);
+            adapter.submitList(items);
         }
     }
 
-    private void initializeMapping() {
-        tagToJsonKey = new HashMap<>();
-        tagToJsonKey.put("#인기작품", "popularWorks");
-        tagToJsonKey.put("#탑툰독점", "topToonExclusive");
-        tagToJsonKey.put("#매일무료", "dailyFree");
-        tagToJsonKey.put("#전체무료", "completelyFree");
-        tagToJsonKey.put("#핫한신작", "hotNewWorks");
-        tagToJsonKey.put("#리메이크", "remakes");
-        tagToJsonKey.put("#백만조회", "millionViews");
-        tagToJsonKey.put("#정주행각", "bingeWatching");
 
+    private void initializeMapping() {
+        customKeywordTagToJsonKey = new HashMap<>();
+        recommendGenreTagToJsonKey = new HashMap<>();
+        String[] customKeywordTags = getResources().getStringArray(R.array.custom_keyword);
+        String[] customKeywordJsonKeys = getResources().getStringArray(R.array.custom_keyword_json);
+        String[] recommendGenreTags = getResources().getStringArray(R.array.recommend_genre);
+        String[] recommendGenreJsonKeys = getResources().getStringArray(R.array.recommend_genre_json);
+
+        for (int i = 0; i < customKeywordTags.length; i++) {
+            customKeywordTagToJsonKey.put(customKeywordTags[i], customKeywordJsonKeys[i]);
+        }
+        for (int i = 0; i < recommendGenreTags.length; i++) {
+            recommendGenreTagToJsonKey.put(recommendGenreTags[i], recommendGenreJsonKeys[i]);
+        }
     }
 
     private List<Integer> getWebtoonIdsForTag(TopToonItems items, String tag) {
-        String jsonKey = tagToJsonKey.get(tag);
+        String jsonKey = customKeywordTagToJsonKey.get(tag);
         if (jsonKey != null) {
             switch (jsonKey) {
                 case "popularWorks":
@@ -378,6 +389,30 @@ public class HomeFragment extends Fragment {
         return new ArrayList<>();
     }
 
+    private List<Integer> getWebtoonIdsForGenre(TopToonItems items, String tag) {
+        String jsonKey = recommendGenreTagToJsonKey.get(tag);
+        if (jsonKey != null) {
+            switch (jsonKey) {
+                case "romance":
+                    return items.getRecommendGenre().getRomance();
+                case "drama":
+                    return items.getRecommendGenre().getDrama();
+                case "schoolAction":
+                    return items.getRecommendGenre().getSchoolAction();
+                case "omnibus":
+                    return items.getRecommendGenre().getOmnibus();
+                case "fantasySF":
+                    return items.getRecommendGenre().getFantasySF();
+                case "horrorThriller":
+                    return items.getRecommendGenre().getHorrorThriller();
+                case "comedy":
+                    return items.getRecommendGenre().getComedy();
+                case "martialArts":
+                    return items.getRecommendGenre().getMartialArts();
+            }
+        }
+        return new ArrayList<>();
+    }
 
 
     private List<TagMenuItem> createCustomKeywordMenu() {
