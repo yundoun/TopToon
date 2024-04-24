@@ -3,6 +3,7 @@ package com.example.toptoon;
 import android.annotation.SuppressLint;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -66,6 +67,9 @@ public class TabRvAdapter extends ListAdapter<TabContentItem, TabRvAdapter.TabRv
             binding.tvEpisode.setText(tabContentItem.getLatestEpisode());
             binding.tvViews.setText(tabContentItem.getViews());
             binding.tvTitle.setText(tabContentItem.getTitle());
+
+            // 가시성 설정
+            binding.ivHits.setVisibility(tabContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
         }
     }
 }

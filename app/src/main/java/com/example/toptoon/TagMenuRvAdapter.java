@@ -1,6 +1,7 @@
 package com.example.toptoon;
 
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -90,6 +91,7 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
             // Notify the listener
             if (listener != null) {
                 listener.onTagSelected(menu.getTitle());
+                System.out.println("클릭 이벤트 테스트");
             }
         });
     }
@@ -102,7 +104,7 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
             // Update for not selected
         }
     }
-    
+
     static class TagMenuViewHolder extends RecyclerView.ViewHolder {
         private final TagMenuRvRowBinding binding;
 
