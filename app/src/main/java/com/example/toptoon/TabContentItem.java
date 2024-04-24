@@ -1,6 +1,33 @@
 package com.example.toptoon;
 
+import java.util.Objects;
+
 public class TabContentItem {
+
+//equals(): 이 메소드는 두 객체의 내용이 동일한지 비교합니다. 각 필드가 같은지 확인하며, boolean과 String 타입의 필드 모두를 비교합니다.
+//hashCode(): 객체의 해시코드를 반환합니다. 객체의 동등성을 판단하는데 사용되며, equals() 메소드에서 사용된 모든 필드를 기반으로 해시코드를 계산해야 합니다.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TabContentItem that = (TabContentItem) o;
+        return isNew == that.isNew &&
+                isDiscounted == that.isDiscounted &&
+                isExclusive == that.isExclusive &&
+                waitFree == that.waitFree &&
+                recentlyUpdated == that.recentlyUpdated &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(author, that.author) &&
+                Objects.equals(latestEpisode, that.latestEpisode) &&
+                Objects.equals(views, that.views) &&
+                Objects.equals(imageUrl, that.imageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, author, latestEpisode, views, isNew, isDiscounted, isExclusive, waitFree, recentlyUpdated, imageUrl);
+    }
+
     public TabContentItem(String title, String author, String latestEpisode,
                           String views, boolean isNew, boolean isDiscounted,
                           boolean isExclusive, boolean waitFree, boolean recentlyUpdated,

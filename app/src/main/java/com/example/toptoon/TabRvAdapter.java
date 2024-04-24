@@ -61,7 +61,7 @@ public class TabRvAdapter extends ListAdapter<TabContentItem, TabRvAdapter.TabRv
         public void bind(TabContentItem tabContentItem, String rank){
             Glide.with(itemView.getContext())
                     .load(tabContentItem.getImageUrl()) // 이미지 URL 사용
-                    .into(binding.ivTabLive);
+                    .into(binding.ivTabWebtoon);
 
             binding.tvRank.setText(rank); // Rank 값을 설정
             binding.tvEpisode.setText(tabContentItem.getLatestEpisode());
@@ -70,6 +70,10 @@ public class TabRvAdapter extends ListAdapter<TabContentItem, TabRvAdapter.TabRv
 
             // 가시성 설정
             binding.ivHits.setVisibility(tabContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
+            binding.ivNew.setVisibility(tabContentItem.isNew() ? View.VISIBLE : View.GONE );
+            binding.ivDiscounted.setVisibility(tabContentItem.isDiscounted() ? View.VISIBLE : View.GONE );
+            binding.ivUpdate.setVisibility(tabContentItem.isRecentlyUpdated() ? View.VISIBLE : View.GONE );
+            binding.ivExclusive.setVisibility(tabContentItem.isExclusive() ? View.VISIBLE : View.GONE );
         }
     }
 }
