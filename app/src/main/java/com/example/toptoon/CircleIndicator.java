@@ -1,20 +1,25 @@
 package com.example.toptoon;
 
 import android.content.Context;
+import android.util.Log;
 import android.util.TypedValue;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.util.AttributeSet;
+
+import com.example.toptoon.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CircleIndicator extends LinearLayout {
 
-    private Context mContext;
+    private final Context mContext;
 
     private int mDefaultCircle;
     private int mSelectCircle;
+    private FragmentHomeBinding binding;
 
     private List<ImageView> imageDot = new ArrayList<>();
 
@@ -41,7 +46,6 @@ public class CircleIndicator extends LinearLayout {
      */
     public void createDotPanel(int count, int defaultCircle, int selectCircle, int position) {
         this.removeAllViews();
-
         mDefaultCircle = defaultCircle;
         mSelectCircle = selectCircle;
 
@@ -68,6 +72,15 @@ public class CircleIndicator extends LinearLayout {
             } else {
                 imageDot.get(i).setImageResource(mDefaultCircle);
             }
+        }
+    }
+
+    public void clearDotPanel() {
+        if (binding != null) {
+            binding.slideIndicator.removeAllViews();
+            this.removeAllViews();
+            imageDot.clear();
+            Log.d("CircleIndicator", "인디케이터 지우기");
         }
     }
 }

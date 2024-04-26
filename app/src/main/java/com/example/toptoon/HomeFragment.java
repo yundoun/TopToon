@@ -126,6 +126,10 @@ public class HomeFragment extends Fragment {
 
     private void initializeSlider(List<String> ImageUrls) {
 
+        if (!isAdded() || binding == null) {
+            return; // Stop initialization if the Fragment is not properly attached or if the binding is null.
+        }
+
         vpAutoSlide = binding.vpAutoSlide;
         SlideImageAdapter adapter1 = new SlideImageAdapter(getContext(), ImageUrls);
         vpAutoSlide.setAdapter(adapter1);
@@ -135,6 +139,13 @@ public class HomeFragment extends Fragment {
 
         // 인디케이터 초기화
         CircleIndicator circleIndicator = binding.slideIndicator;
+        Log.println(Log.INFO, "HomeFragment", "인디케이터 초기화 발생 길이: " + imagesLength);
+
+        // 기존 인디케이터 점들을 삭제
+        circleIndicator.clearDotPanel();
+
+        binding.slideIndicator.removeAllViews();
+
         // 실제 이미지 수에 맞게 점 개수를 조정
         circleIndicator.createDotPanel(imagesLength, R.drawable.indicator_unselected, R.drawable.indicator_selected, 0);
 
