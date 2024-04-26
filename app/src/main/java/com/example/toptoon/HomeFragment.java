@@ -292,7 +292,6 @@ public class HomeFragment extends Fragment {
             public void onTagSelected(String tag) {
                 // 선택된 태그에 대한 데이터 로드
                 fetchWebtoonsForTag(tag);
-                Toast.makeText(getContext(), "선택됨: " + tag, Toast.LENGTH_SHORT).show();
             }
         };
 

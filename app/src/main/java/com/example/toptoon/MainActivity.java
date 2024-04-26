@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -19,12 +20,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMainMenuSelectedListener {
 
     private ActivityMainBinding binding;
-    TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
-    Call<TopToonItems> call = service.getTopToonItems();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +33,26 @@ public class MainActivity extends AppCompatActivity {
         setHeaderAd();
         setupMainMenu();
         displayHomeFragment();
-
+        clickMainLogo();
     }
 
-    private void setHeaderAd(){
+
+    private void setHeaderAd() {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
             public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
-                if(response.isSuccessful() && response.body() != null){
+                if (response.isSuccessful() && response.body() != null) {
                     String headerAdUrl = response.body()
                             .getHeaderAd();
                     Log.println(Log.INFO, "MainActivity", "headerAdUrl: " + headerAdUrl);
-                    if(headerAdUrl != null && !headerAdUrl.isEmpty()){
+                    if (headerAdUrl != null && !headerAdUrl.isEmpty()) {
                         Glide.with(MainActivity.this)
                                 .load(headerAdUrl)
                                 .into(binding.ivHeaderAd);
                     }
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "MainActivity", "onFailure: " + t.getMessage());
@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         MainMenuRvAdapter adapter = new MainMenuRvAdapter();
         binding.rvMainMenu.setAdapter(adapter);
+        adapter.setListener(this);
         List<MainMenuItem> menuList = createMenuItems(); // 메뉴 아이템 데이터 리스트 생성
         adapter.submitList(menuList); // 데이터 설정
     }
@@ -90,4 +91,44 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit(); // 변경사항을 커밋하여 적용
     }
 
+    public void clickMainLogo() {
+        binding.ivLogo.setOnClickListener(v -> {
+            // 현재 활성화된 프래그먼트가 HomeFragment가 아니라면 교체
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (!(currentFragment instanceof HomeFragment)) {
+                displayHomeFragment();
+            }
+        });
+    }
+
+    @Override
+    public void onMainMenuSelected(String menu) {
+        // 여기서 메뉴 항목 선택 처리
+        // 예: 프래그먼트 전환
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        if (menu.equals("연재")) {
+            transaction.replace(R.id.fragmentContainer, new SerialFragment());
+            transaction.addToBackStack(null);
+        }
+        else if (menu.equals("TOP100")){
+            transaction.replace(R.id.fragmentContainer, new Top100Fragment());
+            transaction.addToBackStack(null);
+        }
+//        else if (menu.equals("완결")){
+//            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+//            transaction.addToBackStack(null);
+//        }
+//        else if (menu.equals("추천무료")){
+//            transaction.replace(R.id.fragmentContainer, new GenreFragment());
+//            transaction.addToBackStack(null);
+//        }
+//        else if (menu.equals("전연령")){
+//            transaction.replace(R.id.fragmentContainer, new SearchFragment());
+//            transaction.addToBackStack(null);
+//
+//        }
+        // 다른 메뉴 항목에 대한 추가 체크 및 해당 프래그먼트로 교체
+        transaction.commit();
+    }
 }

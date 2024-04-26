@@ -14,8 +14,8 @@ import com.example.toptoon.databinding.TagMenuRvRowBinding;
 
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {
     private int selectedPos = RecyclerView.NO_POSITION;
-    private OnTagSelectedListener listener;
-    private int type; // 0 for default, 1 for custom
+    private final OnTagSelectedListener listener;
+    private final int type; // 0 for default, 1 for custom
 
     protected TagMenuRvAdapter(int type, OnTagSelectedListener listener) {
         super(new DiffUtil.ItemCallback<TagMenuItem>() {
@@ -45,8 +45,6 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
     public void onBindViewHolder(@NonNull TagMenuRvAdapter.TagMenuViewHolder holder, int position) {
         TagMenuItem menu = getItem(position);
         holder.binding.tvTagMenu.setText(menu.getTitle());
-
-        updateSelection(holder, position);
 
         // 현재 위치가 선택된 위치인지
         if (selectedPos == position) {
@@ -91,18 +89,9 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
             // Notify the listener
             if (listener != null) {
                 listener.onTagSelected(menu.getTitle());
-                System.out.println("클릭 이벤트 테스트");
+                Log.println(Log.INFO, "TagMenuRvAdapter", "Selected tag: " + menu.getTitle());
             }
         });
-    }
-
-
-    private void updateSelection(TagMenuViewHolder holder, int position) {
-        if (selectedPos == position) {
-            // Update for selected
-        } else {
-            // Update for not selected
-        }
     }
 
     static class TagMenuViewHolder extends RecyclerView.ViewHolder {

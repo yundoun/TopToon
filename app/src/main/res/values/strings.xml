@@ -64,4 +64,14 @@
         <item>martialArts</item>
     </string-array>
 
+    <string-array name="weekdays">
+        <item>월요일</item>
+        <item>화요일</item>
+        <item>수요일</item>
+        <item>목요일</item>
+        <item>금요일</item>
+        <item>토요일</item>
+        <item>일요일</item>
+    </string-array>
+
 </resources>
