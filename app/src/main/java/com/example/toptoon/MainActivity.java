@@ -79,18 +79,25 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     }
 
     private void displayHomeFragment() {
-        // HomeFragment 인스턴스 생성
-        HomeFragment homeFragment = new HomeFragment();
-
-        // FragmentManager를 사용하여 FragmentTransaction을 시작
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        // FragmentTransaction을 사용하여 FragmentContainerView에 HomeFragment 추가
-        fragmentTransaction.add(R.id.fragmentContainer, homeFragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit(); // 변경사항을 커밋하여 적용
+        // HomeFragment를 찾거나 없으면 새로 생성
+        HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag("HOME_FRAGMENT");
+        if (homeFragment == null) {
+            homeFragment = new HomeFragment();
+            fragmentTransaction.add(R.id.fragmentContainer, homeFragment, "HOME_FRAGMENT");
+        } else {
+            // 이미 HomeFragment가 추가된 경우에는 replace하지 않고 그대로 두거나 필요에 따라 refresh할 수 있음
+            fragmentTransaction.replace(R.id.fragmentContainer, homeFragment, "HOME_FRAGMENT");
+        }
+
+        // 백스택에서 현재 프래그먼트 제거 (HomeFragment가 기본 화면이므로 백스택 필요 없음)
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        fragmentTransaction.commit();
     }
+
 
     public void clickMainLogo() {
         binding.ivLogo.setOnClickListener(v -> {
