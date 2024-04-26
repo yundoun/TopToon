@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         // FragmentTransaction을 사용하여 FragmentContainerView에 HomeFragment 추가
         fragmentTransaction.add(R.id.fragmentContainer, homeFragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit(); // 변경사항을 커밋하여 적용
     }
 

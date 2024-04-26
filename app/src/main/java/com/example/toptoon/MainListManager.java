@@ -5,8 +5,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-public class MainMenuManager extends FragmentStateAdapter {
-    public MainMenuManager(@NonNull SerialFragment fragmentActivity) {
+public class MainListManager extends FragmentStateAdapter {
+    public MainListManager(@NonNull SerialFragment fragmentActivity) {
         super(fragmentActivity);
     }
 
@@ -15,23 +15,23 @@ public class MainMenuManager extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new MondayFragment();
+                return new MainListFragment();
             case 1:
-                return new MondayFragment();
+                return new MainListFragment();
             case 2:
-                return new MondayFragment();
+                return new MainListFragment();
             case 3:
-                return new MondayFragment();
+                return new MainListFragment();
             case 4:
-                return new MondayFragment();
+                return new MainListFragment();
             case 5:
-                return new MondayFragment();
+                return new MainListFragment();
             case 6:
-                return new MondayFragment();
+                return new MainListFragment();
             case 7:
-                return new MondayFragment();
+                return new MainListFragment();
             case 8:
-                return new MondayFragment();
+                return new MainListFragment();
             default:
                 return null; // 이 경우가 발생하지 않도록 주의
         }
