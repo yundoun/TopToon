@@ -118,20 +118,27 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         if (menu.equals("연재")) {
             transaction.replace(R.id.fragmentContainer, new SerialFragment());
             transaction.addToBackStack(null);
-        }
-        else if (menu.equals("TOP100")){
+        } else if (menu.equals("TOP100")) {
             transaction.replace(R.id.fragmentContainer, new Top100Fragment());
             transaction.addToBackStack(null);
-        }
-//        else if (menu.equals("완결")){
+        } else if (menu.equals("신작")) {
+            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+            transaction.addToBackStack(null);
+        } else if (menu.equals("완결")) {
+            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+            transaction.addToBackStack(null);
+//        } else if (menu.equals("추천무료")) {
+//            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+//            transaction.addToBackStack(null);
+//        } else if (menu.equals("전연령")) {
 //            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
 //            transaction.addToBackStack(null);
 //        }
-//        else if (menu.equals("추천무료")){
+//        else if (menu.equals("탑툰쇼츠")){
 //            transaction.replace(R.id.fragmentContainer, new GenreFragment());
 //            transaction.addToBackStack(null);
 //        }
-//        else if (menu.equals("전연령")){
+//        else if (menu.equals("출석체크")){
 //            transaction.replace(R.id.fragmentContainer, new SearchFragment());
 //            transaction.addToBackStack(null);
 //
