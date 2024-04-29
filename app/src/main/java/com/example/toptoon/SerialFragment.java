@@ -22,7 +22,7 @@ public class SerialFragment extends Fragment {
     }
 
     private void initializeComponents() {
-        binding.vpSerial.setAdapter(new MainListManager(this));
+        binding.vpSerial.setAdapter(new SerialListManager(this));
         new TabLayoutMediator(binding.tlSerial, binding.vpSerial, this::setUpTabTitles).attach();
     }
 

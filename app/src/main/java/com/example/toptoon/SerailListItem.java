@@ -1,10 +1,8 @@
 package com.example.toptoon;
 
-import java.util.Objects;
+public class SerailListItem {
 
-public class MainListItem {
-
-    public MainListItem(String title, int imageResourceId, String latestEpisode, String views) {
+    public SerailListItem(String title, int imageResourceId, String latestEpisode, String views) {
         this.title = title;
         this.imageResourceId = imageResourceId;
         this.latestEpisode = latestEpisode;

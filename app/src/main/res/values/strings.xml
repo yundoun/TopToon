@@ -75,4 +75,11 @@
         <item>리메이크</item>
     </string-array>
 
+    <string-array name="TOP100">
+        <item>주간</item>
+        <item>월간</item>
+        <item>신작</item>
+        <item>할인</item>
+    </string-array>
+
 </resources>
