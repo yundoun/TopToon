@@ -35,30 +35,60 @@ public class TopToonItems {
     private RecommendGenre recommendGenre;
 
     // Getter and Setter
-    public List<Webtoon> getWebtoons() { return webtoons; }
-    public List<Integer> getTabRealTime() { return tabRealTime; }
-    public List<Integer> getTabNew() { return tabNew; }
-    public List<Integer> getTabSale() { return tabSale; }
-    public List<Integer> getWaitFree() { return waitFree; }
-    public List<Integer> getOneCoin() { return oneCoin; }
-    public List<SlideAd> getSlideAd() { return slideAd; }
+    public List<Webtoon> getWebtoons() {
+        return webtoons;
+    }
 
-    public List<Event> getEvent() { return event; }
+    public List<Integer> getTabRealTime() {
+        return tabRealTime;
+    }
 
-    public String getHeaderAd() { return headerAd; }
+    public List<Integer> getTabNew() {
+        return tabNew;
+    }
 
-    public String getFreeAd() { return freeAd; }
+    public List<Integer> getTabSale() {
+        return tabSale;
+    }
 
-    public String getSectionAd() { return sectionAd; }
+    public List<Integer> getWaitFree() {
+        return waitFree;
+    }
+
+    public List<Integer> getOneCoin() {
+        return oneCoin;
+    }
+
+    public List<SlideAd> getSlideAd() {
+        return slideAd;
+    }
+
+    public List<Event> getEvent() {
+        return event;
+    }
+
+    public String getHeaderAd() {
+        return headerAd;
+    }
+
+    public String getFreeAd() {
+        return freeAd;
+    }
+
+    public String getSectionAd() {
+        return sectionAd;
+    }
+
     public CustomKeyword getCustomKeyword() {
         return customKeyword;
     }
 
-    public RecommendGenre getRecommendGenre(){return recommendGenre;}
+    public RecommendGenre getRecommendGenre() {
+        return recommendGenre;
+    }
 
 
-
-    // Inner Classes
+    // 내부 클래스
 
     public static class SlideAd {
         private String imageUrl;
@@ -79,7 +109,7 @@ public class TopToonItems {
 
     }
 
-    public static class CustomKeyword{
+    public static class CustomKeyword {
         public List<Integer> getPopularWorks() {
             return popularWorks;
         }
@@ -99,7 +129,10 @@ public class TopToonItems {
         public List<Integer> getHotNewWorks() {
             return hotNewWorks;
         }
-        public List<Integer> getRemakes() { return remakes; }
+
+        public List<Integer> getRemakes() {
+            return remakes;
+        }
 
         public List<Integer> getMillionViews() {
             return millionViews;
@@ -118,7 +151,8 @@ public class TopToonItems {
         private List<Integer> millionViews;
         private List<Integer> bingeWatching;
     }
-    public static class RecommendGenre{
+
+    public static class RecommendGenre {
         public List<Integer> getRomance() {
             return romance;
         }
@@ -166,6 +200,7 @@ public class TopToonItems {
         public int getId() {
             return id;
         }
+
         public String getTitle() {
             return title;
         }

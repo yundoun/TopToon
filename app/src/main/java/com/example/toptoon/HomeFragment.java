@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
     private void fetchSlideAds() {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
-            public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     TopToonItems items = response.body();
                     Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "데이터를 받아오는 데 실패함");
             }
         });
@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
     private void initializeSlider(List<String> ImageUrls) {
 
         if (!isAdded() || binding == null) {
-            return; // Stop initialization if the Fragment is not properly attached or if the binding is null.
+            return;
         }
 
         vpAutoSlide = binding.vpAutoSlide;
@@ -316,7 +316,7 @@ public class HomeFragment extends Fragment {
     private void fetchWebtoonsForTag(String tag) {
         NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
             @Override
-            public void onResponse(Call<TopToonItems> call, Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     TopToonItems items = response.body();
                     List<Integer> webtoonIds;
@@ -335,7 +335,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TopToonItems> call, Throwable t) {
+            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
                 // 네트워크 에러 처리
             }
         });
@@ -425,6 +425,7 @@ public class HomeFragment extends Fragment {
     }
 
 
+    @NonNull
     private List<TagMenuItem> createCustomKeywordMenu() {
         List<TagMenuItem> menuList = new ArrayList<>();
         for (String item : getResources().getStringArray(R.array.custom_keyword)) {
@@ -433,6 +434,7 @@ public class HomeFragment extends Fragment {
         return menuList;
     }
 
+    @NonNull
     private List<TagMenuItem> createRecommendGenre() {
         List<TagMenuItem> menuList = new ArrayList<>();
         for (String item : getResources().getStringArray(R.array.recommend_genre)) {

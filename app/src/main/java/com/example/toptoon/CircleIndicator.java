@@ -63,7 +63,6 @@ public class CircleIndicator extends LinearLayout {
 
     /**
      * 선택된 점 표시
-     * @param position
      */
     public void selectDot(int position) {
         for (int i = 0; i < imageDot.size(); i++) {

@@ -1,9 +1,9 @@
 package com.example.toptoon;
 
 public class CommonContentItem {
-    private String imageUrl;
-    private String title;
-    private String author;
+    private final String imageUrl;
+    private final String title;
+    private final String author;
 
     public CommonContentItem(String imageUrl, String title, String author) {
         this.imageUrl = imageUrl;
