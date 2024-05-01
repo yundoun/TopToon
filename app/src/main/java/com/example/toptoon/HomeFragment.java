@@ -1,5 +1,6 @@
 package com.example.toptoon;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -51,6 +52,32 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         initializeComponents();
+
+
+        // 페이지 마진을 설정합니다.
+        int pageMarginPx = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
+        int offsetPx = getResources().getDimensionPixelOffset(R.dimen.offset);
+        binding.vpAutoSlide.setClipToPadding(false);
+        binding.vpAutoSlide.setClipChildren(false);
+        binding.vpAutoSlide.setOffscreenPageLimit(3);
+        binding.vpAutoSlide.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
+        binding.vpAutoSlide.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                outRect.right = pageMarginPx;
+                outRect.left = pageMarginPx;
+            }
+        });
+
+// 페이지 변환 애니메이션을 설정합니다.
+        binding.vpAutoSlide.setPageTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float v = 1 - Math.abs(position);
+                page.setScaleY(0.8f + v * 0.2f);
+            }
+        });
+
         return binding.getRoot();
     }
 

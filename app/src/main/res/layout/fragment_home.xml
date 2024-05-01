@@ -138,7 +138,7 @@
 
     <ImageView
         android:id="@+id/ivFreeAd"
-        android:layout_width="394dp"
+        android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
