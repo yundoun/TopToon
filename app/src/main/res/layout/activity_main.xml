@@ -16,7 +16,7 @@
             android:id="@+id/ivHeaderAd"
             android:layout_width="match_parent"
             android:layout_height="57.5dp"
-            android:background="#00008B"
+            android:background="@color/headerAdd"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

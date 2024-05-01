@@ -124,19 +124,9 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         } else if (menu.equals("신작")) {
             transaction.replace(R.id.fragmentContainer, new CompleteFragment());
             transaction.addToBackStack(null);
-<<<<<<< Updated upstream
-        }
-//        else if (menu.equals("완결")) {
-//            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
-//            transaction.addToBackStack(null);
-//        } else if (menu.equals("추천무료")) {
-=======
-        } else if (menu.equals("완결")) {
-            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
-            transaction.addToBackStack(null);
+
         }
 //        else if (menu.equals("추천무료")) {
->>>>>>> Stashed changes
 //            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
 //            transaction.addToBackStack(null);
 //        } else if (menu.equals("전연령")) {

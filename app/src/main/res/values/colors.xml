@@ -45,4 +45,8 @@
     <color name="violet">#8B00FF</color>
     <color name="light_violet">#B266FF</color>
     <color name="dark_violet">#5A009D</color>
+
+    <color name="headerAdd">#0D1226</color>
+    <color name="freeAdd">#FEE4DD</color>
+    <color name="sectionAdd">#F2437E</color>
 </resources>

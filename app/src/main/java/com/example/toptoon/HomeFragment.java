@@ -51,34 +51,12 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        initializeComponents();
-
-
-        // 페이지 마진을 설정합니다.
-        int pageMarginPx = getResources().getDimensionPixelOffset(R.dimen.pageMargin);
-        int offsetPx = getResources().getDimensionPixelOffset(R.dimen.offset);
-        binding.vpAutoSlide.setClipToPadding(false);
-        binding.vpAutoSlide.setClipChildren(false);
-        binding.vpAutoSlide.setOffscreenPageLimit(3);
-        binding.vpAutoSlide.getChildAt(0).setOverScrollMode(View.OVER_SCROLL_NEVER);
-        binding.vpAutoSlide.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                outRect.right = pageMarginPx;
-                outRect.left = pageMarginPx;
-            }
-        });
-
-// 페이지 변환 애니메이션을 설정합니다.
-        binding.vpAutoSlide.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float v = 1 - Math.abs(position);
-                page.setScaleY(0.8f + v * 0.2f);
-            }
-        });
-
         return binding.getRoot();
+    }
+
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initializeComponents();
     }
 
     private void initializeComponents() {
@@ -86,6 +64,7 @@ public class HomeFragment extends Fragment {
         setTabColor();
         setupTabLayoutWithViewPager();
         setupAutoSlide();
+        configureViewPager();
         setSectionAd();
         initializeRecyclerViews();
         fetchAndDisplayCommonRecyclerView();
@@ -216,6 +195,18 @@ public class HomeFragment extends Fragment {
 
     private int calculateNextItemPosition(int imagesLength) {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
+    }
+
+    private void configureViewPager() {
+        if (vpAutoSlide != null) {
+            int padding = (int) (getResources().getDisplayMetrics().widthPixels * 0.10);
+            vpAutoSlide.setPadding(padding, 0, padding, 0);
+            vpAutoSlide.setClipToPadding(false);
+            vpAutoSlide.setClipChildren(false);
+            vpAutoSlide.setOffscreenPageLimit(1);
+        } else {
+            Log.e("ViewPager2 Setup", "ViewPager2 is null");
+        }
     }
 
     private void fetchAndDisplayCommonRecyclerView() {
