@@ -1,6 +1,5 @@
 package com.example.toptoon.Fragment;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -15,7 +14,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -82,12 +80,13 @@ public class HomeFragment extends Fragment {
         setupViewPager(binding.categoryViewPager, screenWidth / 5, 4, 20, true);  // 페이지 변형 적용
         setupViewPager(binding.vpAutoSlide, screenWidth > 1080 ? screenWidth / 3 : 0, 5, 20, false);  // 페이지 변형 미적용
         setupViewPager(binding.vpEvent, screenWidth > 1080 ? screenWidth / 2 : screenWidth / 5, 2, 20, false);  // 페이지 변형 미적용
-        
+
         binding.categoryViewPager.post(new Runnable() {
             @Override
             public void run() {
                 // 첫 번째 페이지가 로드되면 약간 오른쪽으로 스크롤하여 옆 페이지를 보이게 함
-                binding.categoryViewPager.setCurrentItem(1, false);
+                // 0 번째 탭부터 시작
+                binding.categoryViewPager.setCurrentItem(0, false);
                 binding.categoryViewPager.scrollTo(binding.categoryViewPager.getScrollX(), 0);
             }
         });
@@ -105,7 +104,7 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void transformPage(@NonNull View page, float position) {
                     final float MIN_SCALE = 0.9f;
-                    final float MIN_ALPHA = 0.7f;
+                    final float MIN_ALPHA = 0.5f;
                     if (position < -1 || position > 1) {
                         page.setAlpha(0);
                     } else {
@@ -127,7 +126,6 @@ public class HomeFragment extends Fragment {
         setTabColor();
         setupTabLayoutWithViewPager();
         setupAutoSlide();
-        configureViewPager();
         setSectionAd();
         initializeRecyclerViews();
         fetchAndDisplayCommonRecyclerView();
@@ -260,18 +258,6 @@ public class HomeFragment extends Fragment {
 
     private int calculateNextItemPosition(int imagesLength) {
         return ((Integer.MAX_VALUE / 2) - ((Integer.MAX_VALUE / 2) % imagesLength)) + currentItem;
-    }
-
-    private void configureViewPager() {
-        if (vpAutoSlide != null) {
-            int padding = (int) (getResources().getDisplayMetrics().widthPixels * 0.10);
-            vpAutoSlide.setPadding(padding, 0, padding, 0);
-            vpAutoSlide.setClipToPadding(false);
-            vpAutoSlide.setClipChildren(false);
-            vpAutoSlide.setOffscreenPageLimit(1);
-        } else {
-            Log.e("ViewPager2 Setup", "ViewPager2 is null");
-        }
     }
 
     private void fetchAndDisplayCommonRecyclerView() {

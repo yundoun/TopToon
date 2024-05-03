@@ -19,14 +19,16 @@ public class TabManager extends FragmentStateAdapter {
     @Override
     public Fragment createFragment(int position) {
         switch (position) {
+
+            case 0:
+            default:
+                return new TabRealTime(); // 기본값
             case 1:
                 return new TabNewItem();
             case 2:
                 return new TabSale();
             case 3:
                 return new TabMine();
-            default:
-                return new TabRealTime(); // 기본값
         }
     }
 

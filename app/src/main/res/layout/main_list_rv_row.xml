@@ -42,33 +42,71 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="3dp"
             android:text="제1200화"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvListTitle" />
 
         <ImageView
             android:id="@+id/ivListLook"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             app:layout_constraintStart_toEndOf="@+id/tvLatestEpisode"
+            app:layout_constraintTop_toBottomOf="@+id/tvListTitle"
             app:srcCompat="@drawable/icon_look" />
 
         <TextView
             android:id="@+id/tvListViews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="3dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="3dp"
             android:text="34만"
             android:textSize="10dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivListLook" />
+            app:layout_constraintStart_toEndOf="@+id/ivListLook"
+            app:layout_constraintTop_toBottomOf="@+id/tvListTitle" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="28dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            app:srcCompat="@drawable/icon_new" />
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="28dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="160dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/icon_exclusive" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="28dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            app:srcCompat="@drawable/icon_discounted" />
+
+        <ImageView
+            android:id="@+id/imageView8"
+            android:layout_width="28dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toEndOf="@+id/imageView7"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            app:srcCompat="@drawable/icon_hits" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

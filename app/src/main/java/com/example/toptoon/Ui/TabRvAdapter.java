@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Ui;
 
 import android.view.LayoutInflater;
 import android.view.View;

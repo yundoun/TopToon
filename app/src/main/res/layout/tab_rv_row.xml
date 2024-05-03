@@ -17,6 +17,7 @@
             android:id="@+id/ivTabWebtoon"
             android:layout_width="100dp"
             android:layout_height="60dp"
+            android:layout_marginStart="5dp"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +25,7 @@
 
         <ImageView
             android:id="@+id/ivExclusive"
-            android:layout_width="32dp"
+            android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginBottom="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,11 +49,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="1dp"
             android:gravity="center|start"
             android:text="제407화"
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/ivTabWebtoon"
-            app:layout_constraintTop_toBottomOf="@+id/tvRank" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
         <TextView
             android:id="@+id/tvViews"
@@ -68,7 +70,7 @@
 
         <ImageView
             android:id="@+id/ivHits"
-            android:layout_width="34dp"
+            android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginStart="5dp"
             android:layout_marginBottom="5dp"
@@ -103,7 +105,7 @@
 
         <ImageView
             android:id="@+id/ivNew"
-            android:layout_width="34dp"
+            android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="5dp"
@@ -114,7 +116,7 @@
 
         <ImageView
             android:id="@+id/ivDiscounted"
-            android:layout_width="34dp"
+            android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="5dp"

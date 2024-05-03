@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.Fragment.BaseTabFragment;
-import com.example.toptoon.TabRvAdapter;
+import com.example.toptoon.Ui.TabRvAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

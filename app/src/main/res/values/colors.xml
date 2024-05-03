@@ -35,6 +35,7 @@
     <color name="blue">#0000FF</color>
     <color name="light_blue">#6666FF</color>
     <color name="dark_blue">#000099</color>
+    <color name="sky_blue">#dff6fe</color>
 
     <!-- 남색 -->
     <color name="indigo">#4B0082</color>

@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Ui;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;

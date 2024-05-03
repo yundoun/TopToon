@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.toptoon.MainListRvAdapter;
+import com.example.toptoon.Ui.MainListRvAdapter;
 import com.example.toptoon.R;
 import com.example.toptoon.DataModel.SerailListItem;
 import com.example.toptoon.databinding.FragmentMainListBinding;
