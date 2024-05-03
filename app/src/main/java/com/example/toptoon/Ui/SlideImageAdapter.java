@@ -43,9 +43,6 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
         int realPosition = position % imageUrls.size(); // 실제 이미지 배열의 위치를 계산
         Glide.with(context).load(imageUrls.get(realPosition)).into(holder.binding.slideImageRow);
-
-        holder.binding.getRoot().setOnClickListener(v -> binding.vpEvent.setCurrentItem(position, true));
-
     }
 
     @Override

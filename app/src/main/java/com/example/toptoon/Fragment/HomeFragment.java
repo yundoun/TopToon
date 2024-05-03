@@ -3,6 +3,7 @@ package com.example.toptoon.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,47 +70,19 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeComponents();
+        adjustViewPagerSettings();
+        InitialSettingTagMenu();
+    }
 
-        binding.categoryViewPager.setClipToPadding(false); // 패딩 영역에서도 뷰를 그리도록 함
-        binding.categoryViewPager.setClipChildren(false); // 자식 뷰가 부모의 경계를 넘어서도 그려지도록 함
-        binding.categoryViewPager.setPadding(0, 0, 140, 0); // 왼쪽과 오른쪽 패딩을 설정하여 다음 페이지가 보이도록 함
-        binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(20)); // 페이지 사이의 간격 추가
-        binding.categoryViewPager.setOffscreenPageLimit(4); // ViewPager2에서 미리 로드할 페이지 수 설정
+    private void adjustViewPagerSettings() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
 
-        binding.vpEvent.setClipToPadding(false); // 패딩 영역에서도 뷰를 그리도록 함
-        binding.vpEvent.setClipChildren(false); // 자식 뷰가 부모의 경계를 넘어서도 그려지도록 함
-        binding.vpEvent.setPadding(0, 0, 200, 0); // 왼쪽과 오른쪽 패딩을 설정하여 다음 페이지가 보이도록 함
-        binding.vpEvent.setPageTransformer(new MarginPageTransformer(20)); // 페이지 사이의 간격 추가
-        binding.vpEvent.setOffscreenPageLimit(4); // ViewPager2에서 미리 로드할 페이지 수 설정
-
-        binding.categoryViewPager.setPageTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                final float MIN_SCALE = 0.9f;
-                final float MIN_ALPHA = 0.7f;
-
-                if (position < -1 || position > 1) {
-                    // 페이지가 화면 밖으로 넘어갔을 때
-                    page.setAlpha(0);
-                } else {
-                    // 페이지 스케일을 줄이고, 불투명도 조정
-                    float scale = Math.max(MIN_SCALE, 1 - Math.abs(position));
-                    float alpha = Math.max(MIN_ALPHA, 1 - Math.abs(position));
-                    page.setScaleX(scale);
-                    page.setScaleY(scale);
-                    page.setAlpha(alpha);
-
-                    // 페이지 위치 조정
-                    float horzMargin = page.getWidth() * (1 - scale) / 2;
-                    if (position < 0) {
-                        page.setTranslationX(horzMargin - horzMargin / 2);
-                    } else {
-                        page.setTranslationX(-horzMargin + horzMargin / 2);
-                    }
-                }
-            }
-        });
-
+        setupViewPager(binding.categoryViewPager, screenWidth / 5, 4, 20, true);  // 페이지 변형 적용
+        setupViewPager(binding.vpAutoSlide, screenWidth > 1080 ? screenWidth / 3 : 0, 5, 20, false);  // 페이지 변형 미적용
+        setupViewPager(binding.vpEvent, screenWidth > 1080 ? screenWidth / 2 : screenWidth / 5, 2, 20, false);  // 페이지 변형 미적용
+        
         binding.categoryViewPager.post(new Runnable() {
             @Override
             public void run() {
@@ -119,9 +92,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
+    }
 
-
-
+    private void setupViewPager(ViewPager2 viewPager, int padding, int offscreenPageLimit, int pageMargin, boolean applyTransformer) {
+        viewPager.setClipToPadding(false);
+        viewPager.setClipChildren(false);
+        viewPager.setPadding(0, 0, padding, 0);
+        viewPager.setPageTransformer(new MarginPageTransformer(pageMargin));
+        viewPager.setOffscreenPageLimit(offscreenPageLimit);
+        if (applyTransformer) {
+            viewPager.setPageTransformer(new ViewPager2.PageTransformer() {
+                @Override
+                public void transformPage(@NonNull View page, float position) {
+                    final float MIN_SCALE = 0.9f;
+                    final float MIN_ALPHA = 0.7f;
+                    if (position < -1 || position > 1) {
+                        page.setAlpha(0);
+                    } else {
+                        float scale = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                        float alpha = Math.max(MIN_ALPHA, 1 - Math.abs(position));
+                        page.setScaleX(scale);
+                        page.setScaleY(scale);
+                        page.setAlpha(alpha);
+                        float horzMargin = page.getWidth() * (1 - scale) / 2;
+                        page.setTranslationX(position < 0 ? horzMargin - horzMargin / 2 : -horzMargin + horzMargin / 2);
+                    }
+                }
+            });
+        }
     }
 
     private void initializeComponents() {
@@ -135,31 +133,12 @@ public class HomeFragment extends Fragment {
         fetchAndDisplayCommonRecyclerView();
         setFreeAd();
         setupTagMenu();
+    }
 
+    private void InitialSettingTagMenu() {
         fetchWebtoonsForTag("#인기작품");
         fetchWebtoonsForTag("#로맨스");
-        onConfigurationChanged(getResources().getConfiguration());
     }
-
-    //  레이아웃이 완전히 다시 그려진 후에 패딩 값이 적용되도록 다음과 같이 변경
-    // 가로 화면 전환시 ViewPager2의 패딩 값을 변경하여 양 이미지를 보이게 끔 구현
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        binding.vpEvent.post(new Runnable() {
-            @Override
-            public void run() {
-                if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    binding.vpEvent.setPadding(0, 0, 1300, 0);
-                    binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(40));
-                } else {
-                    binding.vpEvent.setPadding(0, 0, 200, 0);
-                    binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(20));
-                }
-            }
-        });
-    }
-
 
 
     private void fetchSlideAds() {
