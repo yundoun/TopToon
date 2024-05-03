@@ -5,42 +5,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 
-import com.example.toptoon.Ui.MainListRvAdapter;
+import com.example.toptoon.Management.CompleteManager;
 import com.example.toptoon.R;
-import com.example.toptoon.DataModel.SerailListItem;
-import com.example.toptoon.databinding.CompleteFragmentBinding;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.toptoon.databinding.FragmentCompleteBinding;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 public class CompleteFragment extends Fragment {
 
-    CompleteFragmentBinding binding;
+    FragmentCompleteBinding binding;
 
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = CompleteFragmentBinding.inflate(inflater, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentCompleteBinding.inflate(inflater, container, false);
         initializeComponents();
         return binding.getRoot();
     }
 
     public void initializeComponents() {
-        binding.rvComplete.setLayoutManager(new GridLayoutManager(getContext(), 3));
-        MainListRvAdapter adapter = new MainListRvAdapter();
-        binding.rvComplete.setAdapter(adapter);
+        binding.vpComplete.setAdapter(new CompleteManager(this));
+        new TabLayoutMediator(binding.tlComplete, binding.vpComplete, this::setUpTabTitles).attach();
+    }
 
-        // 테스트 데이터 생성
-        List<SerailListItem> items = new ArrayList<>();
-        items.add(new SerailListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new SerailListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new SerailListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new SerailListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new SerailListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        adapter.submitList(items);
-
+    private void setUpTabTitles(TabLayout.Tab tab, int position) {
+        String[] tabTitles = getResources().getStringArray(R.array.complete);
+        if (position < tabTitles.length) {
+            tab.setText(tabTitles[position]);
+        }
     }
 
 }

@@ -82,4 +82,11 @@
         <item>할인</item>
     </string-array>
 
+    <string-array name="complete">
+        <item>최신완결</item>
+        <item>최고매출 순</item>
+        <item>연도별</item>
+        <item>장르</item>
+    </string-array>
+
 </resources>

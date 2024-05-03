@@ -1,8 +1,8 @@
 package com.example.toptoon.DataModel;
 
-public class SerailListItem {
+public class MainListItem {
 
-    public SerailListItem(String title, int imageResourceId, String latestEpisode, String views) {
+    public MainListItem(String title, int imageResourceId, String latestEpisode, String views) {
         this.title = title;
         this.imageResourceId = imageResourceId;
         this.latestEpisode = latestEpisode;

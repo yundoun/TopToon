@@ -9,20 +9,20 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.toptoon.DataModel.SerailListItem;
+import com.example.toptoon.DataModel.MainListItem;
 import com.example.toptoon.databinding.MainListRvRowBinding;
 
-public class MainListRvAdapter extends ListAdapter<SerailListItem, MainListRvAdapter.MainListRvViewHolder> {
+public class MainListRvAdapter extends ListAdapter<MainListItem, MainListRvAdapter.MainListRvViewHolder> {
     public MainListRvAdapter() {
-        super(new DiffUtil.ItemCallback<SerailListItem>() {
+        super(new DiffUtil.ItemCallback<MainListItem>() {
             @Override
-            public boolean areItemsTheSame(@NonNull SerailListItem oldItem, @NonNull SerailListItem newItem) {
+            public boolean areItemsTheSame(@NonNull MainListItem oldItem, @NonNull MainListItem newItem) {
                 return oldItem.equals(newItem);
             }
 
             @SuppressLint("DiffUtilEquals")
             @Override
-            public boolean areContentsTheSame(@NonNull SerailListItem oldItem, @NonNull SerailListItem newItem) {
+            public boolean areContentsTheSame(@NonNull MainListItem oldItem, @NonNull MainListItem newItem) {
                 return oldItem.equals(newItem);
             }
         });

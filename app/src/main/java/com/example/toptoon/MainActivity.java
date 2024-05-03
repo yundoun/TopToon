@@ -15,6 +15,7 @@ import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.MainMenuItem;
 import com.example.toptoon.Fragment.CompleteFragment;
+import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.HomeFragment;
 import com.example.toptoon.Fragment.SerialFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
@@ -129,9 +130,12 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
             transaction.replace(R.id.fragmentContainer, new Top100Fragment());
             transaction.addToBackStack(null);
         } else if (menu.equals("신작")) {
-            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+            transaction.replace(R.id.fragmentContainer, new NewProductFragment());
             transaction.addToBackStack(null);
 
+        } else if (menu.equals("완결")){
+            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
+            transaction.addToBackStack(null);
         }
 //        else if (menu.equals("추천무료")) {
 //            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
