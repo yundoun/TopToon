@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Ui;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptoon.DataModel.MainMenuItem;
+import com.example.toptoon.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.MainMenuRvRowBinding;
 
 public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapter.MainMenuViewHolder> {
@@ -21,7 +22,7 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
     }
 
 
-    protected MainMenuRvAdapter() {
+    public MainMenuRvAdapter() {
         super(new DiffUtil.ItemCallback<MainMenuItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull MainMenuItem oldItem, @NonNull MainMenuItem newItem) {

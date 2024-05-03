@@ -7,8 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.example.toptoon.DataModel.MainListItem;
+import com.example.toptoon.R;
+import com.example.toptoon.Ui.MainListRvAdapter;
 import com.example.toptoon.databinding.FragmentAllAgesBinding;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AllAgeFragment extends Fragment {
 
@@ -21,6 +28,19 @@ public class AllAgeFragment extends Fragment {
     }
 
     private void initializeComponents() {
+        binding.rvAllAges.setLayoutManager(new GridLayoutManager(getContext(), 3));
+        MainListRvAdapter adapter = new MainListRvAdapter();
+        binding.rvAllAges.setAdapter(adapter);
+
+        // 테스트 데이터 생성
+        List<MainListItem> items = new ArrayList<>();
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+        adapter.submitList(items);
     }
 
 }

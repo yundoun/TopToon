@@ -18,11 +18,12 @@ import com.example.toptoon.Fragment.AllAgeFragment;
 import com.example.toptoon.Fragment.CompleteFragment;
 import com.example.toptoon.Fragment.EventFragment;
 import com.example.toptoon.Fragment.FreeRecommendFragment;
-import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.HomeFragment;
+import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.SerialFragment;
 import com.example.toptoon.Fragment.ShortsFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
+import com.example.toptoon.Ui.MainMenuRvAdapter;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
     private void setupMainMenu() {
         binding.rvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
-        com.example.toptoon.MainMenuRvAdapter adapter = new com.example.toptoon.MainMenuRvAdapter();
+        MainMenuRvAdapter adapter = new MainMenuRvAdapter();
         binding.rvMainMenu.setAdapter(adapter);
         adapter.setListener(this);
         List<MainMenuItem> menuList = createMenuItems(); // 메뉴 아이템 데이터 리스트 생성
@@ -137,22 +138,19 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
             transaction.replace(R.id.fragmentContainer, new NewProductFragment());
             transaction.addToBackStack(null);
 
-        } else if (menu.equals("완결")){
+        } else if (menu.equals("완결")) {
             transaction.replace(R.id.fragmentContainer, new CompleteFragment());
             transaction.addToBackStack(null);
-        }
-        else if (menu.equals("추천무료")) {
+        } else if (menu.equals("추천무료")) {
             transaction.replace(R.id.fragmentContainer, new FreeRecommendFragment());
             transaction.addToBackStack(null);
         } else if (menu.equals("전연령")) {
             transaction.replace(R.id.fragmentContainer, new AllAgeFragment());
             transaction.addToBackStack(null);
-        }
-        else if (menu.equals("탑툰쇼츠")){
+        } else if (menu.equals("탑툰쇼츠")) {
             transaction.replace(R.id.fragmentContainer, new ShortsFragment());
             transaction.addToBackStack(null);
-        }
-        else if (menu.equals("이벤트")){
+        } else if (menu.equals("이벤트")) {
             transaction.replace(R.id.fragmentContainer, new EventFragment());
             transaction.addToBackStack(null);
 
