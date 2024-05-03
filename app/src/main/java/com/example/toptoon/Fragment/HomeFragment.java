@@ -1,5 +1,6 @@
 package com.example.toptoon.Fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -136,8 +138,29 @@ public class HomeFragment extends Fragment {
 
         fetchWebtoonsForTag("#인기작품");
         fetchWebtoonsForTag("#로맨스");
-
+        onConfigurationChanged(getResources().getConfiguration());
     }
+
+    //  레이아웃이 완전히 다시 그려진 후에 패딩 값이 적용되도록 다음과 같이 변경
+    // 가로 화면 전환시 ViewPager2의 패딩 값을 변경하여 양 이미지를 보이게 끔 구현
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        binding.vpEvent.post(new Runnable() {
+            @Override
+            public void run() {
+                if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    binding.vpEvent.setPadding(0, 0, 1300, 0);
+                    binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(40));
+                } else {
+                    binding.vpEvent.setPadding(0, 0, 200, 0);
+                    binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(20));
+                }
+            }
+        });
+    }
+
+
 
     private void fetchSlideAds() {
         NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {

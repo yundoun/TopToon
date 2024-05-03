@@ -2,12 +2,14 @@ package com.example.toptoon.Ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.example.toptoon.databinding.SlideImageRowBinding;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
 
     private final List<String> imageUrls;
     private Context context;
+    private FragmentHomeBinding binding;
 
     public SlideImageAdapter(Context context, List<String> imageUrls){
         this.context = context;
@@ -40,6 +43,9 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
         int realPosition = position % imageUrls.size(); // 실제 이미지 배열의 위치를 계산
         Glide.with(context).load(imageUrls.get(realPosition)).into(holder.binding.slideImageRow);
+
+        holder.binding.getRoot().setOnClickListener(v -> binding.vpEvent.setCurrentItem(position, true));
+
     }
 
     @Override
