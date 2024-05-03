@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
@@ -22,12 +23,12 @@ import com.example.toptoon.CircleIndicator;
 import com.example.toptoon.CommonRvAdapter;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.CommonContentItem;
+import com.example.toptoon.DataModel.TagMenuItem;
+import com.example.toptoon.Management.TabManager;
 import com.example.toptoon.OnTagSelectedListener;
 import com.example.toptoon.R;
-import com.example.toptoon.Ui.SlideImageAdapter;
-import com.example.toptoon.Management.TabManager;
-import com.example.toptoon.DataModel.TagMenuItem;
 import com.example.toptoon.TagMenuRvAdapter;
+import com.example.toptoon.Ui.SlideImageAdapter;
 import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -66,6 +67,59 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initializeComponents();
+
+        binding.categoryViewPager.setClipToPadding(false); // 패딩 영역에서도 뷰를 그리도록 함
+        binding.categoryViewPager.setClipChildren(false); // 자식 뷰가 부모의 경계를 넘어서도 그려지도록 함
+        binding.categoryViewPager.setPadding(0, 0, 140, 0); // 왼쪽과 오른쪽 패딩을 설정하여 다음 페이지가 보이도록 함
+        binding.categoryViewPager.setPageTransformer(new MarginPageTransformer(20)); // 페이지 사이의 간격 추가
+        binding.categoryViewPager.setOffscreenPageLimit(4); // ViewPager2에서 미리 로드할 페이지 수 설정
+
+        binding.vpEvent.setClipToPadding(false); // 패딩 영역에서도 뷰를 그리도록 함
+        binding.vpEvent.setClipChildren(false); // 자식 뷰가 부모의 경계를 넘어서도 그려지도록 함
+        binding.vpEvent.setPadding(0, 0, 200, 0); // 왼쪽과 오른쪽 패딩을 설정하여 다음 페이지가 보이도록 함
+        binding.vpEvent.setPageTransformer(new MarginPageTransformer(20)); // 페이지 사이의 간격 추가
+        binding.vpEvent.setOffscreenPageLimit(4); // ViewPager2에서 미리 로드할 페이지 수 설정
+
+        binding.categoryViewPager.setPageTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                final float MIN_SCALE = 0.9f;
+                final float MIN_ALPHA = 0.7f;
+
+                if (position < -1 || position > 1) {
+                    // 페이지가 화면 밖으로 넘어갔을 때
+                    page.setAlpha(0);
+                } else {
+                    // 페이지 스케일을 줄이고, 불투명도 조정
+                    float scale = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                    float alpha = Math.max(MIN_ALPHA, 1 - Math.abs(position));
+                    page.setScaleX(scale);
+                    page.setScaleY(scale);
+                    page.setAlpha(alpha);
+
+                    // 페이지 위치 조정
+                    float horzMargin = page.getWidth() * (1 - scale) / 2;
+                    if (position < 0) {
+                        page.setTranslationX(horzMargin - horzMargin / 2);
+                    } else {
+                        page.setTranslationX(-horzMargin + horzMargin / 2);
+                    }
+                }
+            }
+        });
+
+        binding.categoryViewPager.post(new Runnable() {
+            @Override
+            public void run() {
+                // 첫 번째 페이지가 로드되면 약간 오른쪽으로 스크롤하여 옆 페이지를 보이게 함
+                binding.categoryViewPager.setCurrentItem(1, false);
+                binding.categoryViewPager.scrollTo(binding.categoryViewPager.getScrollX(), 0);
+            }
+        });
+
+
+
+
     }
 
     private void initializeComponents() {
@@ -303,6 +357,7 @@ public class HomeFragment extends Fragment {
         binding.categoryViewPager.setAdapter(new TabManager(this));
         // TabLayout과 ViewPager2 연동
         new TabLayoutMediator(binding.tabLayout, binding.categoryViewPager, this::setupTabTitles).attach();
+
     }
 
     private void setupTabTitles(TabLayout.Tab tab, int position) {
