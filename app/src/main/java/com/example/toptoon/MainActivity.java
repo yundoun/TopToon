@@ -14,10 +14,14 @@ import com.bumptech.glide.Glide;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.MainMenuItem;
+import com.example.toptoon.Fragment.AllAgeFragment;
 import com.example.toptoon.Fragment.CompleteFragment;
+import com.example.toptoon.Fragment.EventFragment;
+import com.example.toptoon.Fragment.FreeRecommendFragment;
 import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.HomeFragment;
 import com.example.toptoon.Fragment.SerialFragment;
+import com.example.toptoon.Fragment.ShortsFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
@@ -137,22 +141,22 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
             transaction.replace(R.id.fragmentContainer, new CompleteFragment());
             transaction.addToBackStack(null);
         }
-//        else if (menu.equals("추천무료")) {
-//            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
-//            transaction.addToBackStack(null);
-//        } else if (menu.equals("전연령")) {
-//            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
-//            transaction.addToBackStack(null);
-//        }
-//        else if (menu.equals("탑툰쇼츠")){
-//            transaction.replace(R.id.fragmentContainer, new GenreFragment());
-//            transaction.addToBackStack(null);
-//        }
-//        else if (menu.equals("출석체크")){
-//            transaction.replace(R.id.fragmentContainer, new SearchFragment());
-//            transaction.addToBackStack(null);
-//
-//        }
+        else if (menu.equals("추천무료")) {
+            transaction.replace(R.id.fragmentContainer, new FreeRecommendFragment());
+            transaction.addToBackStack(null);
+        } else if (menu.equals("전연령")) {
+            transaction.replace(R.id.fragmentContainer, new AllAgeFragment());
+            transaction.addToBackStack(null);
+        }
+        else if (menu.equals("탑툰쇼츠")){
+            transaction.replace(R.id.fragmentContainer, new ShortsFragment());
+            transaction.addToBackStack(null);
+        }
+        else if (menu.equals("이벤트")){
+            transaction.replace(R.id.fragmentContainer, new EventFragment());
+            transaction.addToBackStack(null);
+
+        }
         // 다른 메뉴 항목에 대한 추가 체크 및 해당 프래그먼트로 교체
         transaction.commit();
     }
