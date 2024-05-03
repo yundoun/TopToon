@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Fragment;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.toptoon.R;
+import com.example.toptoon.Management.Top100ListManager;
 import com.example.toptoon.databinding.FragmentTop100Binding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

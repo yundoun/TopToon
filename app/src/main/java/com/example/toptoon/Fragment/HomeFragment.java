@@ -1,13 +1,11 @@
-package com.example.toptoon;
+package com.example.toptoon.Fragment;
 
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +17,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.example.toptoon.Api.NetworkManager;
+import com.example.toptoon.CircleIndicator;
+import com.example.toptoon.CommonRvAdapter;
+import com.example.toptoon.DataModel.ApiItems;
+import com.example.toptoon.DataModel.CommonContentItem;
+import com.example.toptoon.OnTagSelectedListener;
+import com.example.toptoon.R;
+import com.example.toptoon.Ui.SlideImageAdapter;
+import com.example.toptoon.Management.TabManager;
+import com.example.toptoon.DataModel.TagMenuItem;
+import com.example.toptoon.TagMenuRvAdapter;
 import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -77,18 +86,18 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchSlideAds() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    TopToonItems items = response.body();
+                    ApiItems items = response.body();
                     Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
 
-                    for (TopToonItems.SlideAd slideAd : items.getSlideAd()) {
+                    for (ApiItems.SlideAd slideAd : items.getSlideAd()) {
                         slideImageUrls.add(slideAd.getImageUrl());
                     }
 
-                    for (TopToonItems.Event event : items.getEvent()) {
+                    for (ApiItems.Event event : items.getEvent()) {
                         eventImageUrls.add(event.getImageUrl());
                     }
                     initializeSlider(slideImageUrls);
@@ -99,7 +108,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "데이터를 받아오는 데 실패함");
             }
         });
@@ -210,12 +219,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchAndDisplayCommonRecyclerView() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.println(Log.INFO, "HomeFragment", "Common 데이터를 받아옴");
-                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    List<ApiItems.Webtoon> allWebtoons = response.body().getWebtoons();
                     displayFreeWait(findWebtoonById(response.body().getWaitFree(), allWebtoons));
                     displayOneCoin(findWebtoonById(response.body().getOneCoin(), allWebtoons));
 
@@ -223,16 +232,16 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "Common 데이터를 받아오는 데 실패함");
             }
         });
     }
 
-    private List<TopToonItems.Webtoon> findWebtoonById(List<Integer> idList, List<TopToonItems.Webtoon> allWebtoons) {
-        List<TopToonItems.Webtoon> selectedWebtoons = new ArrayList<>();
+    private List<ApiItems.Webtoon> findWebtoonById(List<Integer> idList, List<ApiItems.Webtoon> allWebtoons) {
+        List<ApiItems.Webtoon> selectedWebtoons = new ArrayList<>();
         for (Integer id : idList) {
-            for (TopToonItems.Webtoon webtoon : allWebtoons) {
+            for (ApiItems.Webtoon webtoon : allWebtoons) {
                 if (webtoon.getId() == id) {
                     selectedWebtoons.add(webtoon);
                     break;
@@ -242,10 +251,10 @@ public class HomeFragment extends Fragment {
         return selectedWebtoons;
     }
 
-    private void displayFreeWait(List<TopToonItems.Webtoon> waitFreeList) {
+    private void displayFreeWait(List<ApiItems.Webtoon> waitFreeList) {
         if (waitFreeList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon item : waitFreeList) {
+            for (ApiItems.Webtoon item : waitFreeList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
@@ -256,10 +265,10 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void displayOneCoin(List<TopToonItems.Webtoon> oneCoinList) {
+    private void displayOneCoin(List<ApiItems.Webtoon> oneCoinList) {
         if (oneCoinList != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon item : oneCoinList) {
+            for (ApiItems.Webtoon item : oneCoinList) {
                 items.add(new CommonContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
@@ -332,13 +341,13 @@ public class HomeFragment extends Fragment {
     }
 
     private void fetchWebtoonsForTag(String tag) {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    TopToonItems items = response.body();
+                    ApiItems items = response.body();
                     List<Integer> webtoonIds;
-                    List<TopToonItems.Webtoon> webtoons;
+                    List<ApiItems.Webtoon> webtoons;
 
                     if (customKeywordTagToJsonKey.containsKey(tag)) {
                         webtoonIds = getWebtoonIdsForTag(items, tag);
@@ -353,20 +362,20 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 // 네트워크 에러 처리
             }
         });
     }
 
-    private List<TopToonItems.Webtoon> filterWebtoonsByIds(List<TopToonItems.Webtoon> webtoons, List<Integer> ids) {
+    private List<ApiItems.Webtoon> filterWebtoonsByIds(List<ApiItems.Webtoon> webtoons, List<Integer> ids) {
         return webtoons.stream().filter(w -> ids.contains(w.getId())).collect(Collectors.toList());
     }
 
-    private void updateWebtoonRecyclerView(List<TopToonItems.Webtoon> webtoons, CommonRvAdapter adapter) {
+    private void updateWebtoonRecyclerView(List<ApiItems.Webtoon> webtoons, CommonRvAdapter adapter) {
         if (webtoons != null) {
             List<CommonContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon webtoon : webtoons) {
+            for (ApiItems.Webtoon webtoon : webtoons) {
                 items.add(new CommonContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor()));
             }
             adapter.submitList(items);
@@ -390,7 +399,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private List<Integer> getWebtoonIdsForTag(TopToonItems items, String tag) {
+    private List<Integer> getWebtoonIdsForTag(ApiItems items, String tag) {
         String jsonKey = customKeywordTagToJsonKey.get(tag);
         if (jsonKey != null) {
             switch (jsonKey) {
@@ -417,7 +426,7 @@ public class HomeFragment extends Fragment {
         return new ArrayList<>();
     }
 
-    private List<Integer> getWebtoonIdsForGenre(TopToonItems items, String tag) {
+    private List<Integer> getWebtoonIdsForGenre(ApiItems items, String tag) {
         String jsonKey = recommendGenreTagToJsonKey.get(tag);
         if (jsonKey != null) {
             switch (jsonKey) {
@@ -463,9 +472,9 @@ public class HomeFragment extends Fragment {
 
 
     private void setFreeAd() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String freeAdUrl = response.body()
                             .getFreeAd();
@@ -479,16 +488,16 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
             }
         });
     }
 
     private void setSectionAd() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String sectionAdUrl = response.body()
                             .getSectionAd();
@@ -502,7 +511,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "HomeFragment", "onFailure: " + t.getMessage());
             }
         });

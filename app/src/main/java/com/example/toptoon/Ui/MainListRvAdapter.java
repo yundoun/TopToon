@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptoon.DataModel.SerailListItem;
 import com.example.toptoon.databinding.MainListRvRowBinding;
 
 public class MainListRvAdapter extends ListAdapter<SerailListItem, MainListRvAdapter.MainListRvViewHolder> {

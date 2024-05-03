@@ -1,10 +1,10 @@
-package com.example.toptoon;
+package com.example.toptoon.DataModel;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TopToonItems {
+public class ApiItems {
 
 
     @SerializedName("webtoons")

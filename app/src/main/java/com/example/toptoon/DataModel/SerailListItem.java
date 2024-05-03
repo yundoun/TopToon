@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.DataModel;
 
 public class SerailListItem {
 

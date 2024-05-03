@@ -1,9 +1,12 @@
-package com.example.toptoon;
+package com.example.toptoon.Management;
 
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.toptoon.Fragment.MainListFragment;
+import com.example.toptoon.Fragment.SerialFragment;
 
 public class SerialListManager extends FragmentStateAdapter {
     public SerialListManager(@NonNull SerialFragment fragmentActivity) {

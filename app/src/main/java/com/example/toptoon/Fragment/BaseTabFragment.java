@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.toptoon.TabRvAdapter;
 import com.example.toptoon.databinding.FragmentTabItemBinding;
 
 public abstract class BaseTabFragment extends Fragment {

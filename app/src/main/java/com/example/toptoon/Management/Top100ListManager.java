@@ -1,8 +1,11 @@
-package com.example.toptoon;
+package com.example.toptoon.Management;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.example.toptoon.Fragment.MainListFragment;
+import com.example.toptoon.Fragment.Top100Fragment;
 
 public class Top100ListManager extends FragmentStateAdapter {
     public Top100ListManager(@NonNull Top100Fragment fragmentActivity) {

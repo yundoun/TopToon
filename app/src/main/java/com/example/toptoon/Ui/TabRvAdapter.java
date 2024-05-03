@@ -1,7 +1,5 @@
 package com.example.toptoon;
 
-import android.annotation.SuppressLint;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +10,8 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.toptoon.DataModel.TabContentItem;
 import com.example.toptoon.databinding.TabRvRowBinding;
-
-import java.util.List;
 
 public class TabRvAdapter extends ListAdapter<TabContentItem, TabRvAdapter.TabRvViewHolder> {
 

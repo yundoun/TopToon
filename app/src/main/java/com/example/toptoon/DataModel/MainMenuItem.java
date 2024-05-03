@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.DataModel;
 
 import java.util.Objects;
 

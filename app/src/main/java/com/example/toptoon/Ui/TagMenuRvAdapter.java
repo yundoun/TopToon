@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.toptoon.DataModel.TagMenuItem;
 import com.example.toptoon.databinding.TagMenuRvRowBinding;
 
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {
@@ -17,7 +18,7 @@ public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.
     private final OnTagSelectedListener listener;
     private final int type; // 0 for default, 1 for custom
 
-    protected TagMenuRvAdapter(int type, OnTagSelectedListener listener) {
+    public TagMenuRvAdapter(int type, OnTagSelectedListener listener) {
         super(new DiffUtil.ItemCallback<TagMenuItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull TagMenuItem oldItem, @NonNull TagMenuItem newItem) {

@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Ui;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,7 +18,7 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     private final List<String> imageUrls;
     private Context context;
 
-    SlideImageAdapter(Context context, List<String> imageUrls){
+    public SlideImageAdapter(Context context, List<String> imageUrls){
         this.context = context;
         this.imageUrls = imageUrls;
     }

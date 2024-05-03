@@ -11,6 +11,13 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.bumptech.glide.Glide;
+import com.example.toptoon.Api.NetworkManager;
+import com.example.toptoon.DataModel.ApiItems;
+import com.example.toptoon.DataModel.MainMenuItem;
+import com.example.toptoon.Fragment.CompleteFragment;
+import com.example.toptoon.Fragment.HomeFragment;
+import com.example.toptoon.Fragment.SerialFragment;
+import com.example.toptoon.Fragment.Top100Fragment;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -20,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements OnMainMenuSelectedListener {
+public class MainActivity extends AppCompatActivity implements com.example.toptoon.OnMainMenuSelectedListener {
 
     private ActivityMainBinding binding;
 
@@ -38,9 +45,9 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
 
     private void setHeaderAd() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     String headerAdUrl = response.body()
                             .getHeaderAd();
@@ -54,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 Log.println(Log.ERROR, "MainActivity", "onFailure: " + t.getMessage());
             }
         });
@@ -63,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     private void setupMainMenu() {
         binding.rvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
-        MainMenuRvAdapter adapter = new MainMenuRvAdapter();
+        com.example.toptoon.MainMenuRvAdapter adapter = new com.example.toptoon.MainMenuRvAdapter();
         binding.rvMainMenu.setAdapter(adapter);
         adapter.setListener(this);
         List<MainMenuItem> menuList = createMenuItems(); // 메뉴 아이템 데이터 리스트 생성

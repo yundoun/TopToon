@@ -1,8 +1,14 @@
-package com.example.toptoon;
+package com.example.toptoon.Fragment;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import com.example.toptoon.Api.NetworkManager;
+import com.example.toptoon.DataModel.ApiItems;
+import com.example.toptoon.DataModel.TabContentItem;
+import com.example.toptoon.Fragment.BaseTabFragment;
+import com.example.toptoon.TabRvAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +25,16 @@ public class TabSale extends BaseTabFragment {
     }
 
     protected void fetchDataFromNetwork() {
-        NetworkManager.fetchTopToonItems(new Callback<TopToonItems>() {
+        NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
-            public void onResponse(@NonNull Call<TopToonItems> call, @NonNull Response<TopToonItems> response) {
+            public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.println(Log.INFO, "TabSale", "데이터를 받아옴");
                     List<Integer> tabSaleIds = response.body().getTabSale();
-                    List<TopToonItems.Webtoon> allWebtoons = response.body().getWebtoons();
-                    List<TopToonItems.Webtoon> filteredWebtoons = new ArrayList<>();
+                    List<ApiItems.Webtoon> allWebtoons = response.body().getWebtoons();
+                    List<ApiItems.Webtoon> filteredWebtoons = new ArrayList<>();
                     for (Integer id : tabSaleIds) {
-                        for (TopToonItems.Webtoon webtoon : allWebtoons) {
+                        for (ApiItems.Webtoon webtoon : allWebtoons) {
                             if (webtoon.getId() == id) {
                                 filteredWebtoons.add(webtoon);
                             }
@@ -42,17 +48,17 @@ public class TabSale extends BaseTabFragment {
             }
 
             @Override
-            public void onFailure(@NonNull Call<TopToonItems> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<ApiItems> call, @NonNull Throwable t) {
                 // 네트워크 요청이 실패했을 때
                 Log.e("TabSale", "네트워크 요청이 실패했습니다");
             }
         });
     }
 
-    private void displayData(List<TopToonItems.Webtoon> tabItems) {
+    private void displayData(List<ApiItems.Webtoon> tabItems) {
         if (tabItems != null) {
             List<TabContentItem> items = new ArrayList<>();
-            for (TopToonItems.Webtoon item : tabItems) {
+            for (ApiItems.Webtoon item : tabItems) {
                 items.add(new TabContentItem(
                         item.getTitle(),
                         item.getAuthor(),
