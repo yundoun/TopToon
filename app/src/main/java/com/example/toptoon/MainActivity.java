@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         setHeaderAd();
         setupMainMenu();
-        displayHomeFragment();
-        clickMainLogo();
+        displayFragment(new HomeFragment(), "HOME_FRAGMENT", false); // Initially display the Home Fragment
+        setupLogoClickEvent();
     }
 
 
@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         MainMenuRvAdapter adapter = new MainMenuRvAdapter();
         binding.rvMainMenu.setAdapter(adapter);
         adapter.setListener(this);
-        List<MainMenuItem> menuList = createMenuItems(); // 메뉴 아이템 데이터 리스트 생성
-        adapter.submitList(menuList); // 데이터 설정
+        adapter.submitList(createMenuItems()); // 데이터 설정
     }
 
     private List<MainMenuItem> createMenuItems() {
@@ -94,79 +93,58 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         return menuList;
     }
 
-    private void displayHomeFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        // HomeFragment를 찾거나 없으면 새로 생성
-        HomeFragment homeFragment = (HomeFragment) fragmentManager.findFragmentByTag("HOME_FRAGMENT");
-        if (homeFragment == null) {
-            homeFragment = new HomeFragment();
-            fragmentTransaction.add(R.id.fragmentContainer, homeFragment, "HOME_FRAGMENT");
-        } else {
-            // 이미 HomeFragment가 추가된 경우에는 replace하지 않고 그대로 두거나 필요에 따라 refresh할 수 있음
-            fragmentTransaction.replace(R.id.fragmentContainer, homeFragment, "HOME_FRAGMENT");
-        }
-
-        // 백스택에서 현재 프래그먼트 제거 (HomeFragment가 기본 화면이므로 백스택 필요 없음)
-        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-        fragmentTransaction.commit();
-    }
-
-
-    public void clickMainLogo() {
-        binding.ivLogo.setOnClickListener(v -> {
-            // 현재 활성화된 프래그먼트가 HomeFragment가 아니라면 교체
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-            if (!(currentFragment instanceof HomeFragment)) {
-                displayHomeFragment();
-                binding.ivHeaderAd.setVisibility(View.VISIBLE);
-            }
-        });
+    private void setupLogoClickEvent() {
+        binding.ivLogo.setOnClickListener(v -> displayFragment(new HomeFragment(), "HOME_FRAGMENT", false));
     }
 
     @Override
     public void onMainMenuSelected(String menu) {
-        // 여기서 메뉴 항목 선택 처리
-        // 예: 프래그먼트 전환
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment newFragment;
+        boolean shouldHideAd = true;
 
-        if (menu.equals("연재")) {
-            transaction.replace(R.id.fragmentContainer, new SerialFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("TOP100")) {
-            transaction.replace(R.id.fragmentContainer, new Top100Fragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("신작")) {
-            transaction.replace(R.id.fragmentContainer, new NewProductFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("완결")) {
-            transaction.replace(R.id.fragmentContainer, new CompleteFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("추천무료")) {
-            transaction.replace(R.id.fragmentContainer, new FreeRecommendFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("전연령")) {
-            transaction.replace(R.id.fragmentContainer, new AllAgeFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("탑툰쇼츠")) {
-            transaction.replace(R.id.fragmentContainer, new ShortsFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (menu.equals("이벤트")) {
-            transaction.replace(R.id.fragmentContainer, new EventFragment());
-            transaction.addToBackStack(null);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-
+        switch (menu) {
+            case "연재":
+                newFragment = new SerialFragment();
+                break;
+            case "TOP100":
+                newFragment = new Top100Fragment();
+                break;
+            case "신작":
+                newFragment = new NewProductFragment();
+                break;
+            case "완결":
+                newFragment = new CompleteFragment();
+                break;
+            case "추천무료":
+                newFragment = new FreeRecommendFragment();
+                break;
+            case "전연령":
+                newFragment = new AllAgeFragment();
+                break;
+            case "탑툰쇼츠":
+                newFragment = new ShortsFragment();
+                break;
+            case "이벤트":
+                newFragment = new EventFragment();
+                break;
+            default:
+                return; // In case of an unrecognized menu item, do nothing.
         }
-        // 다른 메뉴 항목에 대한 추가 체크 및 해당 프래그먼트로 교체
+        displayFragment(newFragment, null, shouldHideAd);
+    }
+
+    private void displayFragment(Fragment fragment, String tag, boolean shouldHideAd) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragmentContainer, fragment);
+        if (tag != null) {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
+
+        if (shouldHideAd) {
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else {
+            binding.ivHeaderAd.setVisibility(View.VISIBLE);
+        }
     }
 }
