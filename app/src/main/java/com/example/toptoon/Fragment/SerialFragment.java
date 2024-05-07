@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.toptoon.R;
 import com.example.toptoon.Management.SerialListManager;
@@ -27,7 +29,29 @@ public class SerialFragment extends Fragment {
     private void initializeComponents() {
         binding.vpSerial.setAdapter(new SerialListManager(this));
         new TabLayoutMediator(binding.tlSerial, binding.vpSerial, this::setUpTabTitles).attach();
+//        binding.vpSerial.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                adjustViewPagerHeight(position);
+//            }
+//        });
     }
+
+//    private void adjustViewPagerHeight(int position) {
+//        binding.vpSerial.post(() -> {
+//            RecyclerView recyclerView = (RecyclerView) binding.vpSerial.getChildAt(0);
+//            if (recyclerView != null) {
+//                recyclerView.measure(
+//                        View.MeasureSpec.makeMeasureSpec(recyclerView.getWidth(), View.MeasureSpec.EXACTLY),
+//                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+//
+//                ViewGroup.LayoutParams params = binding.vpSerial.getLayoutParams();
+//                params.height = recyclerView.getMeasuredHeight();
+//                binding.vpSerial.setLayoutParams(params);
+//            }
+//        });
+//    }
 
     private void setUpTabTitles(TabLayout.Tab tab, int position) {
         String[] tabTitles = getResources().getStringArray(R.array.serial);

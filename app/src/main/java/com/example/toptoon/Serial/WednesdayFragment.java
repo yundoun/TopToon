@@ -30,7 +30,7 @@ public class WednesdayFragment extends BaseMainListFragment {
             public void onResponse(Call<ApiItems> call, Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Integer> wednesdayIds = response.body().getSerial().getWednesday();
-                    Log.println(Log.INFO, "WednesdayFragment", "mondayIds: " + wednesdayIds.toString());
+                    Log.println(Log.INFO, "WednesdayFragment", "wednesdayIds: " + wednesdayIds.toString());
                     List<ApiItems.Webtoon> webtoons = response.body().getWebtoons();
                     List<BaseContentItem> baseContentItems = filterTabContentItemsByWebtoonIds(wednesdayIds, webtoons);
 

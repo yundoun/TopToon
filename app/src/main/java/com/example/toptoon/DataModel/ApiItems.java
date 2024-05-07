@@ -101,6 +101,8 @@ public class ApiItems {
         private List<Integer> friday;
         private List<Integer> saturday;
         private List<Integer> sunday;
+        private List<Integer> remake;
+
 
         public List<Integer> getMonday() {
             return monday;
@@ -134,7 +136,6 @@ public class ApiItems {
             return remake;
         }
 
-        private List<Integer> remake;
 
     }
 
