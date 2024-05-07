@@ -2,6 +2,7 @@ package com.example.toptoon.Ui;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -60,12 +61,12 @@ public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAd
             binding.tvLatestEpisodeMain.setText(baseContentItem.getAuthor());
             binding.tvListViewsMain.setText(baseContentItem.getViews());
 
-//            // 가시성 설정
-//            binding.ivHits.setVisibility(tabContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
-//            binding.ivNew.setVisibility(tabContentItem.isNew() ? View.VISIBLE : View.GONE );
-//            binding.ivDiscounted.setVisibility(tabContentItem.isDiscounted() ? View.VISIBLE : View.GONE );
-//            binding.ivUpdate.setVisibility(tabContentItem.isRecentlyUpdated() ? View.VISIBLE : View.GONE );
-//            binding.ivExclusive.setVisibility(tabContentItem.isExclusive() ? View.VISIBLE : View.GONE );
+            // 가시성 설정
+            binding.ivExclusiveMain.setVisibility(baseContentItem.isExclusive() ? View.VISIBLE : View.GONE );
+            binding.ivNewMain.setVisibility(baseContentItem.isNew() ? View.VISIBLE : View.GONE );
+            binding.ivSaleMain.setVisibility(baseContentItem.isDiscounted() ? View.VISIBLE : View.GONE );
+            binding.ivFreeWaitMain.setVisibility(baseContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
+
 
         }
 

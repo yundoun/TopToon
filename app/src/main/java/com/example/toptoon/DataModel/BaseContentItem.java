@@ -60,11 +60,11 @@ public class BaseContentItem {
         return views;
     }
 
-    public boolean isNew() {
+    public  boolean isNew() {
         return isNew;
     }
 
-    public boolean isDiscounted() {
+    public  boolean isDiscounted() {
         return isDiscounted;
     }
 

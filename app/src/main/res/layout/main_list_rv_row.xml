@@ -32,6 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="무련전봉"
             android:textSize="14dp"
             android:textStyle="bold"
@@ -77,8 +79,6 @@
             android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.013"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_new" />
@@ -97,12 +97,9 @@
             android:id="@+id/ivSaleMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="33dp"
             android:layout_marginTop="4dp"
             android:scaleType="fitXY"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.005"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivNewMain"
             app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_discounted" />
 
@@ -110,11 +107,8 @@
             android:id="@+id/ivFreeWaitMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="70dp"
             android:layout_marginTop="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivSaleMain"
             app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_hits" />
     </androidx.constraintlayout.widget.ConstraintLayout>

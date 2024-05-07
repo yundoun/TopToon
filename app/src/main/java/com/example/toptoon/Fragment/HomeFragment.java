@@ -21,9 +21,9 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.CircleIndicator;
-import com.example.toptoon.CommonRvAdapter;
+import com.example.toptoon.Ui.HorizontalRvAdapter;
 import com.example.toptoon.DataModel.ApiItems;
-import com.example.toptoon.DataModel.CommonContentItem;
+import com.example.toptoon.DataModel.HorizontalContentItem;
 import com.example.toptoon.DataModel.TagMenuItem;
 import com.example.toptoon.Management.TabManager;
 import com.example.toptoon.OnTagSelectedListener;
@@ -49,10 +49,10 @@ public class HomeFragment extends Fragment {
     private final Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
-    private CommonRvAdapter adapterFreeWait;
-    private CommonRvAdapter adapterOneCoin;
-    private CommonRvAdapter adapterCustomKeyword;
-    private CommonRvAdapter adapterRecommendGenre;
+    private HorizontalRvAdapter adapterFreeWait;
+    private HorizontalRvAdapter adapterOneCoin;
+    private HorizontalRvAdapter adapterCustomKeyword;
+    private HorizontalRvAdapter adapterRecommendGenre;
     List<String> slideImageUrls = new ArrayList<>();
     List<String> eventImageUrls = new ArrayList<>();
     private Map<String, String> customKeywordTagToJsonKey, recommendGenreTagToJsonKey;
@@ -295,9 +295,9 @@ public class HomeFragment extends Fragment {
 
     private void displayFreeWait(List<ApiItems.Webtoon> waitFreeList) {
         if (waitFreeList != null) {
-            List<CommonContentItem> items = new ArrayList<>();
+            List<HorizontalContentItem> items = new ArrayList<>();
             for (ApiItems.Webtoon item : waitFreeList) {
-                items.add(new CommonContentItem(
+                items.add(new HorizontalContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
                         item.getAuthor()
@@ -309,9 +309,9 @@ public class HomeFragment extends Fragment {
 
     private void displayOneCoin(List<ApiItems.Webtoon> oneCoinList) {
         if (oneCoinList != null) {
-            List<CommonContentItem> items = new ArrayList<>();
+            List<HorizontalContentItem> items = new ArrayList<>();
             for (ApiItems.Webtoon item : oneCoinList) {
-                items.add(new CommonContentItem(
+                items.add(new HorizontalContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
                         item.getAuthor()
@@ -323,20 +323,20 @@ public class HomeFragment extends Fragment {
 
 
     private void initializeRecyclerViews() {
-        adapterFreeWait = new CommonRvAdapter();
+        adapterFreeWait = new HorizontalRvAdapter();
         setupRecyclerView(binding.rvWaitFree, adapterFreeWait);
 
-        adapterOneCoin = new CommonRvAdapter();
+        adapterOneCoin = new HorizontalRvAdapter();
         setupRecyclerView(binding.rvOneCoin, adapterOneCoin);
 
-        adapterCustomKeyword = new CommonRvAdapter();
+        adapterCustomKeyword = new HorizontalRvAdapter();
         setupRecyclerView(binding.rvCustomKeyword, adapterCustomKeyword);
 
-        adapterRecommendGenre = new CommonRvAdapter();
+        adapterRecommendGenre = new HorizontalRvAdapter();
         setupRecyclerView(binding.rvRecommendGenre, adapterRecommendGenre);
     }
 
-    private void setupRecyclerView(RecyclerView recyclerView, CommonRvAdapter adapter) {
+    private void setupRecyclerView(RecyclerView recyclerView, HorizontalRvAdapter adapter) {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setAdapter(adapter);
     }
@@ -415,11 +415,11 @@ public class HomeFragment extends Fragment {
         return webtoons.stream().filter(w -> ids.contains(w.getId())).collect(Collectors.toList());
     }
 
-    private void updateWebtoonRecyclerView(List<ApiItems.Webtoon> webtoons, CommonRvAdapter adapter) {
+    private void updateWebtoonRecyclerView(List<ApiItems.Webtoon> webtoons, HorizontalRvAdapter adapter) {
         if (webtoons != null) {
-            List<CommonContentItem> items = new ArrayList<>();
+            List<HorizontalContentItem> items = new ArrayList<>();
             for (ApiItems.Webtoon webtoon : webtoons) {
-                items.add(new CommonContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor()));
+                items.add(new HorizontalContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor()));
             }
             adapter.submitList(items);
         }
