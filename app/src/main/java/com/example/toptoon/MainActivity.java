@@ -2,6 +2,7 @@ package com.example.toptoon;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.example.toptoon.Fragment.SerialFragment;
 import com.example.toptoon.Fragment.ShortsFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
 import com.example.toptoon.Ui.MainMenuRvAdapter;
+import com.example.toptoon.Ui.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -33,9 +35,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements com.example.toptoon.OnMainMenuSelectedListener {
+public class MainActivity extends AppCompatActivity implements OnMainMenuSelectedListener {
 
     private ActivityMainBinding binding;
+    private MainMenuRvAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
             if (!(currentFragment instanceof HomeFragment)) {
                 displayHomeFragment();
+                binding.ivHeaderAd.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -131,28 +135,35 @@ public class MainActivity extends AppCompatActivity implements com.example.topto
         if (menu.equals("연재")) {
             transaction.replace(R.id.fragmentContainer, new SerialFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("TOP100")) {
             transaction.replace(R.id.fragmentContainer, new Top100Fragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("신작")) {
             transaction.replace(R.id.fragmentContainer, new NewProductFragment());
             transaction.addToBackStack(null);
-
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("완결")) {
             transaction.replace(R.id.fragmentContainer, new CompleteFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("추천무료")) {
             transaction.replace(R.id.fragmentContainer, new FreeRecommendFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("전연령")) {
             transaction.replace(R.id.fragmentContainer, new AllAgeFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("탑툰쇼츠")) {
             transaction.replace(R.id.fragmentContainer, new ShortsFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
         } else if (menu.equals("이벤트")) {
             transaction.replace(R.id.fragmentContainer, new EventFragment());
             transaction.addToBackStack(null);
+            binding.ivHeaderAd.setVisibility(View.GONE);
 
         }
         // 다른 메뉴 항목에 대한 추가 체크 및 해당 프래그먼트로 교체

@@ -1,5 +1,6 @@
 package com.example.toptoon.Ui;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptoon.DataModel.MainMenuItem;
-import com.example.toptoon.OnMainMenuSelectedListener;
 import com.example.toptoon.R;
 import com.example.toptoon.databinding.MainMenuRvRowBinding;
 
@@ -18,6 +18,7 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
 
     private OnMainMenuSelectedListener listener;
     private int selectedItemPosition = -1; // 선택된 아이템이 없는 상태를 -1로 초기화
+
     public void setListener(OnMainMenuSelectedListener listener) {
         this.listener = listener;
     }
@@ -45,15 +46,15 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
         return new MainMenuViewHolder(binding);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, int position) {
         MainMenuItem menu = getItem(position);
         holder.binding.tvItem.setText(menu.getTitle());
 
-        if (position == selectedItemPosition){
+        if (position == selectedItemPosition) {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
-        }
-        else {
+        } else {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false);
         }
 
