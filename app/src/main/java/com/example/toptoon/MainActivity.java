@@ -46,12 +46,15 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        if (adapter == null) { // 어댑터가 아직 생성되지 않았다면 생성
+            setupMainMenu();
+        }
+
         setupMainMenu();
         setHeaderAd();
         displayFragment(new HomeFragment(), false);
         setupLogoClickEvent();
     }
-
 
     private void setHeaderAd() {
         NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
@@ -93,9 +96,14 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         return menuList;
     }
 
+
     private void setupLogoClickEvent() {
-        binding.ivLogo.setOnClickListener(v -> displayFragment(new HomeFragment(), false));
+        binding.ivLogo.setOnClickListener(v -> {
+            adapter.setSelectedItemPosition(-1); // 선택 리셋
+            displayFragment(new HomeFragment(), false);
+        });
     }
+
 
     @Override
     public void onMainMenuSelected(String menu) {
@@ -142,6 +150,12 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     }
 
     private void displayFragment(Fragment fragment, boolean shouldHideAd) {
+
+        // 메뉴 특정 프래그먼트에서 벗어날 때 선택된 항목을 리셋
+        if (currentSelectedMenuIndex != -1) {
+            adapter.setSelectedItemPosition(-1);
+        }
+
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         if (true) {
@@ -152,4 +166,14 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding.ivHeaderAd.setVisibility(shouldHideAd ? View.GONE : View.VISIBLE);
 
     }
+
+    public void onBackPressed() {
+        // 뒤로 가기 내비게이션 처리
+        if (currentSelectedMenuIndex != -1) {
+            adapter.setSelectedItemPosition(-1);
+        }
+        super.onBackPressed();
+    }
+
+
 }

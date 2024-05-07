@@ -51,22 +51,32 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
         MainMenuItem menu = getItem(position);
         holder.binding.tvItem.setText(menu.getTitle());
 
-        if (position == selectedItemPosition) {
+        Log.d("MainMenuAdapter", "Binding position: " + position + ", selectedItemPosition: " + selectedItemPosition);
+
+        if ( position  == selectedItemPosition) {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
+            Log.d("MainMenuAdapter", "Border true applied to position: " + position);
         } else {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false);
+            Log.d("MainMenuAdapter", "Border false applied to position: " + position);
         }
 
         holder.itemView.setOnClickListener(v -> {
-            selectedItemPosition = position;
-            notifyDataSetChanged();
+            int previousSelectedPosition = selectedItemPosition; // 이전 선택된 위치 저장
+            selectedItemPosition = position; // 새로운 선택된 위치 설정
+
+            Log.d("MainMenuRvAdapter", "Item clicked at position: " + position + ", previous position: " + previousSelectedPosition + ", new selectedItemPosition: " + selectedItemPosition);
+
+            // 이전과 현재 선택된 위치의 항목만 갱신
+            notifyItemChanged(previousSelectedPosition);
+            notifyItemChanged(selectedItemPosition);
 
             if (listener != null) {
                 listener.onMainMenuSelected(menu.getTitle()); // Pass the clicked menu item to the listener
-                Log.println(Log.INFO, "MainMenuRvAdapter", "onBindViewHolder: " + menu.getTitle() + " clicked");
-
+                Log.i("MainMenuRvAdapter", "onBindViewHolder: " + menu.getTitle() + " clicked");
             }
         });
+
     }
 
     static class MainMenuViewHolder extends RecyclerView.ViewHolder {
@@ -76,5 +86,10 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
             super(binding.getRoot());
             this.binding = binding;
         }
+    }
+
+    public void setSelectedItemPosition(int position) {
+        this.selectedItemPosition = position;
+        notifyDataSetChanged();
     }
 }
