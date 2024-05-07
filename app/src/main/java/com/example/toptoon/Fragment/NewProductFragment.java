@@ -32,14 +32,6 @@ public class NewProductFragment extends Fragment {
         MainListRvAdapter adapter = new MainListRvAdapter();
         binding.rvComplete.setAdapter(adapter);
 
-        // 테스트 데이터 생성
-        List<MainListItem> items = new ArrayList<>();
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        adapter.submitList(items);
 
     }
 

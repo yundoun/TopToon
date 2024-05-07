@@ -6,8 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
-import com.example.toptoon.DataModel.TabContentItem;
-import com.example.toptoon.Fragment.BaseTabFragment;
+import com.example.toptoon.DataModel.BaseContentItem;
 import com.example.toptoon.Ui.TabRvAdapter;
 
 import java.util.ArrayList;
@@ -52,9 +51,9 @@ public class TabRealTime extends BaseTabFragment {
 
     private void displayData(List<ApiItems.Webtoon> tabItems) {
         if (tabItems != null && !tabItems.isEmpty()) {
-            List<TabContentItem> items = new ArrayList<>();
+            List<BaseContentItem> items = new ArrayList<>();
             for (ApiItems.Webtoon item : tabItems) {
-                items.add(new TabContentItem(
+                items.add(new BaseContentItem(
                         item.getTitle(),
                         item.getAuthor(),
                         item.getLatestEpisode(),

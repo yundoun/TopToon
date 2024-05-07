@@ -31,16 +31,6 @@ public class AllAgeFragment extends Fragment {
         binding.rvAllAges.setLayoutManager(new GridLayoutManager(getContext(), 3));
         MainListRvAdapter adapter = new MainListRvAdapter();
         binding.rvAllAges.setAdapter(adapter);
-
-        // 테스트 데이터 생성
-        List<MainListItem> items = new ArrayList<>();
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        adapter.submitList(items);
     }
 
 }

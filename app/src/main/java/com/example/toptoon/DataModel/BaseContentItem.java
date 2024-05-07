@@ -2,7 +2,7 @@ package com.example.toptoon.DataModel;
 
 import java.util.Objects;
 
-public class TabContentItem {
+public class BaseContentItem {
 
 //equals(): 이 메소드는 두 객체의 내용이 동일한지 비교합니다. 각 필드가 같은지 확인하며, boolean과 String 타입의 필드 모두를 비교합니다.
 //hashCode(): 객체의 해시코드를 반환합니다. 객체의 동등성을 판단하는데 사용되며, equals() 메소드에서 사용된 모든 필드를 기반으로 해시코드를 계산해야 합니다.
@@ -10,7 +10,7 @@ public class TabContentItem {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TabContentItem that = (TabContentItem) o;
+        BaseContentItem that = (BaseContentItem) o;
         return isNew == that.isNew &&
                 isDiscounted == that.isDiscounted &&
                 isExclusive == that.isExclusive &&
@@ -28,10 +28,10 @@ public class TabContentItem {
         return Objects.hash(title, author, latestEpisode, views, isNew, isDiscounted, isExclusive, waitFree, recentlyUpdated, imageUrl);
     }
 
-    public TabContentItem(String title, String author, String latestEpisode,
-                          String views, boolean isNew, boolean isDiscounted,
-                          boolean isExclusive, boolean waitFree, boolean recentlyUpdated,
-                          String imageUrl) {
+    public BaseContentItem(String title, String author, String latestEpisode,
+                           String views, boolean isNew, boolean isDiscounted,
+                           boolean isExclusive, boolean waitFree, boolean recentlyUpdated,
+                           String imageUrl) {
         this.title = title;
         this.author = author;
         this.latestEpisode = latestEpisode;

@@ -34,15 +34,15 @@ public class MainListFragment extends Fragment {
         MainListRvAdapter adapter = new MainListRvAdapter();
         binding.rvMainList.setAdapter(adapter);
 
-        List<MainListItem> items = new ArrayList<>();
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
-        adapter.submitList(items); // 테스트 아이템 리스트를 어댑터에 제출
+//        List<MainListItem> items = new ArrayList<>();
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        items.add(new MainListItem("무련전봉", R.drawable.tmp, "제1200화", "329만"));
+//        adapter.submitList(items); // 테스트 아이템 리스트를 어댑터에 제출
     }
 }
 

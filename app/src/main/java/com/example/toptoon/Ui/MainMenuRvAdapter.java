@@ -23,7 +23,6 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
         this.listener = listener;
     }
 
-
     public MainMenuRvAdapter() {
         super(new DiffUtil.ItemCallback<MainMenuItem>() {
             @Override
@@ -48,7 +47,7 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, @SuppressLint("RecyclerView") int position) {
         MainMenuItem menu = getItem(position);
         holder.binding.tvItem.setText(menu.getTitle());
 

@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -14,9 +14,9 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/ivListImage"
-            android:layout_width="127dp"
-            android:layout_height="178dp"
+            android:id="@+id/ivImageMain"
+            android:layout_width="0dp"
+            android:layout_height="170dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -26,7 +26,7 @@
             app:srcCompat="@drawable/tmp" />
 
         <TextView
-            android:id="@+id/tvListTitle"
+            android:id="@+id/tvTitleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
@@ -35,52 +35,55 @@
             android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivListImage" />
+            app:layout_constraintTop_toBottomOf="@+id/ivImageMain" />
 
         <TextView
-            android:id="@+id/tvLatestEpisode"
+            android:id="@+id/tvLatestEpisodeMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="3dp"
+            android:layout_marginEnd="10dp"
             android:text="제1200화"
             android:textSize="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ivListLook"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvListTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleMain" />
 
         <ImageView
             android:id="@+id/ivListLook"
             android:layout_width="12dp"
             android:layout_height="12dp"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@+id/tvLatestEpisode"
-            app:layout_constraintTop_toBottomOf="@+id/tvListTitle"
+            android:layout_marginEnd="5dp"
+            app:layout_constraintEnd_toStartOf="@+id/tvListViewsMain"
+            app:layout_constraintStart_toEndOf="@+id/tvLatestEpisodeMain"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleMain"
             app:srcCompat="@drawable/icon_look" />
 
         <TextView
-            android:id="@+id/tvListViews"
+            android:id="@+id/tvListViewsMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
             android:layout_marginTop="3dp"
             android:text="34만"
             android:textSize="10dp"
             app:layout_constraintStart_toEndOf="@+id/ivListLook"
-            app:layout_constraintTop_toBottomOf="@+id/tvListTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleMain" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/ivNewMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.013"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_new" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/ivExclusiveMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
             android:layout_marginStart="2dp"
@@ -90,23 +93,28 @@
             app:srcCompat="@drawable/icon_exclusive" />
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/ivSaleMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
-            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="fitXY"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.005"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_discounted" />
 
         <ImageView
-            android:id="@+id/imageView8"
+            android:id="@+id/ivFreeWaitMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView7"
-            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisode"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_hits" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

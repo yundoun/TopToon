@@ -7,6 +7,10 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.toptoon.Fragment.MainListFragment;
 import com.example.toptoon.Fragment.SerialFragment;
+import com.example.toptoon.Serial.MondayFragment;
+import com.example.toptoon.Serial.TuesdayFragment;
+import com.example.toptoon.Serial.TursdayFragment;
+import com.example.toptoon.Serial.WednesdayFragment;
 
 public class SerialListManager extends FragmentStateAdapter {
     public SerialListManager(@NonNull SerialFragment fragmentActivity) {
@@ -18,9 +22,13 @@ public class SerialListManager extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
+                return new MondayFragment();
             case 1:
+                return new TuesdayFragment();
             case 2:
+                return new WednesdayFragment();
             case 3:
+                return new TursdayFragment();
             case 4:
             case 5:
             case 6:

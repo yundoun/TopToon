@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ApiItems {
 
-
+    // 필드
     @SerializedName("webtoons")
     private List<Webtoon> webtoons;
 
@@ -25,6 +25,7 @@ public class ApiItems {
     @SerializedName("oneCoin")
     private List<Integer> oneCoin;
 
+
     // 광고 필드는 변경 없음
     private List<SlideAd> slideAd;
     private List<Event> event;
@@ -33,6 +34,7 @@ public class ApiItems {
     private String sectionAd;
     private CustomKeyword customKeyword;
     private RecommendGenre recommendGenre;
+    private Serial serial;
 
     // Getter and Setter
     public List<Webtoon> getWebtoons() {
@@ -87,8 +89,54 @@ public class ApiItems {
         return recommendGenre;
     }
 
+    public Serial getSerial() { return serial; }
 
     // 내부 클래스
+
+    public static class Serial {
+        private List<Integer> monday;
+        private List<Integer> tuesday;
+        private List<Integer> wednesday;
+        private List<Integer> thursday;
+        private List<Integer> friday;
+        private List<Integer> saturday;
+        private List<Integer> sunday;
+
+        public List<Integer> getMonday() {
+            return monday;
+        }
+
+        public List<Integer> getTuesday() {
+            return tuesday;
+        }
+
+        public List<Integer> getWednesday() {
+            return wednesday;
+        }
+
+        public List<Integer> getThursday() {
+            return thursday;
+        }
+
+        public List<Integer> getFriday() {
+            return friday;
+        }
+
+        public List<Integer> getSaturday() {
+            return saturday;
+        }
+
+        public List<Integer> getSunday() {
+            return sunday;
+        }
+
+        public List<Integer> getRemake() {
+            return remake;
+        }
+
+        private List<Integer> remake;
+
+    }
 
     public static class SlideAd {
         private String imageUrl;

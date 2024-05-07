@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -39,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
+    private int currentSelectedMenuIndex = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +46,9 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setHeaderAd();
         setupMainMenu();
-        displayFragment(new HomeFragment(), "HOME_FRAGMENT", false); // Initially display the Home Fragment
+        setHeaderAd();
+        displayFragment(new HomeFragment(), false);
         setupLogoClickEvent();
     }
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     private void setupMainMenu() {
         binding.rvMainMenu.setLayoutManager(new GridLayoutManager(this, 4)); // 2열 그리드 설정
 
-        MainMenuRvAdapter adapter = new MainMenuRvAdapter();
+        adapter = new MainMenuRvAdapter();
         binding.rvMainMenu.setAdapter(adapter);
         adapter.setListener(this);
         adapter.submitList(createMenuItems()); // 데이터 설정
@@ -94,57 +94,62 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     }
 
     private void setupLogoClickEvent() {
-        binding.ivLogo.setOnClickListener(v -> displayFragment(new HomeFragment(), "HOME_FRAGMENT", false));
+        binding.ivLogo.setOnClickListener(v -> displayFragment(new HomeFragment(), false));
     }
 
     @Override
     public void onMainMenuSelected(String menu) {
-        Fragment newFragment;
+        Fragment newFragment = null;
         boolean shouldHideAd = true;
 
         switch (menu) {
             case "연재":
                 newFragment = new SerialFragment();
+                currentSelectedMenuIndex = 0;
                 break;
             case "TOP100":
                 newFragment = new Top100Fragment();
+                currentSelectedMenuIndex = 1;
                 break;
             case "신작":
                 newFragment = new NewProductFragment();
+                currentSelectedMenuIndex = 2;
                 break;
             case "완결":
                 newFragment = new CompleteFragment();
+                currentSelectedMenuIndex = 3;
                 break;
             case "추천무료":
                 newFragment = new FreeRecommendFragment();
+                currentSelectedMenuIndex = 4;
                 break;
             case "전연령":
                 newFragment = new AllAgeFragment();
+                currentSelectedMenuIndex = 5;
                 break;
             case "탑툰쇼츠":
                 newFragment = new ShortsFragment();
+                currentSelectedMenuIndex = 6;
                 break;
             case "이벤트":
                 newFragment = new EventFragment();
+                currentSelectedMenuIndex = 7;
                 break;
             default:
-                return; // In case of an unrecognized menu item, do nothing.
+                return;
         }
-        displayFragment(newFragment, null, shouldHideAd);
+        displayFragment(newFragment, shouldHideAd);
     }
 
-    private void displayFragment(Fragment fragment, String tag, boolean shouldHideAd) {
+    private void displayFragment(Fragment fragment, boolean shouldHideAd) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
-        if (tag != null) {
+        if (true) {
             transaction.addToBackStack(null);
         }
         transaction.commit();
 
-        if (shouldHideAd) {
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else {
-            binding.ivHeaderAd.setVisibility(View.VISIBLE);
-        }
+        binding.ivHeaderAd.setVisibility(shouldHideAd ? View.GONE : View.VISIBLE);
+
     }
 }
