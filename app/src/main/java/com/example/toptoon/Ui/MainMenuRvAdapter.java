@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptoon.DataModel.MainMenuItem;
 import com.example.toptoon.OnMainMenuSelectedListener;
+import com.example.toptoon.R;
 import com.example.toptoon.databinding.MainMenuRvRowBinding;
 
 public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapter.MainMenuViewHolder> {
 
     private OnMainMenuSelectedListener listener;
-
+    private int selectedItemPosition = -1; // 선택된 아이템이 없는 상태를 -1로 초기화
     public void setListener(OnMainMenuSelectedListener listener) {
         this.listener = listener;
     }
@@ -49,15 +50,23 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
         MainMenuItem menu = getItem(position);
         holder.binding.tvItem.setText(menu.getTitle());
 
+        if (position == selectedItemPosition){
+            holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
+        }
+        else {
+            holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false);
+        }
 
         holder.itemView.setOnClickListener(v -> {
+            selectedItemPosition = position;
+            notifyDataSetChanged();
 
             if (listener != null) {
                 listener.onMainMenuSelected(menu.getTitle()); // Pass the clicked menu item to the listener
                 Log.println(Log.INFO, "MainMenuRvAdapter", "onBindViewHolder: " + menu.getTitle() + " clicked");
+
             }
         });
-
     }
 
     static class MainMenuViewHolder extends RecyclerView.ViewHolder {
