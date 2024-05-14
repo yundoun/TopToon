@@ -1,5 +1,6 @@
 package com.example.toptoon;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -54,7 +55,18 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         setHeaderAd();
         displayFragment(new HomeFragment(), false);
         setupLogoClickEvent();
+
+        binding.btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("URL", "https://toptoon.com/hashtag");
+                startActivity(intent);
+            }
+        });
+
     }
+
 
     private void setHeaderAd() {
         NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
