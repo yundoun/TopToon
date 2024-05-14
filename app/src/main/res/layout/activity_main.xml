@@ -1,289 +1,317 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- activity_main.xml -->
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainLayout"
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white">
-
-        <ImageView
-            android:id="@+id/ivHeaderAd"
-            android:layout_width="match_parent"
-            android:layout_height="57.5dp"
-            android:background="@color/headerAdd"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/headerLayout"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:background="@drawable/header_layout_border"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/rvMainMenu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivHeaderAd">
+            android:id="@+id/mainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
 
             <ImageView
-                android:id="@+id/ivLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/logo_toptoon"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/adultSwitch"
+                android:id="@+id/ivHeaderAd"
+                android:layout_width="match_parent"
+                android:layout_height="57.5dp"
+                android:background="@color/headerAdd"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <Switch
-                android:id="@+id/adultSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/headerLayout"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:background="@drawable/header_layout_border"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/rvMainMenu"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivHeaderAd">
+
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/logo_toptoon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/adultSwitch"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <Switch
+                    android:id="@+id/adultSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/icon_adult"
+                    android:track="@drawable/switch_track_selector"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivLogo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:switchMinWidth="50dp"
+                    app:thumbTextPadding="0dp"
+                    tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnCoin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnMyLibrary"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivCoin"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_coin"
+                        app:layout_constraintBottom_toTopOf="@+id/tvCoin"
+                        app:layout_constraintEnd_toEndOf="@+id/tvCoin"
+                        app:layout_constraintStart_toStartOf="@+id/tvCoin"
+                        app:layout_constraintTop_toTopOf="@+id/tvCoin" />
+
+                    <TextView
+                        android:id="@+id/tvCoin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="충전소"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivCoin" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnMyLibrary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnGiftBox"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivMyLibrary"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_mylibrary"
+                        app:layout_constraintBottom_toTopOf="@+id/tvMyLibrary"
+                        app:layout_constraintEnd_toEndOf="@+id/tvMyLibrary"
+                        app:layout_constraintStart_toStartOf="@+id/tvMyLibrary"
+                        app:layout_constraintTop_toTopOf="@+id/tvMyLibrary" />
+
+
+                    <TextView
+                        android:id="@+id/tvMyLibrary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="내서재"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivMyLibrary" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnGiftBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnSearch"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivGiftBox"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_giftbox"
+                        app:layout_constraintBottom_toTopOf="@+id/tvGiftBox"
+                        app:layout_constraintEnd_toEndOf="@+id/tvGiftBox"
+                        app:layout_constraintStart_toStartOf="@+id/tvGiftBox"
+                        app:layout_constraintTop_toTopOf="@+id/tvGiftBox" />
+
+                    <TextView
+                        android:id="@+id/tvGiftBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="선물함"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivGiftBox" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/btnHamburger"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_search"
+                        app:layout_constraintBottom_toTopOf="@+id/tvSearch"
+                        app:layout_constraintEnd_toEndOf="@+id/tvSearch"
+                        app:layout_constraintStart_toStartOf="@+id/tvSearch"
+                        app:layout_constraintTop_toTopOf="@+id/tvSearch" />
+
+                    <TextView
+                        android:id="@+id/tvSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="검색"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btnHamburger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/ivHamburger"
+                        android:layout_width="0dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/icon_headmenu"
+                        app:layout_constraintBottom_toTopOf="@+id/tvHamburger"
+                        app:layout_constraintEnd_toEndOf="@+id/tvHamburger"
+                        app:layout_constraintStart_toStartOf="@+id/tvHamburger"
+                        app:layout_constraintTop_toTopOf="@+id/tvHamburger" />
+
+                    <TextView
+                        android:id="@+id/tvHamburger"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="메뉴"
+                        android:textSize="10sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivHamburger" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMainMenu"
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/headerLayout"
+                app:spanCount="4" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                app:layout_constraintBottom_toTopOf="@+id/ivFooter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.545"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvMainMenu" />
+
+            <ImageView
+                android:id="@+id/ivFooter"
+                android:layout_width="0dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:textOff=""
-                android:textOn=""
-                android:thumb="@drawable/icon_adult"
-                android:track="@drawable/switch_track_selector"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ivLogo"
-                app:layout_constraintTop_toTopOf="parent"
-                app:switchMinWidth="50dp"
-                app:thumbTextPadding="0dp"
-                tools:ignore="UseSwitchCompatOrMaterialXml" />
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnCoin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnMyLibrary"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivCoin"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_coin"
-                    app:layout_constraintBottom_toTopOf="@+id/tvCoin"
-                    app:layout_constraintEnd_toEndOf="@+id/tvCoin"
-                    app:layout_constraintStart_toStartOf="@+id/tvCoin"
-                    app:layout_constraintTop_toTopOf="@+id/tvCoin" />
-
-                <TextView
-                    android:id="@+id/tvCoin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="충전소"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivCoin" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnMyLibrary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnGiftBox"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivMyLibrary"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_mylibrary"
-                    app:layout_constraintBottom_toTopOf="@+id/tvMyLibrary"
-                    app:layout_constraintEnd_toEndOf="@+id/tvMyLibrary"
-                    app:layout_constraintStart_toStartOf="@+id/tvMyLibrary"
-                    app:layout_constraintTop_toTopOf="@+id/tvMyLibrary" />
-
-
-                <TextView
-                    android:id="@+id/tvMyLibrary"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="내서재"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivMyLibrary" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnGiftBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnSearch"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivGiftBox"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_giftbox"
-                    app:layout_constraintBottom_toTopOf="@+id/tvGiftBox"
-                    app:layout_constraintEnd_toEndOf="@+id/tvGiftBox"
-                    app:layout_constraintStart_toStartOf="@+id/tvGiftBox"
-                    app:layout_constraintTop_toTopOf="@+id/tvGiftBox" />
-
-                <TextView
-                    android:id="@+id/tvGiftBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="선물함"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivGiftBox" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnSearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnHamburger"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivSearch"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_search"
-                    app:layout_constraintBottom_toTopOf="@+id/tvSearch"
-                    app:layout_constraintEnd_toEndOf="@+id/tvSearch"
-                    app:layout_constraintStart_toStartOf="@+id/tvSearch"
-                    app:layout_constraintTop_toTopOf="@+id/tvSearch" />
-
-                <TextView
-                    android:id="@+id/tvSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="검색"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivSearch" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btnHamburger"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="8dp"
+                android:background="@drawable/icon_footer"
+                android:foregroundGravity="center"
+                android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/ivHamburger"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:src="@drawable/icon_headmenu"
-                    app:layout_constraintBottom_toTopOf="@+id/tvHamburger"
-                    app:layout_constraintEnd_toEndOf="@+id/tvHamburger"
-                    app:layout_constraintStart_toStartOf="@+id/tvHamburger"
-                    app:layout_constraintTop_toTopOf="@+id/tvHamburger" />
-
-                <TextView
-                    android:id="@+id/tvHamburger"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="메뉴"
-                    android:textSize="10sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ivHamburger" />
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMainMenu"
+
+    </androidx.core.widget.NestedScrollView>
+
+
+    <!-- 드로어 메뉴 영역, 오른쪽에 위치 -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:background="#FFF"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/headerLayout"
-            app:spanCount="4" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            app:layout_constraintBottom_toTopOf="@+id/ivFooter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.545"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rvMainMenu" />
-
-        <ImageView
-            android:id="@+id/ivFooter"
-            android:layout_width="0dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/icon_footer"
-            android:foregroundGravity="center"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
-
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="드로어 메뉴"
+            android:textSize="18sp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.core.widget.NestedScrollView>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

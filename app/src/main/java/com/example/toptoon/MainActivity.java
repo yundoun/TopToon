@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -52,42 +53,39 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
             setupMainMenu();
         }
 
+
+
+        binding.btnHamburger.setOnClickListener(v -> {
+            if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                binding.drawerLayout.closeDrawer(GravityCompat.END);
+            } else {
+                binding.drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+
         setupMainMenu();
         setHeaderAd();
         displayFragment(new HomeFragment(), false);
         setupLogoClickEvent();
+        setupButtonClickListeners();
+    }
 
-        binding.btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-                intent.putExtra("URL", "https://toptoon.com/hashtag");
-                startActivity(intent);
-            }
-        });
-
-        binding.btnCoin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment dialog = new DialogFragment();
-                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
-            }
-        });
-        binding.btnMyLibrary.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment dialog = new DialogFragment();
-                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
-            }
-        });
-        binding.btnGiftBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment dialog = new DialogFragment();
-                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
-            }
+    private void setupButtonClickListeners() {
+        binding.btnSearch.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+            intent.putExtra("URL", "https://toptoon.com/hashtag");
+            startActivity(intent);
         });
 
+        View.OnClickListener dialogClickListener = v -> {
+            DialogFragment dialog = new DialogFragment();
+            dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
+        };
+
+        binding.btnCoin.setOnClickListener(dialogClickListener);
+        binding.btnMyLibrary.setOnClickListener(dialogClickListener);
+        binding.btnGiftBox.setOnClickListener(dialogClickListener);
     }
 
 
