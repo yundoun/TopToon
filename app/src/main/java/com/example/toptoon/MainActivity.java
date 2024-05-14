@@ -11,10 +11,12 @@ import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
+import com.example.toptoon.DataModel.DrawerItem;
 import com.example.toptoon.DataModel.MainMenuItem;
 import com.example.toptoon.Fragment.AllAgeFragment;
 import com.example.toptoon.Fragment.CompleteFragment;
@@ -26,6 +28,7 @@ import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.SerialFragment;
 import com.example.toptoon.Fragment.ShortsFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
+import com.example.toptoon.Ui.DrawerRvAdapter;
 import com.example.toptoon.Ui.MainMenuRvAdapter;
 import com.example.toptoon.Ui.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.ActivityMainBinding;
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
+    private DrawerRvAdapter drawerRvAdapter;
     private int currentSelectedMenuIndex = -1;
 
     @Override
@@ -54,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         }
 
 
-
         binding.btnHamburger.setOnClickListener(v -> {
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 binding.drawerLayout.closeDrawer(GravityCompat.END);
@@ -62,6 +65,22 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
                 binding.drawerLayout.openDrawer(GravityCompat.END);
             }
         });
+
+
+        binding.rvDrawer.setLayoutManager(new LinearLayoutManager(this));
+
+        drawerRvAdapter = new DrawerRvAdapter();
+        binding.rvDrawer.setAdapter(drawerRvAdapter);
+
+        // 문자열 배열을 가져옵니다.
+        String[] menu = getResources().getStringArray(R.array.drawer);
+        // 문자열 배열을 List<DrawerItem>으로 변환합니다.
+        List<DrawerItem> drawerItems = new ArrayList<>();
+        for (String title : menu) {
+            drawerItems.add(new DrawerItem(title));
+        }
+        // 변환한 List<DrawerItem>을 DrawerRvAdapter에 제출합니다.
+        drawerRvAdapter.submitList(drawerItems);
 
 
         setupMainMenu();

@@ -89,4 +89,15 @@
         <item>장르</item>
     </string-array>
 
+    <string-array name="drawer">
+        <item>내서재</item>
+        <item>출석체크</item>
+        <item>무료 충전소</item>
+        <item>이벤트</item>
+        <item>공지사항</item>
+        <item>자주하는 질문</item>
+        <item>온라인문의</item>
+        <item>앱 버전 1.4.42</item>
+    </string-array>
+
 </resources>
