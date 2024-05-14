@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.toptoon.DataModel.BaseContentItem;
 import com.example.toptoon.databinding.MainListRvRowBinding;
 
@@ -55,6 +56,7 @@ public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAd
         public void bind(BaseContentItem baseContentItem) {
             Glide.with(itemView.getContext())
                     .load(baseContentItem.getImageUrl())
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) // 모든 버전을 캐시합니다.
                     .into(binding.ivImageMain);
 
             binding.tvTitleMain.setText(baseContentItem.getTitle());

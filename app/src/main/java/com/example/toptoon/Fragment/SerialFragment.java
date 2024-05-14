@@ -29,6 +29,9 @@ public class SerialFragment extends Fragment {
     private void initializeComponents() {
         binding.vpSerial.setAdapter(new SerialListManager(this));
         new TabLayoutMediator(binding.tlSerial, binding.vpSerial, this::setUpTabTitles).attach();
+
+        binding.vpSerial.setOffscreenPageLimit(5);
+
 //        binding.vpSerial.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
 //            @Override
 //            public void onPageSelected(int position) {
