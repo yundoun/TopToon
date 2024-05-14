@@ -17,6 +17,7 @@ import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.MainMenuItem;
 import com.example.toptoon.Fragment.AllAgeFragment;
 import com.example.toptoon.Fragment.CompleteFragment;
+import com.example.toptoon.Fragment.DialogFragment;
 import com.example.toptoon.Fragment.EventFragment;
 import com.example.toptoon.Fragment.FreeRecommendFragment;
 import com.example.toptoon.Fragment.HomeFragment;
@@ -62,6 +63,28 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
                 intent.putExtra("URL", "https://toptoon.com/hashtag");
                 startActivity(intent);
+            }
+        });
+
+        binding.btnCoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new DialogFragment();
+                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
+            }
+        });
+        binding.btnMyLibrary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new DialogFragment();
+                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
+            }
+        });
+        binding.btnGiftBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment dialog = new DialogFragment();
+                dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
             }
         });
 
