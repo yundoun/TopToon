@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,19 +47,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
-    private int currentSelectedMenuIndex = -1;
 
-    private final Map<Class<? extends Fragment>, Integer> fragmentIndexMap = new HashMap<Class<? extends Fragment>, Integer>() {{
-        put(HomeFragment.class, -1);
-        put(SerialFragment.class, 0);
-        put(Top100Fragment.class, 1);
-        put(NewProductFragment.class, 2);
-        put(CompleteFragment.class, 3);
-        put(FreeRecommendFragment.class, 4);
-        put(AllAgeFragment.class, 5);
-        put(ShortsFragment.class, 6);
-        put(EventFragment.class, 7);
-    }};
 
 
     @Override
@@ -181,10 +170,61 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     @Override
     public void onMainMenuSelected(String menu) {
-        Fragment newFragment = getFragmentForMenu(menu);
-        if (newFragment != null) {
-            adapter.setSelectedItemPosition(fragmentIndexMap.get(newFragment.getClass()));
-            displayFragment(newFragment, true);
+        int selectedIndex = getMenuIndex(menu);
+        if (selectedIndex >= 4 && selectedIndex <= 7) {
+            String url = getWebViewUrlForMenu(selectedIndex);
+            if (url != null) {
+                Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
+                intent.putExtra("URL", url);
+                startActivity(intent);
+                return;
+            }
+        } else {
+            Fragment newFragment = getFragmentForMenu(menu);
+            if (newFragment != null) {
+                displayFragment(newFragment, true);
+            }
+        }
+    }
+
+
+    // 메뉴 인덱스에 따라 URL을 반환하는 메서드
+    private String getWebViewUrlForMenu(int index) {
+        switch (index) {
+            case 4:
+                return "https://toptoon.com/event/freetoon/daily#event1";
+            case 5:
+                return "https://toptoon.com/cartoon#cartoon1";
+            case 6:
+                return "https://toptoon.com/shorts";
+            case 7:
+                return "https://toptoon.com/event";
+            default:
+                return null;
+        }
+    }
+
+    // 메뉴 이름에 따라 인덱스를 반환하는 메서드
+    private int getMenuIndex(String menu) {
+        switch (menu) {
+            case "연재":
+                return 0;
+            case "TOP100":
+                return 1;
+            case "신작":
+                return 2;
+            case "완결":
+                return 3;
+            case "추천무료":
+                return 4;
+            case "전연령":
+                return 5;
+            case "탑툰쇼츠":
+                return 6;
+            case "이벤트":
+                return 7;
+            default:
+                return -1;
         }
     }
 
@@ -199,14 +239,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
                 return new NewProductFragment();
             case "완결":
                 return new CompleteFragment();
-            case "추천무료":
-                return new FreeRecommendFragment();
-            case "전연령":
-                return new AllAgeFragment();
-            case "탑툰쇼츠":
-                return new ShortsFragment();
-            case "이벤트":
-                return new EventFragment();
             default:
                 return null;
         }
@@ -216,6 +248,12 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private void displayFragment(Fragment fragment, boolean shouldHideAd) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (fragment instanceof HomeFragment) {
+            // 백스택 초기화
+            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+            shouldHideAd = false; // 홈 프래그먼트일 때 상단 광고 보이기
+            adapter.setSelectedItemPosition(-1); // 선택 리셋
+        }
         transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -228,18 +266,36 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     // => 메인 메뉴 테두리 변경
     public void onBackStackChanged() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        assert currentFragment != null;
-        Integer index = fragmentIndexMap.get(currentFragment.getClass());
-        if (index != null) {
+        if (currentFragment != null) {
+            int index = getMenuIndexForFragment(currentFragment);
             adapter.setSelectedItemPosition(index);
-            binding.ivHeaderAd.setVisibility(index == -1 ? View.VISIBLE : View.GONE);
+            binding.ivHeaderAd.setVisibility(currentFragment instanceof HomeFragment ? View.VISIBLE : View.GONE);
         }
     }
 
+
+    // 현재 프래그먼트에 해당하는 메뉴 인덱스를 반환하는 메서드
+    private int getMenuIndexForFragment(Fragment fragment) {
+        if (fragment instanceof SerialFragment) {
+            return 0;
+        } else if (fragment instanceof Top100Fragment) {
+            return 1;
+        } else if (fragment instanceof NewProductFragment) {
+            return 2;
+        } else if (fragment instanceof CompleteFragment) {
+            return 3;
+        } else if (fragment instanceof HomeFragment) {
+            return -1;
+        } else {
+            return -1;
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        // 뒤로 가기 내비게이션 처리
-        if (currentSelectedMenuIndex != -1) {
-            adapter.setSelectedItemPosition(-1);
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (currentFragment instanceof HomeFragment) {
+            adapter.setSelectedItemPosition(-1); // 홈 프래그먼트일 때 선택 리셋
         }
         super.onBackPressed();
     }

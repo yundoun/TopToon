@@ -55,7 +55,7 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
 
 
         // 선택된 항목의 테두리를 빨간색으로 변경
-        if (position == selectedItemPosition) {
+        if (position == selectedItemPosition && position >= 0 && position <= 3) {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
         } else {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false); // 기본 배경을 설정하거나 초기화
