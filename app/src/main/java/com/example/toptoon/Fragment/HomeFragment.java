@@ -20,6 +20,7 @@ import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.CircleIndicator;
 import com.example.toptoon.Ui.HorizontalRvAdapter;
@@ -582,6 +583,8 @@ public class HomeFragment extends Fragment {
                     if (sectionAdUrl != null && !sectionAdUrl.isEmpty()) {
                         Glide.with(HomeFragment.this)
                                 .load(sectionAdUrl)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .skipMemoryCache(true)
                                 .into(binding.ivSectionAd);
                     }
                 }
