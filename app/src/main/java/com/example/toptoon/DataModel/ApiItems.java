@@ -165,9 +165,13 @@ public class ApiItems {
 
     public static class SlideAd {
         private String imageUrl;
+        private String linkUrl;
 
         public String getImageUrl() {
             return imageUrl;
+        }
+        public String getLinkUrl() {
+            return linkUrl;
         }
 
     }

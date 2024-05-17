@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.CircleIndicator;
+import com.example.toptoon.DataModel.SlideItem;
 import com.example.toptoon.Ui.HorizontalRvAdapter;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.HorizontalContentItem;
@@ -49,6 +50,7 @@ import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
     private ViewPager2 vpAutoSlide;
+
     private final Handler sliderHandler = new Handler();
     private int currentItem = 0;
     private FragmentHomeBinding binding;
@@ -56,7 +58,8 @@ public class HomeFragment extends Fragment {
     private HorizontalRvAdapter adapterOneCoin;
     private HorizontalRvAdapter adapterCustomKeyword;
     private HorizontalRvAdapter adapterRecommendGenre;
-    List<String> slideImageUrls = new ArrayList<>();
+
+    private List<SlideItem> slideItems;
     List<String> eventImageUrls = new ArrayList<>();
     private Map<String, String> customKeywordTagToJsonKey, recommendGenreTagToJsonKey;
 
@@ -182,14 +185,15 @@ public class HomeFragment extends Fragment {
                     ApiItems items = response.body();
                     Log.println(Log.INFO, "HomeFragment", "데이터를 받아오는 데 성공함");
 
+                    slideItems = new ArrayList<>();
                     for (ApiItems.SlideAd slideAd : items.getSlideAd()) {
-                        slideImageUrls.add(slideAd.getImageUrl());
+                        slideItems.add(new SlideItem(slideAd.getImageUrl(), slideAd.getLinkUrl()));
                     }
 
                     for (ApiItems.Event event : items.getEvent()) {
                         eventImageUrls.add(event.getImageUrl());
                     }
-                    initializeSlider(slideImageUrls);
+                    initializeSlider(slideItems);
                     setEventAd(eventImageUrls);
                 } else {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
@@ -228,14 +232,14 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void initializeSlider(List<String> ImageUrls) {
+    private void initializeSlider(List<SlideItem> slideItems) {
 
         if (!isAdded() || binding == null) {
             return;
         }
 
         vpAutoSlide = binding.vpAutoSlide;
-        SlideImageAdapter adapter1 = new SlideImageAdapter(getContext(), ImageUrls);
+        SlideImageAdapter adapter1 = new SlideImageAdapter(getContext(), slideItems);
         vpAutoSlide.setAdapter(adapter1);
 
         int imagesLength = adapter1.getImageArrayLength();
@@ -259,7 +263,7 @@ public class HomeFragment extends Fragment {
 
     private void setEventAd(List<String> ImageUrls) {
         ViewPager2 vpEvent = binding.vpEvent;
-        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), ImageUrls);
+        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), slideItems);
         vpEvent.setAdapter(adapter2);
     }
 

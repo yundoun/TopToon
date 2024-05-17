@@ -1,15 +1,16 @@
 package com.example.toptoon.Ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.toptoon.databinding.FragmentHomeBinding;
+import com.example.toptoon.DataModel.SlideItem;
+import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.SlideImageRowBinding;
 
 import java.util.List;
@@ -17,18 +18,17 @@ import java.util.List;
 public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.SlideImageViewHolder> {
 
 
-    private final List<String> imageUrls;
+    private final List<SlideItem> slideItems;
     private Context context;
-    private FragmentHomeBinding binding;
 
-    public SlideImageAdapter(Context context, List<String> imageUrls){
+    public SlideImageAdapter(Context context, List<SlideItem> slideItems){
         this.context = context;
-        this.imageUrls = imageUrls;
+        this.slideItems = slideItems;
     }
 
     // 이미지 배열의 길이를 반환하는 메서드 추가
     public int getImageArrayLength() {
-        return imageUrls.size();
+        return slideItems.size();
     }
 
     @NonNull
@@ -41,8 +41,16 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
 
     @Override
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
-        int realPosition = position % imageUrls.size(); // 실제 이미지 배열의 위치를 계산
-        Glide.with(context).load(imageUrls.get(realPosition)).into(holder.binding.slideImageRow);
+        int realPosition = position % slideItems.size(); // 실제 이미지 배열의 위치를 계산
+        SlideItem slideItem = slideItems.get(realPosition);
+        Glide.with(context).load(slideItem.getImageUrl()).into(holder.binding.slideImageRow);
+
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, WebViewActivity.class);
+            intent.putExtra("URL", slideItem.getLinkUrl()); // 웹뷰로 전송할 URL
+            context.startActivity(intent);
+        });
+
     }
 
     @Override
