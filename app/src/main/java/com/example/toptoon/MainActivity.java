@@ -34,7 +34,9 @@ import com.example.toptoon.Ui.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,8 +46,20 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
-    private DrawerRvAdapter drawerRvAdapter;
     private int currentSelectedMenuIndex = -1;
+
+    private final Map<Class<? extends Fragment>, Integer> fragmentIndexMap = new HashMap<Class<? extends Fragment>, Integer>() {{
+        put(HomeFragment.class, -1);
+        put(SerialFragment.class, 0);
+        put(Top100Fragment.class, 1);
+        put(NewProductFragment.class, 2);
+        put(CompleteFragment.class, 3);
+        put(FreeRecommendFragment.class, 4);
+        put(AllAgeFragment.class, 5);
+        put(ShortsFragment.class, 6);
+        put(EventFragment.class, 7);
+    }};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         binding.rvDrawer.setLayoutManager(new LinearLayoutManager(this));
 
-        drawerRvAdapter = new DrawerRvAdapter();
+        DrawerRvAdapter drawerRvAdapter = new DrawerRvAdapter();
         binding.rvDrawer.setAdapter(drawerRvAdapter);
 
         // 문자열 배열을 가져옵니다.
@@ -159,95 +173,60 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         });
     }
 
-
     @Override
     public void onMainMenuSelected(String menu) {
-        Fragment newFragment = null;
-        boolean shouldHideAd = true;
+        Fragment newFragment = getFragmentForMenu(menu);
+        if (newFragment != null) {
+            adapter.setSelectedItemPosition(fragmentIndexMap.get(newFragment.getClass()));
+            displayFragment(newFragment, true);
+        }
+    }
 
+    // Fragment 생성을 위한 함수
+    private Fragment getFragmentForMenu(String menu) {
         switch (menu) {
             case "연재":
-                newFragment = new SerialFragment();
-                currentSelectedMenuIndex = 0;
-                break;
+                return new SerialFragment();
             case "TOP100":
-                newFragment = new Top100Fragment();
-                currentSelectedMenuIndex = 1;
-                break;
+                return new Top100Fragment();
             case "신작":
-                newFragment = new NewProductFragment();
-                currentSelectedMenuIndex = 2;
-                break;
+                return new NewProductFragment();
             case "완결":
-                newFragment = new CompleteFragment();
-                currentSelectedMenuIndex = 3;
-                break;
+                return new CompleteFragment();
             case "추천무료":
-                newFragment = new FreeRecommendFragment();
-                currentSelectedMenuIndex = 4;
-                break;
+                return new FreeRecommendFragment();
             case "전연령":
-                newFragment = new AllAgeFragment();
-                currentSelectedMenuIndex = 5;
-                break;
+                return new AllAgeFragment();
             case "탑툰쇼츠":
-                newFragment = new ShortsFragment();
-                currentSelectedMenuIndex = 6;
-                break;
+                return new ShortsFragment();
             case "이벤트":
-                newFragment = new EventFragment();
-                currentSelectedMenuIndex = 7;
-                break;
+                return new EventFragment();
             default:
-                return;
+                return null;
         }
-        adapter.setSelectedItemPosition(currentSelectedMenuIndex);
-        displayFragment(newFragment, shouldHideAd);
     }
+
+
 
     private void displayFragment(Fragment fragment, boolean shouldHideAd) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
-        if (true) {
-            transaction.addToBackStack(null);
-        }
+        transaction.addToBackStack(null);
         transaction.commit();
 
         binding.ivHeaderAd.setVisibility(shouldHideAd ? View.GONE : View.VISIBLE);
-
     }
 
 
+    // 백스택이 변경될 때 현재 표시된 프래그먼트에 따라 선택된 메뉴 항목의 인덱스를 업데이트
+    // => 메인 메뉴 테두리 변경
     public void onBackStackChanged() {
-
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (currentFragment instanceof HomeFragment) {
-            adapter.setSelectedItemPosition(-1);
-            binding.ivHeaderAd.setVisibility(View.VISIBLE);
-        } else if (currentFragment instanceof SerialFragment) {
-            adapter.setSelectedItemPosition(0);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof Top100Fragment) {
-            adapter.setSelectedItemPosition(1);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof NewProductFragment) {
-            adapter.setSelectedItemPosition(2);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof CompleteFragment) {
-            adapter.setSelectedItemPosition(3);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof FreeRecommendFragment) {
-            adapter.setSelectedItemPosition(4);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof AllAgeFragment) {
-            adapter.setSelectedItemPosition(5);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof ShortsFragment) {
-            adapter.setSelectedItemPosition(6);
-            binding.ivHeaderAd.setVisibility(View.GONE);
-        } else if (currentFragment instanceof EventFragment) {
-            adapter.setSelectedItemPosition(7);
-            binding.ivHeaderAd.setVisibility(View.GONE);
+        assert currentFragment != null;
+        Integer index = fragmentIndexMap.get(currentFragment.getClass());
+        if (index != null) {
+            adapter.setSelectedItemPosition(index);
+            binding.ivHeaderAd.setVisibility(index == -1 ? View.VISIBLE : View.GONE);
         }
     }
 
