@@ -17,7 +17,11 @@ public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabR
 
     private OnItemClickListener listener;
 
-    public TabRvAdapter() {
+    public interface OnItemClickListener {
+        void onItemClick(BaseContentItem item);
+    }
+
+    public TabRvAdapter(OnItemClickListener listener) {
         super(new DiffUtil.ItemCallback<BaseContentItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull BaseContentItem oldItem, @NonNull BaseContentItem newItem) {
@@ -31,6 +35,7 @@ public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabR
                 return oldItem.equals(newItem);
             }
         });
+        this.listener = listener;
     }
 
     @NonNull
@@ -47,6 +52,13 @@ public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabR
         // rank 값을 설정. position은 0부터 시작하므로, rank를 표시할 때는 +1을 해줍니다.
         String rank = String.valueOf(position + 1);
         holder.bind(baseContentItem, rank);
+
+        // 클릭 리스너 설정
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(baseContentItem);
+            }
+        });
     }
 
     public static class TabRvViewHolder extends RecyclerView.ViewHolder {

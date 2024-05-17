@@ -18,7 +18,7 @@ import retrofit2.Response;
 
 public class TabRealTime extends BaseTabFragment {
     @Override
-    protected TabRvAdapter createAdapter() { return new TabRvAdapter(); }
+    protected TabRvAdapter createAdapter() { return new TabRvAdapter(this::onItemClick); }
 
     protected void fetchDataFromNetwork() {
         NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
@@ -63,7 +63,8 @@ public class TabRealTime extends BaseTabFragment {
                         item.isExclusive(),
                         item.isWaitFree(),
                         item.isRecentlyUpdated(),
-                        item.getImageUrl()
+                        item.getImageUrl(),
+                        item.getSlug()
                 ));
             }
             adapter.submitList(items);

@@ -76,7 +76,7 @@ public class HomeFragment extends Fragment {
 
         binding.tvViewAll1.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/shorts");
+            intent.putExtra("URL", "https://toptoon.com/hashtag");
             startActivity(intent);
         });
         binding.tvViewAll2.setOnClickListener(v -> {
@@ -85,6 +85,16 @@ public class HomeFragment extends Fragment {
             startActivity(intent);
         });
 
+        binding.ivFreeAd.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+            intent.putExtra("URL", "https://toptoon.com/comic/ep_list/friendshiptolove_na");
+            startActivity(intent);
+        });
+        binding.ivSectionAd.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+            intent.putExtra("URL", "https://toptoon.com/app/downloadApp");
+            startActivity(intent);
+        });
     }
 
 

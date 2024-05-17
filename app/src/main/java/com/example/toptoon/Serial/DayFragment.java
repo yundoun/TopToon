@@ -88,7 +88,8 @@ public class DayFragment extends BaseMainListFragment {
                         webtoon.isExclusive(),
                         webtoon.isWaitFree(),
                         webtoon.isRecentlyUpdated(),
-                        webtoon.getImageUrl()
+                        webtoon.getImageUrl(),
+                        webtoon.getSlug()
                 ));
             }
         }

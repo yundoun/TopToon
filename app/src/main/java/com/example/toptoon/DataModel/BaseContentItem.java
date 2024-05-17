@@ -20,18 +20,19 @@ public class BaseContentItem {
                 Objects.equals(author, that.author) &&
                 Objects.equals(latestEpisode, that.latestEpisode) &&
                 Objects.equals(views, that.views) &&
-                Objects.equals(imageUrl, that.imageUrl);
+                Objects.equals(imageUrl, that.imageUrl) &&
+                Objects.equals(slug, that.slug);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, author, latestEpisode, views, isNew, isDiscounted, isExclusive, waitFree, recentlyUpdated, imageUrl);
+        return Objects.hash(title, author, latestEpisode, views, isNew, isDiscounted, isExclusive, waitFree, recentlyUpdated, imageUrl, slug);
     }
 
     public BaseContentItem(String title, String author, String latestEpisode,
                            String views, boolean isNew, boolean isDiscounted,
                            boolean isExclusive, boolean waitFree, boolean recentlyUpdated,
-                           String imageUrl) {
+                           String imageUrl, String slug) {
         this.title = title;
         this.author = author;
         this.latestEpisode = latestEpisode;
@@ -42,6 +43,7 @@ public class BaseContentItem {
         this.waitFree = waitFree;
         this.recentlyUpdated = recentlyUpdated;
         this.imageUrl = imageUrl;
+        this.slug = slug;
     }
 
     public String getTitle() {
@@ -83,6 +85,7 @@ public class BaseContentItem {
     public String getImageUrl() {
         return imageUrl;
     }
+    public String getSlug() {return slug;}
 
     private final String title;
     private final String author; // 추가된 필드
@@ -94,6 +97,6 @@ public class BaseContentItem {
     private final boolean waitFree; // 추가된 필드
     private final boolean recentlyUpdated; // 추가된 필드
     private final String imageUrl;
-    //private final String slug; // 추가된 필드
+    private final String slug; // 추가된 필드
 
 }

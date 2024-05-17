@@ -100,7 +100,8 @@ public class Top100BaseFragment extends BaseMainListFragment {
                         webtoon.isExclusive(),
                         webtoon.isWaitFree(),
                         webtoon.isRecentlyUpdated(),
-                        webtoon.getImageUrl()
+                        webtoon.getImageUrl(),
+                        webtoon.getSlug()
                 ));
             }
         }
