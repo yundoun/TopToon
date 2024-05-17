@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     private HorizontalRvAdapter adapterRecommendGenre;
 
     private List<SlideItem> slideItems;
-    List<SlideItem> eventItems;
+    private List<SlideItem> eventItems;
     private Map<String, String> customKeywordTagToJsonKey, recommendGenreTagToJsonKey;
 
 
@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
 
 
     private void onItemClick(HorizontalContentItem item) {
-        // 여기에 item.getId()를 사용해 웹뷰로 이동하는 로직을 구현합니다.
+        // 식별자를 사용해 웹뷰로 이동
         Intent intent = new Intent(getActivity(), WebViewActivity.class);
         String url = "https://toptoon.com/comic/ep_list/" + item.getSlug();
         intent.putExtra("URL", url);

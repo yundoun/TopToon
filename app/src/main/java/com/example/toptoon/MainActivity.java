@@ -122,6 +122,12 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding.btnCoin.setOnClickListener(dialogClickListener);
         binding.btnMyLibrary.setOnClickListener(dialogClickListener);
         binding.btnGiftBox.setOnClickListener(dialogClickListener);
+        binding.ivHeaderAd.setOnClickListener(dialogClickListener);
+        binding.adultSwitch.setOnClickListener(v->{
+            DialogFragment dialog = new DialogFragment();
+            dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
+            binding.adultSwitch.setChecked(!binding.adultSwitch.isChecked());
+        });
     }
 
 
