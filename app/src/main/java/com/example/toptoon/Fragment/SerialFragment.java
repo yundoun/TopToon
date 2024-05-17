@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,6 +37,7 @@ public class SerialFragment extends Fragment {
         binding.vpSerial.setOffscreenPageLimit(8);
 
         addBadgesToTabs();
+        adjustRemakeTabWidth();
     }
 
 
@@ -62,4 +64,26 @@ public class SerialFragment extends Fragment {
             }
         }
     }
+
+    private void adjustRemakeTabWidth() {
+        binding.tlSerial.post(() -> {
+            for(int i=0; i< binding.tlSerial.getTabCount(); i++){
+                TabLayout.Tab tab = binding.tlSerial.getTabAt(i);
+                if(tab != null && "리메이크".equals(tab.getText())){
+                    View tabView = (View) tab.view;
+                    if(tabView != null){
+                        // Measure the width of the text
+                        tabView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                        int tabWidth = tabView.getMeasuredWidth();
+
+                        // Set the width of the tab to the measured width
+                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                        params.width = tabWidth;
+                        tabView.setLayoutParams(params);
+                    }
+                }
+            }
+        });
+    }
+
 }

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivImageMain"
             android:layout_width="0dp"
             android:layout_height="170dp"
@@ -25,7 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/tmp" />
+            app:srcCompat="@drawable/tmp"
+            app:shapeAppearanceOverlay="@style/RoundedCorners" />
 
         <TextView
             android:id="@+id/tvTitleMain"
@@ -100,7 +101,7 @@
             android:id="@+id/ivSaleMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="4dp"
             android:scaleType="fitXY"
             app:layout_constraintStart_toEndOf="@+id/ivNewMain"
@@ -111,8 +112,9 @@
             android:id="@+id/ivFreeWaitMain"
             android:layout_width="28dp"
             android:layout_height="16dp"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="4dp"
+            android:scaleType="fitXY"
             app:layout_constraintStart_toEndOf="@+id/ivSaleMain"
             app:layout_constraintTop_toBottomOf="@+id/tvLatestEpisodeMain"
             app:srcCompat="@drawable/icon_hits" />

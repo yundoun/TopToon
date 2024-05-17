@@ -88,12 +88,15 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         displayFragment(new HomeFragment(), false);
         setupLogoClickEvent();
         setupButtonClickListeners();
+
+        // 백스택 변경 리스너 추가
+        getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
     }
 
     private void setupButtonClickListeners() {
         binding.btnSearch.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/hashtag");
+            intent.putExtra("URL", "https://toptoon.com/complete#complete1");
             startActivity(intent);
         });
 
@@ -198,16 +201,11 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
             default:
                 return;
         }
+        adapter.setSelectedItemPosition(currentSelectedMenuIndex);
         displayFragment(newFragment, shouldHideAd);
     }
 
     private void displayFragment(Fragment fragment, boolean shouldHideAd) {
-
-        // 메뉴 특정 프래그먼트에서 벗어날 때 선택된 항목을 리셋
-        if (currentSelectedMenuIndex != -1) {
-            adapter.setSelectedItemPosition(-1);
-        }
-
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
         if (true) {
@@ -217,6 +215,40 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         binding.ivHeaderAd.setVisibility(shouldHideAd ? View.GONE : View.VISIBLE);
 
+    }
+
+
+    public void onBackStackChanged() {
+
+        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+        if (currentFragment instanceof HomeFragment) {
+            adapter.setSelectedItemPosition(-1);
+            binding.ivHeaderAd.setVisibility(View.VISIBLE);
+        } else if (currentFragment instanceof SerialFragment) {
+            adapter.setSelectedItemPosition(0);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof Top100Fragment) {
+            adapter.setSelectedItemPosition(1);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof NewProductFragment) {
+            adapter.setSelectedItemPosition(2);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof CompleteFragment) {
+            adapter.setSelectedItemPosition(3);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof FreeRecommendFragment) {
+            adapter.setSelectedItemPosition(4);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof AllAgeFragment) {
+            adapter.setSelectedItemPosition(5);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof ShortsFragment) {
+            adapter.setSelectedItemPosition(6);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        } else if (currentFragment instanceof EventFragment) {
+            adapter.setSelectedItemPosition(7);
+            binding.ivHeaderAd.setVisibility(View.GONE);
+        }
     }
 
     public void onBackPressed() {

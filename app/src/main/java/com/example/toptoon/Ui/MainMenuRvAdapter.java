@@ -48,36 +48,29 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(@NonNull MainMenuRvAdapter.MainMenuViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        MainMenuItem menu = getItem(position);
-        holder.binding.tvItem.setText(menu.getTitle());
+        MainMenuItem item = getItem(position);
+        holder.binding.tvItem.setText(item.getTitle());
 
         Log.d("MainMenuAdapter", "Binding position: " + position + ", selectedItemPosition: " + selectedItemPosition);
 
-        if ( position  == selectedItemPosition) {
+
+        // 선택된 항목의 테두리를 빨간색으로 변경
+        if (position == selectedItemPosition) {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
-            Log.d("MainMenuAdapter", "Border true applied to position: " + position);
         } else {
-            holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false);
-            Log.d("MainMenuAdapter", "Border false applied to position: " + position);
+            holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_false); // 기본 배경을 설정하거나 초기화
         }
 
         holder.itemView.setOnClickListener(v -> {
-            int previousSelectedPosition = selectedItemPosition; // 이전 선택된 위치 저장
-            selectedItemPosition = position; // 새로운 선택된 위치 설정
-
-            Log.d("MainMenuRvAdapter", "Item clicked at position: " + position + ", previous position: " + previousSelectedPosition + ", new selectedItemPosition: " + selectedItemPosition);
-
-            // 이전과 현재 선택된 위치의 항목만 갱신
-            notifyItemChanged(previousSelectedPosition);
-            notifyItemChanged(selectedItemPosition);
-
             if (listener != null) {
-                listener.onMainMenuSelected(menu.getTitle()); // Pass the clicked menu item to the listener
-                Log.i("MainMenuRvAdapter", "onBindViewHolder: " + menu.getTitle() + " clicked");
+                listener.onMainMenuSelected(item.getTitle());
+                setSelectedItemPosition(position); // 선택된 항목 업데이트
             }
         });
 
     }
+
+
 
     static class MainMenuViewHolder extends RecyclerView.ViewHolder {
         private final MainMenuRvRowBinding binding;
@@ -89,7 +82,13 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
     }
 
     public void setSelectedItemPosition(int position) {
-        this.selectedItemPosition = position;
-        notifyDataSetChanged();
+        int previousPosition = selectedItemPosition;
+        selectedItemPosition = position;
+        if (previousPosition != -1) {
+            notifyItemChanged(previousPosition);
+        }
+        if (position != -1) {
+            notifyItemChanged(position);
+        }
     }
 }
