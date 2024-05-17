@@ -91,4 +91,10 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
             notifyItemChanged(position);
         }
     }
+//    // 상태 저장 메소드
+//    public int getSelectedItemPosition() {
+//        return selectedItemPosition;
+//    }
+
+
 }

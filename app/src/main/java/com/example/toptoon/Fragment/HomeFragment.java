@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
 
         binding.tvViewAll1.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/payment/payment_charge");
+            intent.putExtra("URL", "https://toptoon.com/hashtag");
             startActivity(intent);
         });
         binding.tvViewAll2.setOnClickListener(v -> {
