@@ -12,10 +12,16 @@ import com.bumptech.glide.Glide;
 import com.example.toptoon.DataModel.HorizontalContentItem;
 import com.example.toptoon.databinding.HorizontalRvRowBinding;
 
+import java.util.List;
+
 public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, HorizontalRvAdapter.CommonViewHolder> {
 
+    private OnItemClickListener listener;
 
-    public HorizontalRvAdapter() {
+    public interface OnItemClickListener {
+        void onItemClick(HorizontalContentItem item);
+    }
+    public HorizontalRvAdapter(OnItemClickListener listener) {
         super(new DiffUtil.ItemCallback<HorizontalContentItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull HorizontalContentItem oldItem, @NonNull HorizontalContentItem newItem) {
@@ -27,6 +33,7 @@ public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, Hori
                 return oldItem.equals(newItem);
             }
         });
+        this.listener = listener;
     }
 
 
@@ -40,8 +47,15 @@ public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, Hori
 
     @Override
     public void onBindViewHolder(@NonNull CommonViewHolder holder, int position) {
-        HorizontalContentItem horizontalContentItem = getItem(position);
-        holder.bind(horizontalContentItem);
+        HorizontalContentItem item = getItem(position);
+        holder.bind(item);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(item);
+            }
+        });
+
     }
 
     public static class CommonViewHolder extends RecyclerView.ViewHolder {

@@ -10,13 +10,13 @@ public class ApiItems {
     @SerializedName("webtoons")
     private List<Webtoon> webtoons;
 
-    @SerializedName("TabRealTime")
+    @SerializedName("tabRealTime")
     private List<Integer> tabRealTime;
 
-    @SerializedName("TabNew")
+    @SerializedName("tabNew")
     private List<Integer> tabNew;
 
-    @SerializedName("TabSale")
+    @SerializedName("tabSale")
     private List<Integer> tabSale;
 
     @SerializedName("waitFree")
@@ -35,6 +35,7 @@ public class ApiItems {
     private CustomKeyword customKeyword;
     private RecommendGenre recommendGenre;
     private Serial serial;
+    private Top100 top100;
 
     // Getter and Setter
     public List<Webtoon> getWebtoons() {
@@ -89,9 +90,32 @@ public class ApiItems {
         return recommendGenre;
     }
 
-    public Serial getSerial() { return serial; }
+    public Serial getSerial() {
+        return serial;
+    }
+
+    public Top100 getTop100() {
+        return top100;
+    }
 
     // 내부 클래스
+
+    public static class Top100 {
+        private List<Integer> week;
+        private List<Integer> month;
+        @SerializedName("new")
+        private List<Integer> newWebtoon;
+        private List<Integer> sale;
+
+        public List<Integer> getWeek() {return week;}
+
+        public List<Integer> getMonth() {return month;}
+
+        public List<Integer> getNewWebtoon() {return newWebtoon;}
+
+        public List<Integer> getSale() {return sale;}
+    }
+
 
     public static class Serial {
         private List<Integer> monday;
@@ -289,11 +313,11 @@ public class ApiItems {
         public String getImageUrl() {
             return imageUrl;
         }
-
+        public String getSlug() {return slug;}
         public Webtoon(int id, String title, String author, String latestEpisode,
                        String views, boolean isNew, boolean isDiscounted,
                        boolean isExclusive, boolean wait_free, boolean recentlyUpdated,
-                       String imageUrl) {
+                       String imageUrl, String slug) {
             this.id = id;
             this.title = title;
             this.author = author;
@@ -305,6 +329,7 @@ public class ApiItems {
             this.waitFree = wait_free;
             this.recentlyUpdated = recentlyUpdated;
             this.imageUrl = imageUrl;
+            this.slug = slug;
         }
 
         @SerializedName("id")
@@ -339,6 +364,10 @@ public class ApiItems {
 
         @SerializedName("imageUrl")
         private String imageUrl;
+
+        @SerializedName("slug")
+        private String slug;
+
 
 
     }

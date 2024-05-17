@@ -1,5 +1,6 @@
 package com.example.toptoon.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -30,6 +31,7 @@ import com.example.toptoon.OnTagSelectedListener;
 import com.example.toptoon.R;
 import com.example.toptoon.TagMenuRvAdapter;
 import com.example.toptoon.Ui.SlideImageAdapter;
+import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.FragmentHomeBinding;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -70,6 +72,28 @@ public class HomeFragment extends Fragment {
         initializeComponents();
         adjustViewPagerSettings();
         InitialSettingTagMenu();
+
+
+        binding.tvViewAll1.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+            intent.putExtra("URL", "https://toptoon.com/shorts");
+            startActivity(intent);
+        });
+        binding.tvViewAll2.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), WebViewActivity.class);
+            intent.putExtra("URL", "https://toptoon.com/hashtag");
+            startActivity(intent);
+        });
+
+    }
+
+
+    private void onItemClick(HorizontalContentItem item) {
+        // 여기에 item.getId()를 사용해 웹뷰로 이동하는 로직을 구현합니다.
+        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+        String url = "https://toptoon.com/comic/ep_list/" + item.getSlug();
+        intent.putExtra("URL", url);
+        startActivity(intent);
     }
 
     private void adjustViewPagerSettings() {
@@ -300,8 +324,8 @@ public class HomeFragment extends Fragment {
                 items.add(new HorizontalContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
-                        item.getAuthor()
-                ));
+                        item.getAuthor(),
+                        item.getSlug()));
             }
             adapterFreeWait.submitList(items);
         }
@@ -314,8 +338,8 @@ public class HomeFragment extends Fragment {
                 items.add(new HorizontalContentItem(
                         item.getImageUrl(),
                         item.getTitle(),
-                        item.getAuthor()
-                ));
+                        item.getAuthor(),
+                        item.getSlug()));
             }
             adapterOneCoin.submitList(items);
         }
@@ -323,16 +347,16 @@ public class HomeFragment extends Fragment {
 
 
     private void initializeRecyclerViews() {
-        adapterFreeWait = new HorizontalRvAdapter();
+        adapterFreeWait = new HorizontalRvAdapter(this::onItemClick);
         setupRecyclerView(binding.rvWaitFree, adapterFreeWait);
 
-        adapterOneCoin = new HorizontalRvAdapter();
+        adapterOneCoin = new HorizontalRvAdapter(this::onItemClick);
         setupRecyclerView(binding.rvOneCoin, adapterOneCoin);
 
-        adapterCustomKeyword = new HorizontalRvAdapter();
+        adapterCustomKeyword = new HorizontalRvAdapter(this::onItemClick);
         setupRecyclerView(binding.rvCustomKeyword, adapterCustomKeyword);
 
-        adapterRecommendGenre = new HorizontalRvAdapter();
+        adapterRecommendGenre = new HorizontalRvAdapter(this::onItemClick);
         setupRecyclerView(binding.rvRecommendGenre, adapterRecommendGenre);
     }
 
@@ -419,7 +443,7 @@ public class HomeFragment extends Fragment {
         if (webtoons != null) {
             List<HorizontalContentItem> items = new ArrayList<>();
             for (ApiItems.Webtoon webtoon : webtoons) {
-                items.add(new HorizontalContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor()));
+                items.add(new HorizontalContentItem(webtoon.getImageUrl(), webtoon.getTitle(), webtoon.getAuthor(), webtoon.getSlug()));
             }
             adapter.submitList(items);
         }

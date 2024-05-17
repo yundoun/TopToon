@@ -53,7 +53,11 @@ public class DayFragment extends BaseMainListFragment {
                     List<Integer> dayIds = getIdsByDay(response.body().getSerial(), day);
                     List<ApiItems.Webtoon> webtoons = response.body().getWebtoons();
                     List<BaseContentItem> baseContentItems = filterTabContentItemsByWebtoonIds(dayIds, webtoons);
+
+                    Log.println(Log.DEBUG, "DayFragment", "dayIds: " + dayIds);
+
                     adapter.submitList(baseContentItems);
+
                 }
             }
 

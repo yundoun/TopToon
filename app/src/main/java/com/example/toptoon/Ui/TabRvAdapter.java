@@ -15,6 +15,8 @@ import com.example.toptoon.databinding.TabRvRowBinding;
 
 public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabRvViewHolder> {
 
+    private OnItemClickListener listener;
+
     public TabRvAdapter() {
         super(new DiffUtil.ItemCallback<BaseContentItem>() {
             @Override

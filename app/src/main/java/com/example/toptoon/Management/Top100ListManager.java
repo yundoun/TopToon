@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.toptoon.Fragment.MainListFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
+import com.example.toptoon.Top100.Top100BaseFragment;
 
 public class Top100ListManager extends FragmentStateAdapter {
     public Top100ListManager(@NonNull Top100Fragment fragmentActivity) {
@@ -15,18 +16,7 @@ public class Top100ListManager extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-                return new MainListFragment();
-            case 1:
-                return new MainListFragment();
-            case 2:
-                return new MainListFragment();
-            case 3:
-                return new MainListFragment();
-            default:
-                return null; // 이 경우가 발생하지 않도록 주의
-        }
+        return Top100BaseFragment.newInstance(position);
     }
 
     @Override

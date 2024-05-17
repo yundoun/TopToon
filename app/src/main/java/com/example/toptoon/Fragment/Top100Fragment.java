@@ -26,6 +26,9 @@ public class Top100Fragment extends Fragment {
     private void initializeComponents() {
         binding.vpTOP100.setAdapter(new Top100ListManager(this));
         new TabLayoutMediator(binding.tlTOP100, binding.vpTOP100, this::setUpTabTitles).attach();
+
+        binding.vpTOP100.setOffscreenPageLimit(3);
+
     }
 
     private void setUpTabTitles(TabLayout.Tab tab, int position) {

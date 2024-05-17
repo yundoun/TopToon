@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     private void setupButtonClickListeners() {
         binding.btnSearch.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/complete#complete1");
+            intent.putExtra("URL", "https://toptoon.com/hashtag");
             startActivity(intent);
         });
 
