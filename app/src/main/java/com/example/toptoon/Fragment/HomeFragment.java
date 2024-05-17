@@ -23,15 +23,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.CircleIndicator;
-import com.example.toptoon.DataModel.SlideItem;
-import com.example.toptoon.Ui.HorizontalRvAdapter;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.HorizontalContentItem;
+import com.example.toptoon.DataModel.SlideItem;
 import com.example.toptoon.DataModel.TagMenuItem;
 import com.example.toptoon.Management.TabManager;
 import com.example.toptoon.OnTagSelectedListener;
 import com.example.toptoon.R;
 import com.example.toptoon.TagMenuRvAdapter;
+import com.example.toptoon.Ui.HorizontalRvAdapter;
 import com.example.toptoon.Ui.SlideImageAdapter;
 import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.FragmentHomeBinding;
@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment {
     private HorizontalRvAdapter adapterRecommendGenre;
 
     private List<SlideItem> slideItems;
-    List<String> eventImageUrls = new ArrayList<>();
+    List<SlideItem> eventItems;
     private Map<String, String> customKeywordTagToJsonKey, recommendGenreTagToJsonKey;
 
 
@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
 
         binding.tvViewAll1.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/hashtag");
+            intent.putExtra("URL", "https://toptoon.com/payment/payment_charge");
             startActivity(intent);
         });
         binding.tvViewAll2.setOnClickListener(v -> {
@@ -190,11 +190,12 @@ public class HomeFragment extends Fragment {
                         slideItems.add(new SlideItem(slideAd.getImageUrl(), slideAd.getLinkUrl()));
                     }
 
+                    eventItems = new ArrayList<>();
                     for (ApiItems.Event event : items.getEvent()) {
-                        eventImageUrls.add(event.getImageUrl());
+                        eventItems.add(new SlideItem(event.getImageUrl(), event.getLinkUrl()));
                     }
                     initializeSlider(slideItems);
-                    setEventAd(eventImageUrls);
+                    setEventAd(eventItems);
                 } else {
                     Log.e("HomeFragment", "응답 실패: " + response.errorBody());
                 }
@@ -261,9 +262,9 @@ public class HomeFragment extends Fragment {
         vpAutoSlide.registerOnPageChangeCallback(new ViewPager2PageChangeCallback(circleIndicator, imagesLength));
     }
 
-    private void setEventAd(List<String> ImageUrls) {
+    private void setEventAd(List<SlideItem> eventItems) {
         ViewPager2 vpEvent = binding.vpEvent;
-        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), slideItems);
+        SlideImageAdapter adapter2 = new SlideImageAdapter(getContext(), eventItems);
         vpEvent.setAdapter(adapter2);
     }
 
@@ -620,7 +621,7 @@ public class HomeFragment extends Fragment {
                 // 슬라이딩이 끝나고 정지 상태가 되면, 다시 자동 슬라이딩을 시작하기 전에 기존 작업을 취소
                 sliderHandler.removeCallbacksAndMessages(null);
                 // 그 다음, 자동 슬라이딩 작업을 새로 예약
-                sliderHandler.postDelayed(this::autoSlide, 3000);
+                sliderHandler.postDelayed(this::autoSlide, 4000);
             }
         }
 

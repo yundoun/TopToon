@@ -179,11 +179,12 @@ public class ApiItems {
     public static class Event {
 
         private String imageUrl;
+        private String linkUrl;
 
         public String getImageUrl() {
             return imageUrl;
         }
-
+        public String getLinkUrl() {return linkUrl;}
     }
 
     public static class CustomKeyword {

@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.toptoon.DataModel.SlideItem;
 import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.SlideImageRowBinding;
@@ -21,7 +22,7 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     private final List<SlideItem> slideItems;
     private Context context;
 
-    public SlideImageAdapter(Context context, List<SlideItem> slideItems){
+    public SlideImageAdapter(Context context, List<SlideItem> slideItems) {
         this.context = context;
         this.slideItems = slideItems;
     }
@@ -43,7 +44,11 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
     public void onBindViewHolder(@NonNull SlideImageViewHolder holder, int position) {
         int realPosition = position % slideItems.size(); // 실제 이미지 배열의 위치를 계산
         SlideItem slideItem = slideItems.get(realPosition);
-        Glide.with(context).load(slideItem.getImageUrl()).into(holder.binding.slideImageRow);
+        Glide.with(context)
+                .load(slideItem.getImageUrl())
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
+                .into(holder.binding.slideImageRow);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, WebViewActivity.class);
