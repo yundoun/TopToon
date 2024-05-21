@@ -1,5 +1,6 @@
 package com.example.toptoon;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,12 +89,21 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         setupMainMenu();
         setHeaderAd();
-        displayFragment(new HomeFragment(), false);
+
+        // HomeFragment를 기본으로 설정
+        if (savedInstanceState == null) {
+            displayFragment(new HomeFragment(), false);
+        }
+        
         setupLogoClickEvent();
         setupButtonClickListeners();
 
         // 백스택 변경 리스너 추가
         getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
+
+
+
+
     }
 
     private void setupButtonClickListeners() {
@@ -246,20 +256,17 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
 
 
-    private void displayFragment(Fragment fragment, boolean shouldHideAd) {
+    private void displayFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (fragment instanceof HomeFragment) {
-            // 백스택 초기화
-            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-            shouldHideAd = false; // 홈 프래그먼트일 때 상단 광고 보이기
-            adapter.setSelectedItemPosition(-1); // 선택 리셋
-        }
         transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.addToBackStack(null);
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
         transaction.commit();
 
-        binding.ivHeaderAd.setVisibility(shouldHideAd ? View.GONE : View.VISIBLE);
+        binding.ivHeaderAd.setVisibility(fragment instanceof HomeFragment ? View.VISIBLE : View.GONE);
     }
+
 
 
     // 백스택이 변경될 때 현재 표시된 프래그먼트에 따라 선택된 메뉴 항목의 인덱스를 업데이트
@@ -293,11 +300,24 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     @Override
     public void onBackPressed() {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-        if (currentFragment instanceof HomeFragment) {
-            adapter.setSelectedItemPosition(-1); // 홈 프래그먼트일 때 선택 리셋
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.END);
+        } else {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+            if (currentFragment instanceof HomeFragment) {
+                showExitDialog();
+            } else {
+                super.onBackPressed();
+            }
         }
-        super.onBackPressed();
+    }
+
+    private void showExitDialog() {
+        new AlertDialog.Builder(this)
+                .setMessage("종료하시겠습니까?")
+                .setPositiveButton("예", (dialog, which) -> finish())
+                .setNegativeButton("아니오", null)
+                .show();
     }
 
 
