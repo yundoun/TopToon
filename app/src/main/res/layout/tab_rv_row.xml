@@ -49,12 +49,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="1dp"
+            android:layout_marginBottom="3dp"
             android:gravity="center|start"
             android:text="제407화"
             android:textSize="10sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvViews"
             app:layout_constraintStart_toEndOf="@+id/ivTabWebtoon"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvRank" />
 
         <TextView
             android:id="@+id/tvViews"
@@ -68,31 +69,31 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivLook" />
 
-        <ImageView
-            android:id="@+id/ivHits"
-            android:layout_width="28dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/icon_hits"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/tvViews" />
-
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginTop="3dp"
             android:ellipsize="end"
             android:gravity="center|left"
             android:maxLines="1"
             android:textSize="12sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/tvEpisode"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvRank"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivHits"
+            android:layout_width="26dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/icon_hits"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/ivNew" />
 
         <ImageView
             android:id="@+id/ivLook"
@@ -106,35 +107,25 @@
 
         <ImageView
             android:id="@+id/ivNew"
-            android:layout_width="28dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="2dp"
+            android:layout_width="26dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="3dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/icon_new"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivHits"
+            app:layout_constraintStart_toEndOf="@+id/tvViews"
             app:srcCompat="@drawable/icon_new" />
 
         <ImageView
             android:id="@+id/ivDiscounted"
-            android:layout_width="28dp"
-            android:layout_height="16dp"
+            android:layout_width="26dp"
+            android:layout_height="14dp"
             android:layout_marginStart="2dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/icon_discounted"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/ivNew"
+            app:layout_constraintStart_toEndOf="@+id/ivHits"
             app:srcCompat="@drawable/icon_discounted" />
-
-        <ImageView
-            android:id="@+id/ivUpdate"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toEndOf="@+id/tvTitle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon_update" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -78,9 +78,12 @@ public class SerialFragment extends Fragment {
                         tabView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
                         int tabWidth = tabView.getMeasuredWidth();
 
+                        // Subtract a fixed amount from the measured width to make the tab narrower
+                        int newTabWidth = tabWidth - (int) (30 * getResources().getDisplayMetrics().density); // Subtract 20dp
+
                         // Set the width of the tab to the measured width
                         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = tabWidth;
+                        params.width = newTabWidth;
                         tabView.setLayoutParams(params);
                     }
                 }

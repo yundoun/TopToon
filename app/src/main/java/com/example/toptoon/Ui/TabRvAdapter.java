@@ -83,7 +83,6 @@ public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabR
             binding.ivHits.setVisibility(baseContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
             binding.ivNew.setVisibility(baseContentItem.isNew() ? View.VISIBLE : View.GONE );
             binding.ivDiscounted.setVisibility(baseContentItem.isDiscounted() ? View.VISIBLE : View.GONE );
-            binding.ivUpdate.setVisibility(baseContentItem.isRecentlyUpdated() ? View.VISIBLE : View.GONE );
             binding.ivExclusive.setVisibility(baseContentItem.isExclusive() ? View.VISIBLE : View.GONE );
         }
     }
