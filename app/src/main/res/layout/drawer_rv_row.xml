@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="내서재"
+            android:textColor="@color/black"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivDrawerIcon"
             app:layout_constraintTop_toTopOf="parent" />

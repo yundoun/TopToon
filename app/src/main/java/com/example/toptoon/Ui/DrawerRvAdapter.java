@@ -15,8 +15,13 @@ import com.example.toptoon.DataModel.DrawerItem;
 import com.example.toptoon.R;
 import com.example.toptoon.databinding.DrawerRvRowBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class DrawerRvAdapter extends ListAdapter<DrawerItem, DrawerRvAdapter.DrawerRvViewHolder>{
 
+private List<Integer> images = new ArrayList<>();
 
     public DrawerRvAdapter() {
         super(new AsyncDifferConfig.Builder<>(new DiffUtil.ItemCallback<DrawerItem>() {
@@ -30,6 +35,12 @@ public class DrawerRvAdapter extends ListAdapter<DrawerItem, DrawerRvAdapter.Dra
                 return oldItem.getTitle().equals(newItem.getTitle());
             }
         }).build());
+
+        images = Arrays.asList(
+                R.drawable.drawer_library, R.drawable.drawer_attendance, R.drawable.drawer_freecoin,
+                R.drawable.drawer_event, R.drawable.drawer_notice, R.drawable.drawer_faq, R.drawable.drawer_cs
+        );
+
     }
     @NonNull
     @Override
@@ -42,6 +53,16 @@ public class DrawerRvAdapter extends ListAdapter<DrawerItem, DrawerRvAdapter.Dra
     public void onBindViewHolder(@NonNull DrawerRvViewHolder holder, int position) {
         DrawerItem item = getItem(position);
         holder.binding.tvDrawer.setText(item.getTitle());
+
+        if (position < images.size()) {
+            holder.binding.ivDrawerIcon.setImageResource(images.get(position));
+        } else {
+            holder.binding.ivDrawerIcon.setImageResource(0); // 기본 이미지
+        }
+
+        if (position == 7){
+            holder.binding.ivArrow.setVisibility(View.GONE);
+        }
     }
 
     public static class DrawerRvViewHolder extends RecyclerView.ViewHolder {
