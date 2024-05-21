@@ -13,7 +13,4 @@ public class DrawerItem {
         return title;
     }
 
-    public int getIconNumber() {
-        return iconNumber;
-    }
 }

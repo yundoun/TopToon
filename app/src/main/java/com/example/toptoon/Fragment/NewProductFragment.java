@@ -14,9 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.BaseContentItem;
-import com.example.toptoon.DataModel.MainListItem;
-import com.example.toptoon.R;
-import com.example.toptoon.Ui.MainListRvAdapter;
 import com.example.toptoon.Ui.NewProductRvAdapter;
 import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.FragmentNewProductBinding;
@@ -46,17 +43,17 @@ public class NewProductFragment extends Fragment {
         binding.rvComplete.setAdapter(adapter);
     }
 
-    public void fetch (){
+    public void fetch() {
         NetworkManager.fetchTopToonItems(new Callback<ApiItems>() {
             @Override
             public void onResponse(Call<ApiItems> call, Response<ApiItems> response) {
-                if (response.isSuccessful() && response.body() != null){
+                if (response.isSuccessful() && response.body() != null) {
                     List<Integer> ids = response.body().getNewProduct();
                     List<ApiItems.Webtoon> webtoons = response.body().getWebtoons();
                     List<ApiItems.Webtoon> filteredWebtoons = new ArrayList<>();
-                    for(Integer id : ids){
-                        for(ApiItems.Webtoon webtoon : webtoons){
-                            if(webtoon.getId() == id){
+                    for (Integer id : ids) {
+                        for (ApiItems.Webtoon webtoon : webtoons) {
+                            if (webtoon.getId() == id) {
                                 filteredWebtoons.add(webtoon);
                             }
                         }
@@ -71,6 +68,7 @@ public class NewProductFragment extends Fragment {
             }
         });
     }
+
     private void displayData(List<ApiItems.Webtoon> tabItems) {
         if (tabItems != null) {
             List<BaseContentItem> items = new ArrayList<>();

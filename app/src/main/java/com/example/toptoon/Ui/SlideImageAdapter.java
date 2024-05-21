@@ -20,7 +20,7 @@ public class SlideImageAdapter extends RecyclerView.Adapter<SlideImageAdapter.Sl
 
 
     private final List<SlideItem> slideItems;
-    private Context context;
+    private final Context context;
 
     public SlideImageAdapter(Context context, List<SlideItem> slideItems) {
         this.context = context;

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, HorizontalRvAdapter.CommonViewHolder> {
 
-    private OnItemClickListener listener;
+    private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(HorizontalContentItem item);

@@ -15,22 +15,21 @@ import androidx.annotation.Nullable;
 
 import com.example.toptoon.R;
 
+import java.util.Objects;
+
 public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_dialog, container, false);
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Create a new dialog using the AlertDialog builder.
         Dialog dialog = super.onCreateDialog(savedInstanceState);
-        // Request a window without the title
-        dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        Objects.requireNonNull(dialog.getWindow()).requestFeature(Window.FEATURE_NO_TITLE);
         return dialog;
     }
 

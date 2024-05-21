@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -49,13 +48,33 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        if (adapter == null) { // 어댑터가 아직 생성되지 않았다면 생성
-            setupMainMenu();
+        setupMainMenu();
+        setHeaderAd();
+
+        setupDrawerNavigation();
+
+        setupLogoClickEvent();
+        setupButtonClickListeners();
+
+        // HomeFragment를 기본으로 설정
+        if (savedInstanceState == null) {
+            displayFragment(new HomeFragment(), false);
         }
 
+        // 백스택 변경 리스너 추가
+        getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
+
+//        if (adapter == null) { // 어댑터가 아직 생성되지 않았다면 생성
+//            setupMainMenu();
+//        }
+
+    }
+
+    private void setupDrawerNavigation() {
 
         binding.btnHamburger.setOnClickListener(v -> {
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -65,38 +84,17 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
             }
         });
 
-
         binding.rvDrawer.setLayoutManager(new LinearLayoutManager(this));
-
         DrawerRvAdapter drawerRvAdapter = new DrawerRvAdapter();
         binding.rvDrawer.setAdapter(drawerRvAdapter);
 
-        // 문자열 배열을 가져옵니다.
         String[] menu = getResources().getStringArray(R.array.drawer);
-        // 문자열 배열을 List<DrawerItem>으로 변환합니다.
+        // 문자열 배열을 List<DrawerItem>으로 변환
         List<DrawerItem> drawerItems = new ArrayList<>();
         for (String title : menu) {
             drawerItems.add(new DrawerItem(title));
         }
-        // 변환한 List<DrawerItem>을 DrawerRvAdapter에 제출합니다.
         drawerRvAdapter.submitList(drawerItems);
-
-
-        setupMainMenu();
-        setHeaderAd();
-
-        // HomeFragment를 기본으로 설정
-        if (savedInstanceState == null) {
-            displayFragment(new HomeFragment(), false);
-        }
-
-        setupLogoClickEvent();
-        setupButtonClickListeners();
-
-        // 백스택 변경 리스너 추가
-        getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
-
-
 
     }
 

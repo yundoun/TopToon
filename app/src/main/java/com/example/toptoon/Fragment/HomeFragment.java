@@ -77,29 +77,39 @@ public class HomeFragment extends Fragment {
         adjustViewPagerSettings();
         InitialSettingTagMenu();
 
+        setupViewAllEventListeners();
 
-        binding.tvViewAll1.setOnClickListener(v -> {
+        setupAdClickListeners();
+    }
+
+    private void setupViewAllEventListeners() {
+        // 'View All' 버튼 클릭 리스너를 설정합니다. 여러 버튼에 동일한 URL을 사용
+        View.OnClickListener viewAllClickListener = v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             intent.putExtra("URL", "https://toptoon.com/hashtag");
             startActivity(intent);
-        });
-        binding.tvViewAll2.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), WebViewActivity.class);
-            intent.putExtra("URL", "https://toptoon.com/hashtag");
-            startActivity(intent);
-        });
+        };
 
+        binding.tvViewAll1.setOnClickListener(viewAllClickListener);
+        binding.tvViewAll2.setOnClickListener(viewAllClickListener);
+    }
+
+    private void setupAdClickListeners() {
+        // 무료 광고 클릭
         binding.ivFreeAd.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             intent.putExtra("URL", "https://toptoon.com/comic/ep_list/friendshiptolove_na");
             startActivity(intent);
         });
+
+        // 섹션 광고 클릭
         binding.ivSectionAd.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), WebViewActivity.class);
             intent.putExtra("URL", "https://toptoon.com/app/downloadApp");
             startActivity(intent);
         });
     }
+
 
 
     private void onItemClick(HorizontalContentItem item) {
