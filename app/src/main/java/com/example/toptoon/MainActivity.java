@@ -1,9 +1,11 @@
 package com.example.toptoon;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     private MainMenuRvAdapter adapter;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         // 백스택 변경 리스너 추가
         getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
+
 
 
     }

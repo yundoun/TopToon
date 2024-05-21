@@ -303,7 +303,10 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="#FFF"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true"
+        android:importantForAccessibility="no"
+        android:focusable="true">
 
         <ImageView
             android:id="@+id/imageView4"
