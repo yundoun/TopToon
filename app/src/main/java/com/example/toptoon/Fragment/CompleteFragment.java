@@ -26,6 +26,8 @@ public class CompleteFragment extends Fragment {
     public void initializeComponents() {
         binding.vpComplete.setAdapter(new CompleteManager(this));
         new TabLayoutMediator(binding.tlComplete, binding.vpComplete, this::setUpTabTitles).attach();
+
+        binding.vpComplete.setOffscreenPageLimit(4);
     }
 
     private void setUpTabTitles(TabLayout.Tab tab, int position) {

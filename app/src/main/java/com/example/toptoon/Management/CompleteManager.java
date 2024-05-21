@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.toptoon.Fragment.CompleteFragment;
 import com.example.toptoon.Fragment.MainListFragment;
+import com.example.toptoon.complete.BaseFragment;
 
 public class CompleteManager extends FragmentStateAdapter {
     public CompleteManager(@NonNull CompleteFragment fragmentActivity) {
@@ -15,15 +16,7 @@ public class CompleteManager extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        switch (position) {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                return new MainListFragment();
-            default:
-                return null;
-        }
+        return BaseFragment.newInstance(position);
     }
 
     @Override

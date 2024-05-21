@@ -39,13 +39,16 @@ public class ApiItems {
     private RecommendGenre recommendGenre;
     private Serial serial;
     private Top100 top100;
+    private Complete complete;
 
     // Getter and Setter
     public List<Webtoon> getWebtoons() {
         return webtoons;
     }
 
-    public List<Integer> getNewProduct() {return newProduct;}
+    public List<Integer> getNewProduct() {
+        return newProduct;
+    }
 
     public List<Integer> getTabRealTime() {
         return tabRealTime;
@@ -103,7 +106,35 @@ public class ApiItems {
         return top100;
     }
 
+    public Complete getComplete() {
+        return complete;
+    }
+
     // 내부 클래스
+
+    public static class Complete {
+        private List<Integer> recent;
+        private List<Integer> highestSales;
+        private List<Integer> year;
+        private List<Integer> genre;
+
+        public List<Integer> getRecent() {
+            return recent;
+        }
+
+        public List<Integer> getHighestSales() {
+            return highestSales;
+        }
+
+        public List<Integer> getYear() {
+            return year;
+        }
+
+        public List<Integer> getGenre() {
+            return genre;
+        }
+
+    }
 
     public static class Top100 {
         private List<Integer> week;
@@ -112,13 +143,21 @@ public class ApiItems {
         private List<Integer> newWebtoon;
         private List<Integer> sale;
 
-        public List<Integer> getWeek() {return week;}
+        public List<Integer> getWeek() {
+            return week;
+        }
 
-        public List<Integer> getMonth() {return month;}
+        public List<Integer> getMonth() {
+            return month;
+        }
 
-        public List<Integer> getNewWebtoon() {return newWebtoon;}
+        public List<Integer> getNewWebtoon() {
+            return newWebtoon;
+        }
 
-        public List<Integer> getSale() {return sale;}
+        public List<Integer> getSale() {
+            return sale;
+        }
     }
 
 
@@ -175,6 +214,7 @@ public class ApiItems {
         public String getImageUrl() {
             return imageUrl;
         }
+
         public String getLinkUrl() {
             return linkUrl;
         }
@@ -189,7 +229,10 @@ public class ApiItems {
         public String getImageUrl() {
             return imageUrl;
         }
-        public String getLinkUrl() {return linkUrl;}
+
+        public String getLinkUrl() {
+            return linkUrl;
+        }
     }
 
     public static class CustomKeyword {
@@ -323,7 +366,11 @@ public class ApiItems {
         public String getImageUrl() {
             return imageUrl;
         }
-        public String getSlug() {return slug;}
+
+        public String getSlug() {
+            return slug;
+        }
+
         public Webtoon(int id, String title, String author, String latestEpisode,
                        String views, boolean isNew, boolean isDiscounted,
                        boolean isExclusive, boolean wait_free, boolean recentlyUpdated,
@@ -377,7 +424,6 @@ public class ApiItems {
 
         @SerializedName("slug")
         private String slug;
-
 
 
     }
