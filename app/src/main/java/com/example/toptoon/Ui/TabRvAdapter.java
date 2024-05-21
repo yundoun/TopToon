@@ -15,7 +15,7 @@ import com.example.toptoon.databinding.TabRvRowBinding;
 
 public class TabRvAdapter extends ListAdapter<BaseContentItem, TabRvAdapter.TabRvViewHolder> {
 
-    private OnItemClickListener listener;
+    private final OnItemClickListener listener;
 
     public interface OnItemClickListener {
         void onItemClick(BaseContentItem item);

@@ -1,5 +1,6 @@
 package com.example.toptoon.Serial;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.BaseContentItem;
 import com.example.toptoon.Fragment.BaseMainListFragment;
 import com.example.toptoon.Ui.MainListRvAdapter;
+import com.example.toptoon.WebViewActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -41,7 +43,15 @@ public class DayFragment extends BaseMainListFragment {
 
     @Override
     protected MainListRvAdapter createAdapter() {
-        return new MainListRvAdapter();
+        return new MainListRvAdapter(this::onItemClick);
+    }
+
+    private void onItemClick(BaseContentItem item) {
+        // 식별자를 사용해 웹뷰로 이동
+        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+        String url = "https://toptoon.com/comic/ep_list/" + item.getSlug();
+        intent.putExtra("URL", url);
+        startActivity(intent);
     }
 
     @Override

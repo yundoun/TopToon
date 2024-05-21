@@ -1,5 +1,6 @@
 package com.example.toptoon.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.toptoon.DataModel.HorizontalContentItem;
 import com.example.toptoon.R;
 import com.example.toptoon.Management.SerialListManager;
+import com.example.toptoon.WebViewActivity;
 import com.example.toptoon.databinding.FragmentSerialBinding;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.tabs.TabLayout;
@@ -39,7 +42,6 @@ public class SerialFragment extends Fragment {
         addBadgesToTabs();
         adjustRemakeTabWidth();
     }
-
 
     private void setUpTabTitles(TabLayout.Tab tab, int position) {
         String[] tabTitles = getResources().getStringArray(R.array.serial);

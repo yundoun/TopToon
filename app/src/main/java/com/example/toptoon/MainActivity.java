@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,15 +19,11 @@ import com.example.toptoon.Api.NetworkManager;
 import com.example.toptoon.DataModel.ApiItems;
 import com.example.toptoon.DataModel.DrawerItem;
 import com.example.toptoon.DataModel.MainMenuItem;
-import com.example.toptoon.Fragment.AllAgeFragment;
 import com.example.toptoon.Fragment.CompleteFragment;
 import com.example.toptoon.Fragment.DialogFragment;
-import com.example.toptoon.Fragment.EventFragment;
-import com.example.toptoon.Fragment.FreeRecommendFragment;
 import com.example.toptoon.Fragment.HomeFragment;
 import com.example.toptoon.Fragment.NewProductFragment;
 import com.example.toptoon.Fragment.SerialFragment;
-import com.example.toptoon.Fragment.ShortsFragment;
 import com.example.toptoon.Fragment.Top100Fragment;
 import com.example.toptoon.Ui.DrawerRvAdapter;
 import com.example.toptoon.Ui.MainMenuRvAdapter;
@@ -36,9 +31,7 @@ import com.example.toptoon.Ui.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
-
 
 
     @Override
@@ -94,14 +86,12 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         if (savedInstanceState == null) {
             displayFragment(new HomeFragment(), false);
         }
-        
+
         setupLogoClickEvent();
         setupButtonClickListeners();
 
         // 백스택 변경 리스너 추가
         getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
-
-
 
 
     }
@@ -122,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding.btnMyLibrary.setOnClickListener(dialogClickListener);
         binding.btnGiftBox.setOnClickListener(dialogClickListener);
         binding.ivHeaderAd.setOnClickListener(dialogClickListener);
-        binding.adultSwitch.setOnClickListener(v->{
+        binding.adultSwitch.setOnClickListener(v -> {
             DialogFragment dialog = new DialogFragment();
             dialog.show(getSupportFragmentManager(), "LoginDialogFragment");
             binding.adultSwitch.setChecked(!binding.adultSwitch.isChecked());
@@ -255,7 +245,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     }
 
 
-
     private void displayFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
@@ -266,7 +255,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         binding.ivHeaderAd.setVisibility(fragment instanceof HomeFragment ? View.VISIBLE : View.GONE);
     }
-
 
 
     // 백스택이 변경될 때 현재 표시된 프래그먼트에 따라 선택된 메뉴 항목의 인덱스를 업데이트

@@ -21,6 +21,7 @@ public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, Hori
     public interface OnItemClickListener {
         void onItemClick(HorizontalContentItem item);
     }
+
     public HorizontalRvAdapter(OnItemClickListener listener) {
         super(new DiffUtil.ItemCallback<HorizontalContentItem>() {
             @Override

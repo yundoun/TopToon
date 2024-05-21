@@ -25,6 +25,9 @@ public class ApiItems {
     @SerializedName("oneCoin")
     private List<Integer> oneCoin;
 
+    @SerializedName("newProduct")
+    private List<Integer> newProduct;
+
 
     // 광고 필드는 변경 없음
     private List<SlideAd> slideAd;
@@ -41,6 +44,8 @@ public class ApiItems {
     public List<Webtoon> getWebtoons() {
         return webtoons;
     }
+
+    public List<Integer> getNewProduct() {return newProduct;}
 
     public List<Integer> getTabRealTime() {
         return tabRealTime;

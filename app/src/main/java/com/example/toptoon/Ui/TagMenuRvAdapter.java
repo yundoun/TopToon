@@ -1,4 +1,4 @@
-package com.example.toptoon;
+package com.example.toptoon.Ui;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.toptoon.DataModel.TagMenuItem;
+import com.example.toptoon.R;
 import com.example.toptoon.databinding.TagMenuRvRowBinding;
 
 public class TagMenuRvAdapter extends ListAdapter<TagMenuItem, TagMenuRvAdapter.TagMenuViewHolder> {

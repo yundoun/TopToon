@@ -16,7 +16,14 @@ import com.example.toptoon.DataModel.BaseContentItem;
 import com.example.toptoon.databinding.MainListRvRowBinding;
 
 public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAdapter.MainListRvViewHolder> {
-    public MainListRvAdapter() {
+
+    private final OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(BaseContentItem item);
+    }
+
+    public MainListRvAdapter(OnItemClickListener listener) {
         super(new DiffUtil.ItemCallback<BaseContentItem>() {
             @Override
             public boolean areItemsTheSame(@NonNull BaseContentItem oldItem, @NonNull BaseContentItem newItem) {
@@ -29,6 +36,7 @@ public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAd
                 return oldItem.equals(newItem);
             }
         });
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +51,13 @@ public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAd
     public void onBindViewHolder(@NonNull MainListRvViewHolder holder, int position) {
         BaseContentItem baseContentItem = getItem(position);
         holder.bind(baseContentItem);
+
+        // 클릭 리스너 설정
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onItemClick(baseContentItem);
+            }
+        });
     }
 
     public static class MainListRvViewHolder extends RecyclerView.ViewHolder {
