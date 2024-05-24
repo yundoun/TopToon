@@ -50,8 +50,16 @@ Retrofit2, ViewPager2, Glide, WebView, Intent, ListAdapter, ViewBinding
 
 ### 결과물
 
-<image src="결과물/전체 메인 화면.gif">
+<image src="결과물/전체 메인 화면.gif"> <image src="결과물/메인메뉴_연재.jpg" width="400" height="800">
 
-<image src="결과물/메인메뉴_클릭.gif">
+<br>
+
+<image src="결과물/Dialog.jpg" width="400" height="800"> <image src="결과물/Drawer.jpg" width="400" height="800">
+
+<br>
+
+<image src="결과물/메인메뉴\_클릭.gif">
+
+<br>
 
 <image src="결과물/메인화면_아이템 클릭.gif">
