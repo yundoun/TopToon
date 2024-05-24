@@ -6,47 +6,47 @@ Retrofit2, ViewPager2, Glide, WebView, Intent, ListAdapter, ViewBinding
 
 ### 학습 목표
 
-1. Single Activity Architecture : 하나의 액티비티를 사용하고 나머지 화면을 모두 Fragment로 구성
-2. 데이터 관리를 위한 JSON 파일을 만들고, 네트워크 통신하기
-3. ListAdapter를 사용해서 여러 형태의 RecyclerView 만들어보기 / 전체적인 레이아웃 따라 만들어보기
+1. Single Activity Architecture: 하나의 액티비티를 사용하고 나머지 화면을 모두 Fragment로 구성합니다.
+2. JSON 파일을 활용한 데이터 관리 및 네트워크 통신 구현하기.
+3. ListAdapter를 이용해 다양한 형태의 RecyclerView 구현하고 전체 레이아웃 따라 만들어보기.
 4. ViewPager2 응용해보기
 
 ### 학습 내용
 
-- 하나의 액티비티를 기준으로 FragmentContainer를 이용해서 Fragment를 Replace 하게끔 구현하였습니다.
+- 하나의 액티비티를 중심으로 FragmentContainer를 활용하여 Fragment를 교체하는 방식으로 구현했습니다.
 
-- 인디케이터를 구현하기 위해 CustonView를 생성하였고, ViewPager2를 사용해서 이미지 슬라이더를 구현하였습니다.
+- 인디케이터 구현을 위해 CustomView를 만들었고, ViewPager2를 사용하여 이미지 슬라이더를 구현했습니다.
 
-- ViewPager2 슬라이더를 자동으로 넘어가게 구현하기 위해 Runnable 객체를 사용했습니다.
+- 이미지 슬라이더가 자동으로 넘어가도록 Runnable 객체를 사용했습니다.
 
-- RecyclerView 태그에 맞는 이미지를 바인딩하기 위해 HashMap을 사용했습니다.
+- RecyclerView에서 적절한 이미지를 바인딩하기 위해 HashMap을 사용했습니다.
 
-- 서버와의 통신을 모방하고, 데이터 관리를 위해 JSON 파일을 직접 만들어보았습니다.
+- 서버와의 통신을 모방하기 위해 직접 JSON 파일을 만들어 보았습니다.
   https://yundoun.github.io/toptoon_drawable/drawable.json
 
-- JSON 파일에 식별자를 포함시켜 식별자를 통해 해당 웹툰으로 이동하게 구현하였습니다.
+- JSON 파일 내의 식별자를 통해 웹툰 페이지로 이동하는 기능을 구현했습니다.
 <pre><code>        Intent intent = new Intent(getActivity(), WebViewActivity.class);
         String url = "https://toptoon.com/comic/ep_list/" + item.getSlug();
         intent.putExtra("URL", url);
         startActivity(intent);</code></pre>
 
-- Dialog를 구현하기 위해 DialogFragment를 사용했습니다.
+- 다이얼로그를 구현하기 위해 DialogFragment를 사용했습니다.
 
-- drawerLayout을 MainActivity에 include 하여 구현하였습니다.
+- MainActivity에 drawerLayout을 포함시켜 구현했습니다.
 
 ### 성과
 
-- RecyclerView, ListAdapter, ViewPager2 심화 학습
-- 네트워크 통신 심화 학습
+- RecyclerView, ListAdapter, ViewPager2 등에 대한 심화 학습
+- 네트워크 통신 기술에 대한 심화 학습
 - SAA 구조 이해하기
 
 ### 느낀점
 
-- UI 로직과 네트워크 데이터 로직이 하나의 Fragment에 모두 들어가있어서 코드의 가독성이 떨어진다
-  ⇒ LiveData, Data Binding, 디자인 패턴 적용( MVVM, MVP,,,) 등 추가적인 개념 학습 필요하다고 생각됩니다.
+- UI 로직과 네트워크 데이터 로직이 하나의 Fragment에 모두 포함되어 있어 코드의 가독성이 떨어진다는 것을 느꼈습니다. 이에 LiveData, Data Binding, 디자인 패턴(MVVM, MVP 등)을 추가로 학습할 필요가 있다고 생각합니다.
 
-- 서버를 직접 개설하고 실시간 데이터를 다루어 보고 싶은 욕심이 생겼습니다.
-- Fragment 전환과 LifeCycle 이 머리 속으로 잘 그려지지 않아서 백스택 관리와 뷰 관리가 어려워서 추가 학습이 필요할 것 같습니다.
+- 직접 서버를 구축하고 실시간 데이터를 처리해보고 싶다는 욕구가 생겼습니다.
+
+- Fragment의 전환과 LifeCycle을 이해하는데 어려움을 겪어 백스택 관리와 뷰 관리에 대한 추가 학습이 필요하다고 느꼈습니다.
 
 ### 결과물
 
