@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class NetworkManager {
-    private static TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
+    private static final TopToonApi service = RetrofitClient.getClient().create(TopToonApi.class);
 
     public static void fetchTopToonItems(Callback<ApiItems> callback) {
         Call<ApiItems> call = service.getTopToonItems();

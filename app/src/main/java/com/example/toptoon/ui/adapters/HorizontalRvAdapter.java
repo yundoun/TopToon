@@ -35,7 +35,6 @@ public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, Hori
         this.listener = listener;
     }
 
-
     @NonNull
     @Override
     public CommonViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -54,7 +53,6 @@ public class HorizontalRvAdapter extends ListAdapter<HorizontalContentItem, Hori
                 listener.onItemClick(item);
             }
         });
-
     }
 
     public static class CommonViewHolder extends RecyclerView.ViewHolder {

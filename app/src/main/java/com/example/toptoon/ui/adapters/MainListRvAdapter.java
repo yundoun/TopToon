@@ -83,8 +83,6 @@ public class MainListRvAdapter extends ListAdapter<BaseContentItem, MainListRvAd
             binding.ivNewMain.setVisibility(baseContentItem.isNew() ? View.VISIBLE : View.GONE );
             binding.ivSaleMain.setVisibility(baseContentItem.isDiscounted() ? View.VISIBLE : View.GONE );
             binding.ivFreeWaitMain.setVisibility(baseContentItem.isWaitFree() ? View.VISIBLE : View.GONE );
-
-
         }
 
     }

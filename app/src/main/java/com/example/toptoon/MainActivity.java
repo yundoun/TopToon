@@ -2,6 +2,7 @@ package com.example.toptoon;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
     private ActivityMainBinding binding;
     private MainMenuRvAdapter adapter;
 
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         // 백스택 변경 리스너 추가
         getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
-
     }
 
     private void setupDrawerNavigation() {
@@ -158,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         return menuList;
     }
 
-
     private void setupLogoClickEvent() {
         binding.ivLogo.setOnClickListener(v -> {
             adapter.setSelectedItemPosition(-1); // 선택 리셋
@@ -168,80 +166,82 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     @Override
     public void onMainMenuSelected(String menu) {
-        int selectedIndex = getMenuIndex(menu);
+        int selectedIndex = getMenuIndex(menu, this);
         if (selectedIndex >= 4 && selectedIndex <= 7) {
-            String url = getWebViewUrlForMenu(selectedIndex);
+            String url = getWebViewUrlForMenu(selectedIndex, this);
             if (url != null) {
                 Intent intent = new Intent(MainActivity.this, WebViewActivity.class);
                 intent.putExtra("URL", url);
                 startActivity(intent);
-                return;
             }
         } else {
-            Fragment newFragment = getFragmentForMenu(menu);
+            Fragment newFragment = getFragmentForMenu(menu, this);
             if (newFragment != null) {
                 displayFragment(newFragment, true);
             }
         }
     }
 
-
     // 메뉴 인덱스에 따라 URL을 반환하는 메서드
-    private String getWebViewUrlForMenu(int index) {
+    private String getWebViewUrlForMenu(int index, Context context) {
         switch (index) {
             case 4:
-                return "https://toptoon.com/event/freetoon/daily#event1";
+                return context.getString(R.string.url_event_freetoon_daily);
             case 5:
-                return "https://toptoon.com/cartoon#cartoon1";
+                return context.getString(R.string.url_cartoon);
             case 6:
-                return "https://toptoon.com/shorts";
+                return context.getString(R.string.url_shorts);
             case 7:
-                return "https://toptoon.com/event";
+                return context.getString(R.string.url_event);
             default:
                 return null;
         }
     }
 
     // 메뉴 이름에 따라 인덱스를 반환하는 메서드
-    private int getMenuIndex(String menu) {
-        switch (menu) {
-            case "연재":
-                return 0;
-            case "TOP100":
-                return 1;
-            case "신작":
-                return 2;
-            case "완결":
-                return 3;
-            case "추천무료":
-                return 4;
-            case "전연령":
-                return 5;
-            case "탑툰쇼츠":
-                return 6;
-            case "이벤트":
-                return 7;
-            default:
-                return -1;
+    private int getMenuIndex(String menu, Context context) {
+        if (context == null || menu == null) {
+            return -1;
         }
+
+        String[] menuItems = context.getResources().getStringArray(R.array.main_menu_items);
+        for(int i=0; i<menuItems.length; i++) {
+            if (menuItems[i].equals(menu)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
-    // Fragment 생성을 위한 함수
-    private Fragment getFragmentForMenu(String menu) {
-        switch (menu) {
-            case "연재":
+    // 메인 메뉴 Fragment 생성을 위한 함수
+    public static Fragment getFragmentForMenu(String menu, Context context) {
+        if (context == null || menu == null) {
+            return null;
+        }
+
+        String[] menuItems = context.getResources().getStringArray(R.array.getFragmentForMenu);
+        for (int i = 0; i < menuItems.length; i++) {
+            if (menuItems[i].equals(menu)) {
+                return createFragmentByIndex(i);
+            }
+        }
+        return null;
+    }
+
+    private static Fragment createFragmentByIndex(int index) {
+        switch (index) {
+            case 0:
                 return new SerialFragment();
-            case "TOP100":
+            case 1:
                 return new Top100Fragment();
-            case "신작":
+            case 2:
                 return new NewProductFragment();
-            case "완결":
+            case 3:
                 return new CompleteFragment();
             default:
                 return null;
         }
     }
-
 
     private void displayFragment(Fragment fragment, boolean addToBackStack) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -254,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
         binding.ivHeaderAd.setVisibility(fragment instanceof HomeFragment ? View.VISIBLE : View.GONE);
     }
 
-
     // 백스택이 변경될 때 현재 표시된 프래그먼트에 따라 선택된 메뉴 항목의 인덱스를 업데이트
     // => 메인 메뉴 테두리 변경
     public void onBackStackChanged() {
@@ -265,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
             binding.ivHeaderAd.setVisibility(currentFragment instanceof HomeFragment ? View.VISIBLE : View.GONE);
         }
     }
-
 
     // 현재 프래그먼트에 해당하는 메뉴 인덱스를 반환하는 메서드
     private int getMenuIndexForFragment(Fragment fragment) {
@@ -300,11 +298,9 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
     private void showExitDialog() {
         new AlertDialog.Builder(this)
-                .setMessage("종료하시겠습니까?")
-                .setPositiveButton("예", (dialog, which) -> finish())
-                .setNegativeButton("아니오", null)
+                .setMessage(getResources().getString(R.string.exitMessage))
+                .setPositiveButton(getResources().getString(R.string.yes), (dialog, which) -> finish())
+                .setNegativeButton(getResources().getString(R.string.no), null)
                 .show();
     }
-
-
 }

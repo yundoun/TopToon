@@ -3,7 +3,7 @@ package com.example.toptoon.dto;
 import java.util.Objects;
 
 public class MainMenuItem {
-    private String title;
+    private final String title;
 
     public MainMenuItem(String title) {
         this.title = title;

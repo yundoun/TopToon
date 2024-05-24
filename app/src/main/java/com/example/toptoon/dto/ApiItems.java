@@ -424,8 +424,5 @@ public class ApiItems {
 
         @SerializedName("slug")
         private String slug;
-
-
     }
-
 }

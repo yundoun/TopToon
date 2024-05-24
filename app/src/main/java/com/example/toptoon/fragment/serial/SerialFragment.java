@@ -67,19 +67,17 @@ public class SerialFragment extends Fragment {
                 TabLayout.Tab tab = binding.tlSerial.getTabAt(i);
                 if(tab != null && "리메이크".equals(tab.getText())){
                     View tabView = (View) tab.view;
-                    if(tabView != null){
-                        // Measure the width of the text
-                        tabView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
-                        int tabWidth = tabView.getMeasuredWidth();
+                    // 측정 모드를 UNSPECIFIED로 설정하여 뷰의 크기를 측정
+                    tabView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                    int tabWidth = tabView.getMeasuredWidth();
 
-                        // Subtract a fixed amount from the measured width to make the tab narrower
-                        int newTabWidth = tabWidth - (int) (30 * getResources().getDisplayMetrics().density); // Subtract 20dp
+                    // 텍스트의 너비를 측정
+                    int newTabWidth = tabWidth - (int) (30 * getResources().getDisplayMetrics().density);
 
-                        // Set the width of the tab to the measured width
-                        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
-                        params.width = newTabWidth;
-                        tabView.setLayoutParams(params);
-                    }
+                   // 가로 길이 조정
+                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) tabView.getLayoutParams();
+                    params.width = newTabWidth;
+                    tabView.setLayoutParams(params);
                 }
             }
         });

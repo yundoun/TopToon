@@ -1,5 +1,6 @@
 package com.example.toptoon.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -436,11 +437,11 @@ public class HomeFragment extends Fragment {
                     List<ApiItems.Webtoon> webtoons;
 
                     if (customKeywordTagToJsonKey.containsKey(tag)) {
-                        webtoonIds = getWebtoonIdsForTag(items, tag);
+                        webtoonIds = getWebtoonIdsForTag(items, tag, getContext());
                         webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
                         updateWebtoonRecyclerView(webtoons, adapterCustomKeyword);
                     } else if (recommendGenreTagToJsonKey.containsKey(tag)) {
-                        webtoonIds = getWebtoonIdsForGenre(items, tag);
+                        webtoonIds = getWebtoonIdsForGenre(items, tag, getContext());
                         webtoons = filterWebtoonsByIds(items.getWebtoons(), webtoonIds);
                         updateWebtoonRecyclerView(webtoons, adapterRecommendGenre);
                     }
@@ -486,53 +487,54 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private List<Integer> getWebtoonIdsForTag(ApiItems items, String tag) {
+    private List<Integer> getWebtoonIdsForTag(ApiItems items, String tag, Context context) {
         String jsonKey = customKeywordTagToJsonKey.get(tag);
         if (jsonKey != null) {
-            switch (jsonKey) {
-                case "popularWorks":
-                    return items.getCustomKeyword().getPopularWorks();
-                case "topToonExclusive":
-                    return items.getCustomKeyword().getToptoonExclusive();
-                case "dailyFree":
-                    return items.getCustomKeyword().getDailyFree();
-                case "completelyFree":
-                    return items.getCustomKeyword().getCompletelyFree();
-                case "hotNewWorks":
-                    return items.getCustomKeyword().getHotNewWorks();
-                case "remakes":
-                    return items.getCustomKeyword().getRemakes();
-                case "millionViews":
-                    return items.getCustomKeyword().getMillionViews();
-                case "bingeWatching":
-                    return items.getCustomKeyword().getBingeWatching();
-                default:
-                    return new ArrayList<>();
+            String[] customKeywordJsonArray = context.getResources().getStringArray(R.array.custom_keyword_json);
+
+            if (jsonKey.equals(customKeywordJsonArray[0])) {
+                return items.getCustomKeyword().getPopularWorks();
+            } else if (jsonKey.equals(customKeywordJsonArray[1])) {
+                return items.getCustomKeyword().getToptoonExclusive();
+            } else if (jsonKey.equals(customKeywordJsonArray[2])) {
+                return items.getCustomKeyword().getDailyFree();
+            } else if (jsonKey.equals(customKeywordJsonArray[3])) {
+                return items.getCustomKeyword().getCompletelyFree();
+            } else if (jsonKey.equals(customKeywordJsonArray[4])) {
+                return items.getCustomKeyword().getHotNewWorks();
+            } else if (jsonKey.equals(customKeywordJsonArray[5])) {
+                return items.getCustomKeyword().getRemakes();
+            } else if (jsonKey.equals(customKeywordJsonArray[6])) {
+                return items.getCustomKeyword().getMillionViews();
+            } else if (jsonKey.equals(customKeywordJsonArray[7])) {
+                return items.getCustomKeyword().getBingeWatching();
             }
+
         }
         return new ArrayList<>();
     }
 
-    private List<Integer> getWebtoonIdsForGenre(ApiItems items, String tag) {
+    private List<Integer> getWebtoonIdsForGenre(ApiItems items, String tag, Context context) {
         String jsonKey = recommendGenreTagToJsonKey.get(tag);
         if (jsonKey != null) {
-            switch (jsonKey) {
-                case "romance":
-                    return items.getRecommendGenre().getRomance();
-                case "drama":
-                    return items.getRecommendGenre().getDrama();
-                case "schoolAction":
-                    return items.getRecommendGenre().getSchoolAction();
-                case "omnibus":
-                    return items.getRecommendGenre().getOmnibus();
-                case "fantasySF":
-                    return items.getRecommendGenre().getFantasySF();
-                case "horrorThriller":
-                    return items.getRecommendGenre().getHorrorThriller();
-                case "comedy":
-                    return items.getRecommendGenre().getComedy();
-                case "martialArts":
-                    return items.getRecommendGenre().getMartialArts();
+            String[] recommendGenreJsonArray = context.getResources().getStringArray(R.array.recommend_genre_json);
+
+            if (jsonKey.equals(recommendGenreJsonArray[0])) {
+                return items.getRecommendGenre().getRomance();
+            } else if (jsonKey.equals(recommendGenreJsonArray[1])) {
+                return items.getRecommendGenre().getDrama();
+            } else if (jsonKey.equals(recommendGenreJsonArray[2])) {
+                return items.getRecommendGenre().getSchoolAction();
+            } else if (jsonKey.equals(recommendGenreJsonArray[3])) {
+                return items.getRecommendGenre().getOmnibus();
+            } else if (jsonKey.equals(recommendGenreJsonArray[4])) {
+                return items.getRecommendGenre().getFantasySF();
+            } else if (jsonKey.equals(recommendGenreJsonArray[5])) {
+                return items.getRecommendGenre().getHorrorThriller();
+            } else if (jsonKey.equals(recommendGenreJsonArray[6])) {
+                return items.getRecommendGenre().getComedy();
+            } else if (jsonKey.equals(recommendGenreJsonArray[7])) {
+                return items.getRecommendGenre().getMartialArts();
             }
         }
         return new ArrayList<>();

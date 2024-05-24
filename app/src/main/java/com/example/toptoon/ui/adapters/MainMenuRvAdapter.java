@@ -54,7 +54,6 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
 
         Log.d("MainMenuAdapter", "Binding position: " + position + ", selectedItemPosition: " + selectedItemPosition);
 
-
         // 선택된 항목의 테두리를 빨간색으로 변경
         if (position == selectedItemPosition && position >= 0 && position <= 3) {
             holder.binding.tvItem.setBackgroundResource(R.drawable.main_menu_border_true);
@@ -70,8 +69,6 @@ public class MainMenuRvAdapter extends ListAdapter<MainMenuItem, MainMenuRvAdapt
         });
 
     }
-
-
 
     static class MainMenuViewHolder extends RecyclerView.ViewHolder {
         private final MainMenuRvRowBinding binding;

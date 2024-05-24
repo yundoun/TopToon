@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.toptoon.R;
+import com.example.toptoon.databinding.FragmentDialogBinding;
 
 import java.util.Objects;
 

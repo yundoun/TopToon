@@ -78,10 +78,6 @@ public class BaseContentItem {
         return waitFree;
     }
 
-    public boolean isRecentlyUpdated() {
-        return recentlyUpdated;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }

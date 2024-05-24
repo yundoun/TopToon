@@ -1,14 +1,16 @@
 package com.example.toptoon.fragment.serial;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.toptoon.R;
+
 public class SerialListManager extends FragmentStateAdapter {
-    private static final String[] DAYS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Remake"};
+    private final String[] DAYS;
 
     public SerialListManager(@NonNull SerialFragment fragmentActivity) {
         super(fragmentActivity);
+        DAYS = fragmentActivity.getResources().getStringArray(R.array.serial);
     }
 
     @NonNull
@@ -17,7 +19,7 @@ public class SerialListManager extends FragmentStateAdapter {
         if (position < DAYS.length) {
             return DayFragment.newInstance(DAYS[position]);
         } else {
-            throw new IllegalStateException("Position exceeds number of tabs available.");
+            throw new IllegalStateException("탭수 초과");
         }
     }
 

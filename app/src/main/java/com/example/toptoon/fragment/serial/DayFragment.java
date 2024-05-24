@@ -1,11 +1,13 @@
 package com.example.toptoon.fragment.serial;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.toptoon.R;
 import com.example.toptoon.api.NetworkManager;
 import com.example.toptoon.dto.ApiItems;
 import com.example.toptoon.dto.BaseContentItem;
@@ -60,7 +62,7 @@ public class DayFragment extends BaseMainListFragment {
             @Override
             public void onResponse(@NonNull Call<ApiItems> call, @NonNull Response<ApiItems> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Integer> dayIds = getIdsByDay(response.body().getSerial(), day);
+                    List<Integer> dayIds = getIdsByDay(response.body().getSerial(), day, getContext());
                     List<ApiItems.Webtoon> webtoons = response.body().getWebtoons();
                     List<BaseContentItem> baseContentItems = filterTabContentItemsByWebtoonIds(dayIds, webtoons);
 
@@ -106,18 +108,32 @@ public class DayFragment extends BaseMainListFragment {
         return items;  // 필터링된 결과를 반환
     }
 
+    private List<Integer> getIdsByDay(ApiItems.Serial serial, String day, Context context) {
 
-    private List<Integer> getIdsByDay(ApiItems.Serial serial, String day) {
-        switch (day.toLowerCase()) {
-            case "monday":    return serial.getMonday();
-            case "tuesday":   return serial.getTuesday();
-            case "wednesday": return serial.getWednesday();
-            case "thursday":  return serial.getThursday();
-            case "friday":    return serial.getFriday();
-            case "saturday":  return serial.getSaturday();
-            case "sunday":    return serial.getSunday();
-            case "remake": return serial.getRemake();
-            default:          return new ArrayList<>();
+        if (context == null) {
+            return new ArrayList<>();
+        }
+
+        String [] serialArray = context.getResources().getStringArray(R.array.serial);
+
+        if (day.equals(serialArray[0])) {
+            return serial.getMonday();
+        } else if (day.equals(serialArray[1])) {
+            return serial.getTuesday();
+        } else if (day.equals(serialArray[2])) {
+            return serial.getWednesday();
+        } else if (day.equals(serialArray[3])) {
+            return serial.getThursday();
+        } else if (day.equals(serialArray[4])) {
+            return serial.getFriday();
+        } else if (day.equals(serialArray[5])) {
+            return serial.getSaturday();
+        } else if (day.equals(serialArray[6])) {
+            return serial.getSunday();
+        } else if (day.equals(serialArray[7])) {
+            return serial.getRemake();
+        } else {
+            return new ArrayList<>();
         }
     }
 }

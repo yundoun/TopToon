@@ -12,6 +12,13 @@
         <item>이벤트</item>
     </string-array>
 
+    <string-array name="getFragmentForMenu">
+        <item>연재</item>
+        <item>TOP100</item>
+        <item>신작</item>
+        <item>완결</item>
+    </string-array>
+
     <string-array name="tab_title">
         <item>실시간</item>
         <item>신작</item>
@@ -41,6 +48,16 @@
         <item>bingeWatching</item>
     </string-array>
 
+    <string-array name="recommend_genre_json">
+        <item>romance</item>
+        <item>drama</item>
+        <item>schoolAction</item>
+        <item>omnibus</item>
+        <item>fantasySF</item>
+        <item>horrorThriller</item>
+        <item>comedy</item>
+        <item>martialArts</item>
+    </string-array>
 
     <string-array name="recommend_genre">
         <item>#로맨스</item>
@@ -51,17 +68,6 @@
         <item>#공포/스릴러</item>
         <item>#개그</item>
         <item>#무협</item>
-    </string-array>
-
-    <string-array name="recommend_genre_json">
-        <item>romance</item>
-        <item>drama</item>
-        <item>schoolAction</item>
-        <item>omnibus</item>
-        <item>fantasySF</item>
-        <item>horrorThriller</item>
-        <item>comedy</item>
-        <item>martialArts</item>
     </string-array>
 
     <string-array name="serial">
@@ -99,5 +105,14 @@
         <item>온라인문의</item>
         <item>앱 버전 1.4.42</item>
     </string-array>
+
+    <string name="url_event_freetoon_daily">https://toptoon.com/event/freetoon/daily#event1</string>
+    <string name="url_cartoon">https://toptoon.com/cartoon#cartoon1</string>
+    <string name="url_shorts">https://toptoon.com/shorts</string>
+    <string name="url_event">https://toptoon.com/event</string>
+
+    <string name="exitMessage">종료하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
 
 </resources>
