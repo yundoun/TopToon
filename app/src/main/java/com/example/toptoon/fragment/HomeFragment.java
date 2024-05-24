@@ -141,8 +141,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupViewPager(ViewPager2 viewPager, int padding, int offscreenPageLimit, int pageMargin, boolean applyTransformer) {
-        viewPager.setClipToPadding(false);
-        viewPager.setClipChildren(false);
+        viewPager.setClipToPadding(false); // 스크롤이 발생할 때 패딩 부분을 넘어서 콘텐츠가 보이게 한다.
+        viewPager.setClipChildren(false); // 자식 뷰가 Viewpager2의 경계를 벗어나도 그려지게 한다.
         viewPager.setPadding(0, 0, padding, 0);
         viewPager.setPageTransformer(new MarginPageTransformer(pageMargin));
         viewPager.setOffscreenPageLimit(offscreenPageLimit);
