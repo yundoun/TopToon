@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.example.toptoon.CircleIndicator
+    <com.example.toptoon.ui.CircleIndicator
         android:id="@+id/slideIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

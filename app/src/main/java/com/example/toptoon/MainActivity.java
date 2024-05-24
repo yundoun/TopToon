@@ -16,19 +16,19 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.example.toptoon.Api.NetworkManager;
-import com.example.toptoon.DataModel.ApiItems;
-import com.example.toptoon.DataModel.DrawerItem;
-import com.example.toptoon.DataModel.MainMenuItem;
-import com.example.toptoon.Fragment.CompleteFragment;
-import com.example.toptoon.Fragment.DialogFragment;
-import com.example.toptoon.Fragment.HomeFragment;
-import com.example.toptoon.Fragment.NewProductFragment;
-import com.example.toptoon.Fragment.SerialFragment;
-import com.example.toptoon.Fragment.Top100Fragment;
-import com.example.toptoon.Ui.DrawerRvAdapter;
-import com.example.toptoon.Ui.MainMenuRvAdapter;
-import com.example.toptoon.Ui.OnMainMenuSelectedListener;
+import com.example.toptoon.api.NetworkManager;
+import com.example.toptoon.dto.ApiItems;
+import com.example.toptoon.dto.DrawerItem;
+import com.example.toptoon.dto.MainMenuItem;
+import com.example.toptoon.fragment.complete.CompleteFragment;
+import com.example.toptoon.fragment.DialogFragment;
+import com.example.toptoon.fragment.HomeFragment;
+import com.example.toptoon.fragment.NewProductFragment;
+import com.example.toptoon.fragment.serial.SerialFragment;
+import com.example.toptoon.fragment.top100.Top100Fragment;
+import com.example.toptoon.ui.adapters.DrawerRvAdapter;
+import com.example.toptoon.ui.adapters.MainMenuRvAdapter;
+import com.example.toptoon.ui.interfaces.OnMainMenuSelectedListener;
 import com.example.toptoon.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
@@ -67,10 +67,6 @@ public class MainActivity extends AppCompatActivity implements OnMainMenuSelecte
 
         // 백스택 변경 리스너 추가
         getSupportFragmentManager().addOnBackStackChangedListener(this::onBackStackChanged);
-
-//        if (adapter == null) { // 어댑터가 아직 생성되지 않았다면 생성
-//            setupMainMenu();
-//        }
 
     }
 
